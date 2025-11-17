@@ -1,7 +1,17 @@
 @use "../base/typographys";
 
-$michroma-regular: "Michroma", sans-serif;
-$orbitron-bold: "Orbitron", sans-serif;
+@mixin michroma-regular {
+  font-family: "Michroma", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@mixin orbitron-bold {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
 
 
 $color-primary: rgb(164, 164, 164);
