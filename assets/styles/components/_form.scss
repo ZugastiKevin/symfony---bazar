@@ -52,7 +52,7 @@
             //background-image: url("");
             background-size: calc(100% + 10px) 100%;
             background-position: -5px;
-            font-family: v.$font-titre;
+            font-family: v.$orbitron-bold;
             text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
             font-size: 0.95rem;
             text-align: center;
@@ -117,7 +117,7 @@
                 letter-spacing: 0.4rem;
             }
             .text-subheadline {
-                color: v.$color-error;
+                color: v.$color-blue-eidolon;
                 font-size: 0.8rem;
                 text-transform: uppercase;
                 letter-spacing: 0.14rem;
@@ -143,7 +143,7 @@
             height: 64px;
             padding-top: 12px;
             color: v.$color-primary;
-            font-family: v.$font-titre;
+            font-family: v.$orbitron-bold;
             font-size: 0.75rem;
             letter-spacing: .08rem;
             text-transform: uppercase;
@@ -177,7 +177,7 @@
             padding-top: 3px;
             border: none;
             border-bottom: 2px solid v.$color-accent;
-            font-family: v.$font-titre;
+            font-family: v.$orbitron-bold;
             color: v.$color-accent;
             text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
             background-color: transparent;
@@ -230,7 +230,7 @@
         color: v.$color-white;
         border: none;
         padding: 10px 2rem 14px;
-        font-family: v.$font-titre;
+        font-family: v.$orbitron-bold;
         cursor: pointer;
         transition: background 0.3s;
         text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
@@ -243,8 +243,8 @@
     .inputs--invalid input,
     .inputs--invalid select,
     .inputs--invalid textarea {
-        border-bottom: 4px solid v.$color-error;
-        color: v.$color-error;
+        border-bottom: 4px solid v.$color-blue-eidolon;
+        color: v.$color-blue-eidolon;
         animation: shake 0.3s both ease-in-out;
     }
 }
@@ -288,8 +288,8 @@
                 .form-group {
                     .form-error {
                         text-align: center;
-                        color: v.$color-error;
-                        font-family: v.$font-titre;
+                        color: v.$color-blue-eidolon;
+                        font-family: v.$orbitron-bold;
 
                         ul {
                             margin-bottom: 0;

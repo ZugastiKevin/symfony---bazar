@@ -1,13 +1,21 @@
 @use "../base/typographys";
 
-$font-source: "Source Sans Pro Regular", serif;
-$font-source-bold: "Source Sans Pro Bold", serif;
+$michroma-regular: "Michroma", sans-serif;
+$orbitron-bold: "Orbitron", sans-serif;
+
 
 $color-primary: rgb(164, 164, 164);
 $color-secondary: rgba(35, 35, 35, 0.19);
 $color-accent: rgb(231, 49, 49);
 
-$color-white: #Fafdff;
-$color-black: #080606;
+$color-antique-gold: #B1954F;
+$color-old-antique-gold: #453D27;
+$color-light-antique-gold: #ACA175;
+$color-golden-twilight: #CBA135;
+$color-blue-eidolon: #5FA3B0;
+$color-cetus-rock: #3A312B;
+
+$color-white: #FAF9F2;
+$color-black: #0E0E15;
 
 $color-overlay: rgba(0, 0, 0, 0.5);

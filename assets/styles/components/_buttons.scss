@@ -1,5 +1,51 @@
 @use "../abstracts/variables" as v;
 
+.btn-test {
+    margin-bottom: 1rem;
+    padding: 10px;
+    background-color: v.$color-old-antique-gold;
+    border-bottom: solid 3.75px v.$color-golden-twilight;
+
+    transition: all 0.2s ease-in-out;
+
+    a {
+        color: v.$color-white;
+    }
+}
+
+.btn-test:hover {
+    background-color: v.$color-antique-gold;
+    border-bottom: solid 3.75px v.$color-blue-eidolon;
+
+    a {
+        color: v.$color-white;
+        text-shadow: 0 0 10px v.$color-black;
+    }
+}
+
+.btn-test-dropdown {
+    margin-bottom: 1rem;
+    padding: 10px;
+    background-color: v.$color-old-antique-gold;
+    border-bottom: solid 3.75px v.$color-golden-twilight;
+
+    transition: all 0.2s ease-in-out;
+
+    a {
+        color: v.$color-white;
+    }
+}
+
+.btn-test-dropdown:hover {
+    background-color: v.$color-antique-gold;
+    border-bottom: solid 3.75px v.$color-blue-eidolon;
+
+    a {
+        color: v.$color-white;
+        text-shadow: 0 0 10px v.$color-black;
+    }
+}
+
 .cta {
     padding: 1rem 1.5rem;
     color: v.$color-white;

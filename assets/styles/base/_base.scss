@@ -12,9 +12,9 @@ html {
 body {
     position: relative;
     margin: 0 auto;
-    font-family: v.$font-source;
-    background: v.$color-white;
-    color: v.$color-text-black;
+    font-family: v.$michroma-regular;
+    background: v.$color-cetus-rock;
+    color: v.$color-white;
 }
 
 main {
@@ -34,10 +34,10 @@ img {
 
 ul {
     list-style: none;
-    padding-left: 0px;
+    padding-left: 0;
 }
 
 a {
     text-decoration: none;
-    color: v.$color-text-black;
+    color: v.$color-black;
 }
