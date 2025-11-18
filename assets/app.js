@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-free/js/all.js';
  * which should already be in your base.html.twig.
  */
 import './styles/app.scss';
+import './scripts/footer-dropdown.js';
 import 'htmx.org';
 window.htmx = require('htmx.org');
 
