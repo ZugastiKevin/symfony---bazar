@@ -1,8 +1,5 @@
 <footer class="container" id="footer">
     <div class="footer">
-        <div class="logo-footer-container">
-            <a href="{{ path('home') }}"><img src="{{ asset('images/logo/!Change-me!.png') }}" alt="{{ site.name }}"></a>
-        </div>
         <div class="footer-content">
             <div class="footer-propo">
                 <h4 class="golden-twilight">À PROPOS</h4>
@@ -13,16 +10,18 @@
                 </ul>
             </div>
             <div class="footer-language_theme_copyright">
+                <h4 class="golden-twilight">CHANGER DE LANGUE / THEME</h4>
                 <div class="footer-language_theme">
-                    <h4 class="golden-twilight">CHANGER DE LANGUE / THEME</h4>
                     <div class="footer-language">
-                        <ul>
-                            <li class="btn-test"><a href="{{ path('mentions_legales') }}">FRANÇAIS</a></li>
+                        <ul class="btn-test-dropdown">
+                            <li>FRANÇAIS</li>
+                            <li><i class="fa-solid fa-caret-down"></i></li>
                         </ul>
                     </div>
                     <div class="footer-theme">
-                        <ul>
-                            <li class="btn-test"><a href="{{ path('mentions_legales') }}">CETUS</a></li>
+                        <ul class="btn-test-dropdown">
+                            <li>CETUS</li>
+                            <li><i class="fa-solid fa-caret-down"></i></li>
                         </ul>
                     </div>
                 </div>
@@ -44,6 +43,9 @@
         <div class="footer-disclaimer">
             <h4 class="golden-twilight">AVERTISSEMENT</h4>
             <p>Digital Extremes Ltd, Warframe et le logo Warframe sont des marques déposées. Tous droits réservés. Ce site n'a aucun lien officiel avec Digital Extremes Ltd ou Warframe. L'ensemble des illustrations, captures d'écran, personnages et autres éléments reconnaissables de la propriété intellectuelle liés à ces marques sont également la propriété intellectuelle de Digital Extremes Ltd.</p>
+        </div>
+        <div class="logo-footer-container">
+            <a href="{{ path('home') }}"><img src="{{ asset('assets/images/logo/bazar.png') }}" alt="{{ site.name }}"></a>
         </div>
     </div>
 </footer>

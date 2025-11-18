@@ -11,3 +11,34 @@
     color: v.$color-golden-twilight;
 }
 
+@mixin separator(
+    $orientation: vertical,
+    $side: left,
+    $offset: -25px,
+    $top: 25px,
+    $height: 80%,
+    $border-color: v.$color-blue-eidolon,
+    $shadow-color: v.$color-old-antique-gold
+) {
+    content: "";
+    position: absolute;
+
+    @if $orientation == vertical {
+        top: $top;
+        #{$side}: $offset;
+        height: $height;
+        width: 0;
+        border-left: 2px solid $border-color;
+        box-shadow: 0 0 10px 4px $shadow-color;
+    }
+
+    @else if $orientation == horizontal {
+        left: $top;
+        top: $offset;
+        width: $height;
+        height: 0;
+        border-top: 2px solid $border-color;
+        box-shadow: 0 0 10px 4px $shadow-color;
+    }
+}
+

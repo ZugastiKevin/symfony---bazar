@@ -13,6 +13,7 @@ body {
     position: relative;
     margin: 0 auto;
     @include v.michroma-regular;
+    font-size: 0.8rem;
     background: v.$color-cetus-rock;
     color: v.$color-white;
 }
@@ -27,6 +28,7 @@ section {
 
 h4 {
     @include v.orbitron-bold;
+    padding: 0 10px;
 }
 
 img {
@@ -44,5 +46,4 @@ ul {
 a {
     text-decoration: none;
     color: v.$color-black;
-    font-size: 0.8rem;
 }
