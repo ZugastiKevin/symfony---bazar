@@ -39,7 +39,7 @@
             margin-top: 1rem;
             width: 100%;
             display: grid;
-            grid-template-columns: 35% 30% 35%;
+            grid-template-columns: 1fr minmax(auto, 309px) 1fr;
             grid-template-areas: "left middle right";
             column-gap: 2rem;
             align-items: flex-start;
@@ -83,36 +83,24 @@
                 justify-content: space-between;
                 gap: 1rem;
 
+                .footer-language {
+                    .dropdown-language {
+                        @include u.dropdown-container(0);
+
+                        .dropdown-language-list {
+                            @include u.dropdown-list(0%, -40%);
+                        }
+                    }
+                }
+
                 .footer-theme {
                     .dropdown-theme {
-                        position: relative;
-                        display: none;
-                        margin-right: 5rem;
-                        transition: display 5s ease-out;
-                        i {
-                            color: v.$color-white;
-                        };
-                    };
-                    .dropdown-theme:hover {
-                        cursor: pointer;
-                    };
-                    .dropdown-theme-list {
-                        position: absolute;
-                        z-index: 1;
-                        display: none;
-                        flex-direction: column;
-                        min-width: 10rem;
-                        padding: 0.8rem 1rem;
-                        border: 3px solid v.$color-blue-eidolon;
-                        border-radius: 1rem;
-                        background-color: v.$color-old-antique-gold;
-                        box-shadow: 0 10px 15px 12px v.$color-black;
-                        transform: translate(-45%, 2%);
+                        @include u.dropdown-container(0);
 
-                        li a:hover {
-                            border-bottom: 1px solid v.$color-old-antique-gold;
+                        .dropdown-theme-list {
+                            @include u.dropdown-list(0%, -40%);
                         }
-                    };
+                    }
                 }
             }
 
@@ -177,6 +165,9 @@
 @media screen and (min-width:1921px) {
     #footer {
         .footer {
+            .footer-content {
+                column-gap: 3rem;
+            }
             .logo-footer-container {
                 width: 8%;
             }

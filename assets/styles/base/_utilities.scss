@@ -42,3 +42,24 @@
     }
 }
 
+@mixin dropdown-container($margin-right: 0) {
+    position: relative;
+    display: block;
+    margin-right: $margin-right;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+
+@mixin dropdown-list($translate-x: -45%, $translate-y: 2%) {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    border-bottom: 3.75px solid v.$color-blue-eidolon;
+    background-color: v.$color-old-antique-gold;
+    box-shadow: 0 0 10px 7px v.$color-old-antique-gold;
+    transform: translate($translate-x, $translate-y);
+}
