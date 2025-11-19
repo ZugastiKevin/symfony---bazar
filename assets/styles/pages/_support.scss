@@ -1,0 +1,19 @@
+@use "../abstracts/variables" as v;
+
+#support {
+    margin-top: 5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .support {
+        margin-top: 3rem;
+        width: 98%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
