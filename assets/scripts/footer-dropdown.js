@@ -8,17 +8,27 @@ function attachHoverDropdown(toggleSelector) {
         const dropdownContent = document.querySelector(targetSelector);
         if (!dropdownContent) return;
 
+        let hideTimeout = null;
+
         const showDropdown = () => {
+            if (hideTimeout) {
+                clearTimeout(hideTimeout);
+                hideTimeout = null;
+            }
+
             dropdownContent.style.display = "flex";
             dropdownContent.style.animation = "show-content 0.5s ease forwards";
+
+            toggle.classList.add("dropdown-open");
         };
 
-        const hideDropdown = () => {
+        const reallyHideDropdown = () => {
             dropdownContent.style.animation = "dont-show-content 0.5s ease forwards";
 
             const handler = (event) => {
                 if (event.animationName === "dont-show-content") {
                     dropdownContent.style.display = "none";
+                    toggle.classList.remove("dropdown-open");
                     dropdownContent.removeEventListener("animationend", handler);
                 }
             };
@@ -26,10 +36,14 @@ function attachHoverDropdown(toggleSelector) {
             dropdownContent.addEventListener("animationend", handler);
         };
 
-        toggle.addEventListener("mouseenter", showDropdown);
-        toggle.addEventListener("mouseleave", hideDropdown);
+        const hideDropdown = () => {
+            hideTimeout = setTimeout(reallyHideDropdown, 150);
+        };
 
+        toggle.addEventListener("mouseenter", showDropdown);
         dropdownContent.addEventListener("mouseenter", showDropdown);
+
+        toggle.addEventListener("mouseleave", hideDropdown);
         dropdownContent.addEventListener("mouseleave", hideDropdown);
     });
 }

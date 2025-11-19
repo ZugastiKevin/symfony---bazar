@@ -1,20 +1,19 @@
 @use "../abstracts/variables" as v;
 
-.btn-test {
-    margin-bottom: 1rem;
+.btn-menu {
     background-color: v.$color-old-antique-gold;
     border-bottom: solid 3.75px v.$color-golden-twilight;
 
     transition: all 0.2s ease-in-out;
 
     a {
-        display: block;
+        display: inline-block;
         padding: 10px;
         color: v.$color-white;
     }
 }
 
-.btn-test:hover {
+.btn-menu:hover {
     background-color: v.$color-antique-gold;
     border-bottom: solid 3.75px v.$color-blue-eidolon;
 
@@ -24,7 +23,7 @@
     }
 }
 
-.btn-test-dropdown {
+.btn-menu-dropdown {
     position: relative;
     width: 100%;
     z-index: 2;
@@ -42,10 +41,12 @@
 
     svg {
         font-size: 1rem;
+        transition: transform 0.2s ease-in-out;
     }
 }
 
-.btn-test-dropdown:hover {
+.btn-menu-dropdown:hover,
+.btn-menu-dropdown.dropdown-open {
     background-color: v.$color-antique-gold;
     border-top: solid 3.75px v.$color-blue-eidolon;
     border-bottom: solid 3.75px v.$color-blue-eidolon;
@@ -54,6 +55,13 @@
         color: v.$color-white;
         text-shadow: 0 0 10px v.$color-black;
     }
+}
+
+.language-dropdown-toggle:hover svg,
+.language-dropdown-toggle.dropdown-open svg,
+.theme-dropdown-toggle:hover svg,
+.theme-dropdown-toggle.dropdown-open svg {
+    transform: rotate(180deg);
 }
 
 .cta {

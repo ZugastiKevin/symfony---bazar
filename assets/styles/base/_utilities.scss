@@ -57,6 +57,7 @@
     z-index: 1;
     display: none;
     flex-direction: column;
+    justify-content: space-between;
     width: 100%;
     border-bottom: 3.75px solid v.$color-blue-eidolon;
     background-color: v.$color-old-antique-gold;

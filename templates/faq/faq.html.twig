@@ -1,0 +1,185 @@
+{% extends 'base.html.twig' %}
+
+{% set toc = [
+    {
+        title: 'Général',
+        items: [
+        { label: 'Ce site est-il lié à Digital Extremes ?', href: '#general-related' },
+        { label: 'Comment puis-je contacter votre support ?', href: '#general-support' },
+        { label: 'Comment activer les notifications de bureau ?', href: '#general-notifications' },
+    ]
+    },
+    {
+        title: 'Commerce',
+        items: [
+        { label: 'Comment utiliser ce service ?', href: '#trading-how-to-use' },
+    ]
+    },
+    {
+        title: 'Compte',
+        items: [
+        { label: 'J’ai changé mon nom dans le jeu, comment puis-je le changer ici sur le site ?', href: '#account-change-name' },
+        { label: 'Pourquoi devez-vous vérifier mon nom en jeu ?', href: '#account-verify-ign' },
+        { label: 'Comment stockez-vous mon mot de passe ?', href: '#account-password-storage' },
+        { label: 'Quel type d’informations votre service connaîtra à mon sujet ?', href: '#account-information' },
+        { label: 'Comment allez-vous utiliser mon adresse mail ?', href: '#account-mail-usage' },
+    ]
+    }
+] %}
+
+{% block title %}F.A.Q{% endblock %}
+
+{% block body %}
+    <section class="container" id="faq">
+        <div class="faq">
+            <h2>Table des matières</h2>
+
+            <ol class="list-faq-container">
+                {% for section in toc %}
+                    <li>
+                        <strong>{{ section.title }}</strong>
+
+                        <ul class="list-faq">
+                            {% for item in section.items %}
+                                <li class="btn-menu">
+                                    <a href="{{ item.href }}">{{ item.label }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ol>
+
+            <div class="faq-content">
+                <h3 id="general-related">Ce site est-il lié à Digital Extremes ?</h3>
+
+                <p>Non, ce site a été créé par {{ site.publisher }} (développeur indépendant).</p>
+
+                <p>Nous ne sommes pas associés à Digital Extremes ; nous avons simplement réalisé ce site pour faciliter le commerce.</p>
+
+                <p>Merci de ne pas contacter le support de <strong>Digital Extremes</strong> pour des questions concernant ce site.</p>
+
+                <p>Si vous avez des questions ou des problèmes, contactez-nous par mail.</p>
+            </div>
+
+            <div class="faq-content">
+            <h3 id="general-support">Comment puis-je contacter votre support ?</h3>
+
+            <p>Il suffit de nous écrire un mail :</p>
+            <p class="btn-menu"><a href="{{ path('confidentialite') }}">contactez-nous</a></p>
+            </div>
+
+            <div class="faq-content">
+                <h3 id="general-notifications">Comment activer les notifications de bureau ?</h3>
+
+                <p>Si votre navigateur bloque les notifications et que vous souhaitez les activer, vous pouvez le faire très facilement.</p>
+
+                <h4>Pour le navigateur Chrome :</h4>
+                <ol>
+                    <li>En haut à gauche de votre navigateur, juste avant la barre d’adresse, cliquez sur l’icône d’information → <i class="fa-solid fa-circle-info"></i></li>
+                    <li>Passez <strong>Notifications</strong> sur <code>Autoriser</code></li>
+                </ol>
+
+                <h4>Pour le navigateur Firefox :</h4>
+                <ol>
+                    <li>En haut à gauche de votre navigateur, juste avant la barre d’adresse, cliquez sur l’icône d’information → <i class="fa-solid fa-circle-info"></i></li>
+                    <li>Cliquez sur <strong>Préférences</strong></li>
+                    <li>Cliquez sur <strong>Paramètres de notifications</strong></li>
+                    <li>Trouvez <strong>warframe.market</strong></li>
+                    <li>Passez le statut sur <code>Autoriser</code></li>
+                </ol>
+            </div>
+
+
+            {# ===================== TRADING ===================== #}
+            <div class="faq-content">
+                <h3 id="trading-how-to-use">Comment utiliser ce service ?</h3>
+
+                <p>Si vous souhaitez consulter les offres, utilisez simplement la fonction de recherche sur la page d’accueil et contactez l’acheteur / le vendeur.</p>
+
+                <p>Si vous voulez publier une offre, vous devez être inscrit sur notre site. Nous proposons deux options :</p>
+
+                <ul>
+                    <li>Inscription via <strong>Steam Login</strong></li>
+                    <li>Inscription via notre système autonome (voir ci-dessous)</li>
+                </ul>
+
+                <p>Après l’inscription et la vérification de votre nom en jeu, vous pouvez publier des offres.</p>
+
+                <p>N’oubliez pas de mettre à jour votre statut en jeu — utilisez le commutateur en haut à droite (menu). Les autres utilisateurs verront votre statut, et s’ils vous voient en ligne, ils pourront vous contacter directement via un message privé en jeu.</p>
+            </div>
+
+            {# ===================== ACCOUNT ===================== #}
+            <div class="faq-content">
+                <h3 id="account-status-management">Gestion du statut</h3>
+
+                <p>Lorsque vous démarrez une nouvelle session sur un navigateur ou une application mobile, votre statut est automatiquement défini sur « invisible », à moins qu'une session existante ait déjà défini un statut.</p>
+
+                <p>Les statuts fonctionnent comme suit :</p>
+
+                <ul>
+                    <li><strong>En ligne en jeu</strong> — Vous êtes en jeu et prêt à commercer.</li>
+                    <li><strong>En ligne</strong> — Vous n’êtes pas actuellement en jeu, mais disponible pour commercer dans environ une heure et pouvez répondre via le site.</li>
+                    <li><strong>Invisible</strong> — Vous n’êtes pas disponible et n’avez aucune obligation commerciale.</li>
+                </ul>
+
+                <p>Par défaut, votre statut « en ligne » ou « en ligne en jeu » est conservé uniquement tant que votre connexion à warframe.market est active (par exemple, lorsque l’onglet du navigateur ou l’application est ouvert). Une fois le navigateur fermé ou la connexion perdue, votre statut passe automatiquement à « hors ligne ».</p>
+
+                <p>Ce comportement fonctionne bien sur PC, mais il est gênant sur mobile, car les téléphones suspendent la connexion lorsque l’application passe en arrière-plan ou lorsque l’écran se verrouille.</p>
+
+                <p>Pour régler cela, vous pouvez utiliser l’option « Et conserver le statut pendant » :</p>
+
+                <ul>
+                    <li><strong>(par défaut)</strong> — Conserve le statut uniquement tant que vous êtes connecté.</li>
+                    <li><strong>1h / 2h / 4h</strong> — Conserve le statut choisi pendant cette durée, même si vous fermez le navigateur ou l’app.</li>
+                </ul>
+
+                <p>Après la durée sélectionnée, votre statut revient automatiquement à « hors ligne ».</p>
+
+                <p><strong>Exemple :</strong> Vous pouvez définir votre statut sur « en ligne en jeu » pendant 2 heures, fermer l’application ou le navigateur, et nous conserverons ce statut pendant toute la durée avant de vous repasser en « hors ligne ».</p>
+            </div>
+
+            <div class="faq-content">
+                <h3 id="account-change-name">J’ai changé mon nom dans le jeu, comment le changer ici ?</h3>
+
+                <p>Vous pouvez revérifier votre compte, cela récupérera votre nom depuis le forum.</p>
+                <p>Si le forum affiche encore votre ancien nom, reconnectez-vous (sur le forum !).</p>
+                <p>Si rien ne fonctionne, envoyez-nous un mail avec votre ancien nom et le nouveau.</p>
+            </div>
+
+            <div class="faq-content">
+                <h3 id="account-verify-ign">Pourquoi devez-vous vérifier mon nom en jeu ?</h3>
+
+                <p>Nous ne voulons pas voir de faux comptes ou de fausses annonces sur notre site.</p>
+                <p>Cela créerait une mauvaise expérience pour tout le monde.</p>
+                <p>Nous sommes désolés si cela prend quelques minutes supplémentaires avant de pouvoir commercer, mais c’est une procédure nécessaire.</p>
+            </div>
+
+            <div class="faq-content">
+                <h3 id="account-password">Comment stockez-vous mon mot de passe ?</h3>
+
+                <p>Votre mot de passe n’est pas stocké directement dans notre base de données.</p>
+                <p>Nous stockons un HASH (généré via passwordEncoder) basé sur votre mot de passe et un salt.</p>
+                <p>Ainsi, personne — même nous — ne peut récupérer votre mot de passe.</p>
+            </div>
+
+            <div class="faq-content">
+                <h3 id="account-information">Quelles informations votre service connaîtra à mon sujet ?</h3>
+
+                <p>Si vous utilisez notre connexion autonome, nous connaîtrons votre adresse e-mail. Vous pouvez utiliser un e-mail fictif, c’est votre choix, et l’usage que nous en faisons est décrit ci-dessous.</p>
+
+                <p>Si vous utilisez la connexion Steam, nous connaîtrons votre nom Steam et votre Steam ID.</p>
+            </div>
+
+            <div class="faq-content">
+                <h3 id="account-mail-usage">Comment allez-vous utiliser mon adresse mail ?</h3>
+
+                <p>Actuellement — uniquement pour les besoins de connexion.</p>
+
+                <p>Vous ne recevrez aucun message de notre part.</p>
+
+                <p>Si un système de notifications par e-mail est ajouté à l’avenir, vous en serez informé à l’avance et pourrez activer ou désactiver ces fonctionnalités.</p>
+            </div>
+        </div>
+    </section>
+{% endblock %}
