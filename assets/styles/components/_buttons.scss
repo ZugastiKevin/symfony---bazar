@@ -1,26 +1,45 @@
 @use "../abstracts/variables" as v;
 
-.btn-menu {
+@mixin menu-button(
+    $font-size: 0.8rem,
+    $uppercase: false,
+    $padding-x: 10px,
+    $padding-y: 10px
+) {
+    display: inline-block;
     background-color: v.$color-old-antique-gold;
     border-bottom: solid 3.75px v.$color-golden-twilight;
-
     transition: all 0.2s ease-in-out;
 
     a {
-        display: inline-block;
-        padding: 10px;
+        display: block;
+        padding: $padding-y $padding-x;
         color: v.$color-white;
+        font-size: $font-size;
+        text-transform: if($uppercase, uppercase, none);
+    }
+
+    &:hover {
+        background-color: v.$color-antique-gold;
+        border-bottom: solid 3.75px v.$color-blue-eidolon;
+
+        a {
+            color: v.$color-white;
+            text-shadow: 0 0 10px v.$color-black;
+        }
+    }
+
+    &:active {
+        border-bottom: solid 3.75px v.$color-blue-eidolon;
     }
 }
 
-.btn-menu:hover {
-    background-color: v.$color-antique-gold;
-    border-bottom: solid 3.75px v.$color-blue-eidolon;
+.btn-menu-navbar {
+    @include menu-button(1rem, true, 15px);
+}
 
-    a {
-        color: v.$color-white;
-        text-shadow: 0 0 10px v.$color-black;
-    }
+.btn-menu {
+    @include menu-button(0.8rem, true);
 }
 
 .btn-menu-dropdown {

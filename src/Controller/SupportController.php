@@ -70,23 +70,4 @@ final class SupportController extends AbstractController
             'supportForm' => $form->createView(),
         ]);
     }
-
-    #[Route('/test-mail', name: 'test_mail')]
-    public function testMail(MailerInterface $mailer): Response
-    {
-        try {
-            $email = (new Email())
-                ->from('support@bazar-de-cetus.octohub.fr')
-                ->to('support@bazar-de-cetus.octohub.fr')
-                ->subject('Test Symfony Mailer')
-                ->text('Si tu lis ceci, ton mailer est bien configuré.');
-
-            $mailer->send($email);
-
-            return new Response('Email envoyé sans exception PHP.');
-        } catch (\Throwable $e) {
-            // Affiche clairement l’erreur côté navigateur
-            return new Response('Erreur mailer : ' . $e->getMessage());
-        }
-    }
 }

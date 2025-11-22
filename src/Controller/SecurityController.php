@@ -53,8 +53,6 @@ class SecurityController extends AbstractController
                     return $this->redirectToRoute('create_user');
                 }
 
-
-                $user->setPseudo('NotLinked');
                 $user->setStatus('Offline');
                 $user->setRoles(['ROLE_USER']);
                 $user->setCreatedAt(new \DateTimeImmutable());

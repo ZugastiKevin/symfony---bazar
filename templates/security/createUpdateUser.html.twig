@@ -3,37 +3,33 @@
 {% block title %}{{ userUpdateForm ? "Modification du Compte" : "Creation du Compte" }}{% endblock %}
 
 {% block body %}
-    <div id="form">
+    <div id="form form-background">
         <div class="form">
             <div class="form-content">
                 <div class="mix">
-                    <figure>
-                        <img src="{{ userUpdateForm ? asset('assets/images/tonImage.png') :  asset('assets/images/tonImage.png') }}" alt="">
-                    </figure>
-
                     <div class="headline">
                         <h2 class="text-headline">{{ site.name }}</h2>
                         <h3 class="text-subheadline">{{ userUpdateForm ? "Modification du Compte" : "Creation du Compte" }}</h3>
                     </div>
                 </div>
                 {{ form_start(userCreateForm, { attr: { class: 'all-form' } }) }}
-{#                <span>#}
-{#                    <label for="{{ userCreateForm.pseudo.vars.id }}">#}
-{#                        Nom d'utilisateur#}
-{#                    </label>#}
-{#                    {% if userUpdateForm %}#}
-{#                        <div class="input-reset-inline">#}
-{#                            {{ form_widget(userCreateForm.pseudo, {#}
-{#                                attr: {#}
-{#                                    'data-original': userCreateForm.pseudo.vars.value#}
-{#                                }#}
-{#                            }) }}#}
-{#                            <button type="button" class="reset-btn"><i class='fas fa-undo redo-icon'></i></button>#}
-{#                        </div>#}
-{#                    {% else %}#}
-{#                        {{ form_widget(userCreateForm.pseudo) }}#}
-{#                    {% endif %}#}
-{#                </span>#}
+                <span>
+                    <label for="{{ userCreateForm.pseudo.vars.id }}">
+                        Pseudo en jeux
+                    </label>
+                    {% if userUpdateForm %}
+                        <div class="input-reset-inline">
+                            {{ form_widget(userCreateForm.pseudo, {
+                                attr: {
+                                    'data-original': userCreateForm.pseudo.vars.value
+                                }
+                            }) }}
+                            <button type="button" class="reset-btn"><i class='fas fa-undo redo-icon'></i></button>
+                        </div>
+                    {% else %}
+                        {{ form_widget(userCreateForm.pseudo) }}
+                    {% endif %}
+                </span>
                 <span>
                     <label for="{{ userCreateForm.email.vars.id }}">
                         Email

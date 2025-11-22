@@ -1,49 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Support - Contactez-nous{% endblock %}
+{% block title %}{{ 'support-title'|trans }}{% endblock %}
 
 {% block body %}
-    <section class="container" id="support">
-        <div class="support">
-            <h1 class="golden-twilight">Contactez le support</h1>
-
-            <p>Vous pouvez utiliser ce formulaire pour nous envoyer un message.</p>
-
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">
-                    {{ message }}
+    <section class="container" id="form">
+        <div class="form">
+            <div class="form-content">
+                <div class="mix">
+                    <div class="headline">
+                        <h2 class="text-headline">{{ site.name }}</h2>
+                        <h3 class="text-subheadline">{{ 'support'|trans }}</h3>
+                    </div>
                 </div>
-            {% endfor %}
 
-            <div class="support-form-container">
-                {{ form_start(supportForm) }}
+                <p>Vous pouvez utiliser ce formulaire pour nous envoyer un message.</p>
 
-                <div class="form-group">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
+                {{ form_start(supportForm, { attr: { class: 'all-form' } }) }}
+                <span class="form-group">
                     {{ form_label(supportForm.name) }}
                     {{ form_widget(supportForm.name) }}
                     {{ form_errors(supportForm.name) }}
-                </div>
-
-                <div class="form-group">
+                </span>
+                <span class="form-group">
                     {{ form_label(supportForm.email) }}
                     {{ form_widget(supportForm.email) }}
                     {{ form_errors(supportForm.email) }}
-                </div>
+                </span>
 
-                <div class="form-group">
+                <span class="form-group">
                     {{ form_label(supportForm.category) }}
                     {{ form_widget(supportForm.category) }}
                     {{ form_errors(supportForm.category) }}
-                </div>
-
-                <div class="form-group">
+                </span>
+                <span class="form-group">
                     {{ form_label(supportForm.message) }}
                     {{ form_widget(supportForm.message) }}
                     {{ form_errors(supportForm.message) }}
-                </div>
-
-                <button class="btn-menu">Envoyer</button>
-
+                </span>
+                <input class="btn btn-lg btn-primary" type="submit" value="Envoyer">
                 {{ form_end(supportForm) }}
             </div>
         </div>

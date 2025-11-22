@@ -8,7 +8,7 @@
     100% { transform: translateX(0);}
 }
 
-@mixin form-basique($width: 70%, $height: 650px) {
+@mixin form-basique($width: 39%, $height: 650px) {
     position: relative;
     width: $width;
     max-width: 1200px;
@@ -67,32 +67,14 @@
     }
 }
 
-@mixin mix($width: 50%, $height: 650px) {
+@mixin mix($width: 100%) {
     .mix {
-        position: relative;
         width: $width;
-        overflow: hidden;
         display: flex;
         justify-content: center;
         align-items: start;
 
-        figure {
-            width: 212px;
-            display: flex;
-            justify-content: center;
-            align-items: start;
-            margin: 0;
-            img {
-                min-height: 450px;
-                max-height: $height;
-            }
-        }
-
         .headline {
-            position: absolute;
-            top: 8%;
-            left: 50%;
-            transform: translateX(-50%);
             text-align: center;
 
             background: rgba(255, 255, 255, 0.1);
@@ -176,9 +158,9 @@
             text-align: center;
             padding-top: 3px;
             border: none;
-            border-bottom: 2px solid v.$color-accent;
+            border-bottom: 3.75px solid v.$color-golden-twilight;
             @include v.orbitron-bold;
-            color: v.$color-accent;
+            color: v.$color-golden-twilight;
             text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
             background-color: transparent;
             //background-image: url();
@@ -225,15 +207,20 @@
     }
 
     input[type=submit] {
-        margin: 0 auto 25px;
-        background-color: transparent;
+        padding: 10px;
         color: v.$color-white;
-        border: none;
-        padding: 10px 2rem 14px;
-        @include v.orbitron-bold;
-        cursor: pointer;
-        transition: background 0.3s;
-        text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
+        background-color: v.$color-old-antique-gold;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        border-right-color: transparent;
+        border-bottom: solid 3.75px v.$color-golden-twilight;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            text-shadow: 0 0 10px v.$color-black;
+            background-color: v.$color-antique-gold;
+            border-bottom: solid 3.75px v.$color-blue-eidolon;
+        }
     }
 
     .inputs--filled label {
@@ -243,28 +230,41 @@
     .inputs--invalid input,
     .inputs--invalid select,
     .inputs--invalid textarea {
-        border-bottom: 4px solid v.$color-blue-eidolon;
-        color: v.$color-blue-eidolon;
+        border-bottom: 4px solid v.$color-accent;
+        color: v.$color-accent;
         animation: shake 0.3s both ease-in-out;
     }
 }
 
+#form-background {
+    background-image: url("/public/assets/images/login/login.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left center;
+}
+
 #form {
+    //margin-top: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     width: 100%;
     min-height: 100vh;
     padding: 1rem;
+
+
     @include warming();
     .form {
         @include form-basique();
+        margin-left: auto;
 
         .form-content {
             position: relative;
             width: 100%;
             display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
             padding-bottom: 10rem;
 
             @include mix();
@@ -273,7 +273,7 @@
                 overflow: hidden;
                 padding: 5%;
                 position: relative;
-                width: 50%;
+                width: 100%;
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
@@ -303,14 +303,25 @@
 
 @media screen and (min-width:1991px) {
     #form {
+        background-size: contain;
+        background-position: center;
         .form {
             width: 35%;
         }
     }
 }
 
+@media screen and (min-width: 1400px) {
+    #form {
+        background-size: cover;
+        background-position: center;
+    }
+}
+
 @media screen and (max-width:1000px) {
     #form {
+        background-size: cover;
+        background-position: top center;
         .form {
             width: 95%;
             .mix {
@@ -325,6 +336,8 @@
 @media screen and (max-width:768px) {
     #form {
         padding: 0;
+        background-size: contain;
+        background-position: top center;
         .form {
             width: 75%;
             flex-direction: column;

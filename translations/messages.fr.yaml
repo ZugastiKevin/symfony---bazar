@@ -1,0 +1,73 @@
+username: Nom d'utilisateur
+logout: Déconnexion
+login: Connexion
+sign_in: Se connecter
+register: Créer un compte
+registration: Inscription
+update_account: Modification du compte
+create_account: Création de compte
+email: Adresse email
+password: Mot de passe
+confirm_password: Confirmer le mot de passe
+remember_me: Se souvenir de moi
+forgot_password: Mot de passe oublié ?
+submit: Valider
+save: Sauvegarder
+cancel: Annuler
+delete: Supprimer
+confirm_delete: Confirmer la suppression?
+update: Modifier
+profile: Profil
+account: Compte
+welcome: Bienvenue
+welcome_back: Bon retour
+logged_in_as: Connecté en tant que
+not_logged_in: Vous n’êtes pas connecté
+error: Erreur
+success: Succès
+invalid_credentials: Identifiants invalides
+csrf_token_invalid: Jeton CSRF invalide
+username_not_found: Utilisateur introuvable
+password_too_short: Le mot de passe est trop court
+form_error: Veuillez corriger les erreurs du formulaire
+please_login: Veuillez vous connecter
+
+# support
+support-title: Support - Contactez-nous
+support: Contactez le support
+
+# warning video
+video: Votre navigateur ne supporte pas la lecture de vidéos.
+
+# navbar
+navbar:
+    market: Commerce
+    contract: Contrats
+
+# home
+home: Accueil
+
+# form bottle placeholder
+form:
+    label:
+        min: Le nom doit contenir au moins {{ limit }} caractère.
+        max: Le nom ne peut pas dépasser {{ limit }} caractères.
+    year_placeholder: Millésime
+    invalid_type: Veuillez télécharger un fichier au format JPEG, JPG, PNG ou WEBP.
+    pays_placeholder: Sélectionner un pays
+    regions_placeholder: Sélectionner une région
+    types_placeholder: Sélectionner un type de vin
+    grapes_placeholder: Sélectionner un cepage
+    yes: Oui
+    no: Non
+    alcool: Saisir un nombre comme 12.5
+    describ:
+        describ_too_short: La description doit contenir au moins {{ limit }} caractère.
+        describ_too_long: La description ne peut pas dépasser {{ limit }} caractères.
+
+# footer
+about: "À propos"
+privacy_policy: "Politique de Confidentialité"
+legal_notice: "Mentions Légales"
+terms_of_use: "Conditions Générales d'Utilisation"
+alcohol_warning: "L'abus d'alcool est dangereux pour la santé, à consommer avec modération"

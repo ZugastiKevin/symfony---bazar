@@ -18,6 +18,7 @@
         {% endblock %}
     </head>
     <body>
+        {% set current = app.request.attributes.get('_route') %}
         {% include "layout/_header.html.twig" %}
         <main class="container" id="main">
             {% block body %}{% endblock %}

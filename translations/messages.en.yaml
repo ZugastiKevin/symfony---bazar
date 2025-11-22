@@ -1,0 +1,73 @@
+username: Username
+logout: Logout
+login: Login
+sign_in: Log in
+register: Create account
+registration: Sign up
+update_account: Update account
+create_account: Create account
+email: Email address
+password: Password
+confirm_password: Confirm password
+remember_me: Remember me
+forgot_password: Forgot your password?
+submit: Submit
+save: Save
+cancel: Cancel
+delete: Delete
+confirm_delete: Confirm delete?
+update: Update
+profile: Profile
+account: Account
+welcome: Welcome
+welcome_back: Welcome back
+logged_in_as: Logged in as
+not_logged_in: You are not logged in
+error: Error
+success: Success
+invalid_credentials: Invalid credentials
+csrf_token_invalid: Invalid CSRF token
+username_not_found: User not found
+password_too_short: Password is too short
+form_error: Please correct the form errors
+please_login: Please log in
+
+# support
+support-title: Support - Contact us
+support: Contact support
+
+# warning video
+video: Your browser does not support the video tag.
+
+# navbar
+navbar:
+    market: Market
+    contract: Contracts
+
+# home
+home: Home
+
+# form bottle placeholder
+form:
+    label:
+        min: The name must be at least {{ limit }} character long.
+        max: The name cannot be longer than {{ limit }} characters.
+    year_placeholder: Vintage
+    invalid_type: Please upload a file in JPEG, JPG, PNG or WEBP format.
+    pays_placeholder: Select a country
+    regions_placeholder: Select a region
+    types_placeholder: Select a wine type
+    cepages_placeholder: Select a grape variety
+    yes: Yes
+    no: No
+    alcool: Enter a number like 12.5
+    describ:
+        describ_too_short: The description must contain at least {{ limit }} character.
+        describ_too_long: The description cannot exceed {{ limit }} characters.
+
+# footer
+about: "About"
+privacy_policy: "Privacy Policy"
+legal_notice: "Legal Notice"
+terms_of_use: "Terms of Use"
+alcohol_warning: "Alcohol abuse is dangerous for your health, consume in moderation"
