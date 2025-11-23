@@ -53,7 +53,7 @@
             background-size: calc(100% + 10px) 100%;
             background-position: -5px;
             @include v.orbitron-bold;
-            text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
+            text-shadow: 1px 1px 0 v.$color-black, -1px -1px 0 v.$color-black, 1px -1px 0 v.$color-black, -1px  1px 0 v.$color-black;
             font-size: 0.95rem;
             text-align: center;
             color: v.$color-primary;
@@ -85,7 +85,7 @@
             border-radius: 1rem;
             width: 70%;
 
-            mask-image: linear-gradient(to right, transparent, black 20%, black 80%, transparent);
+            mask-image: linear-gradient(to right, transparent, v.$color-black 20%, v.$color-black 80%, transparent);
             mask-repeat: no-repeat;
             mask-size: 100% 100%;
             -webkit-mask-repeat: no-repeat;
@@ -93,7 +93,7 @@
 
             .text-headline {
                 color: v.$color-primary;
-                text-shadow: 2px 2px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
+                text-shadow: 2px 2px 0 v.$color-black, -1px -1px 0 v.$color-black, 1px -1px 0 v.$color-black, -1px  1px 0 v.$color-black;
                 font-size: 1.6rem;
                 text-transform: uppercase;
                 letter-spacing: 0.4rem;
@@ -103,7 +103,7 @@
                 font-size: 0.8rem;
                 text-transform: uppercase;
                 letter-spacing: 0.14rem;
-                text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
+                text-shadow: 1px 1px 0 v.$color-black, -1px -1px 0 v.$color-black, 1px -1px 0 v.$color-black, -1px  1px 0 v.$color-black;
             }
         }
     }
@@ -118,13 +118,13 @@
         display: block;
         margin-bottom: 1.15rem;
         position: relative;
-        text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
+        text-shadow: 1px 1px 0 v.$color-black, -1px -1px 0 v.$color-black, 1px -1px 0 v.$color-black, -1px  1px 0 v.$color-black;
 
         label {
             width: 100%;
             height: 64px;
             padding-top: 12px;
-            color: v.$color-primary;
+            color: v.$color-golden-twilight;
             @include v.orbitron-bold;
             font-size: 0.75rem;
             letter-spacing: .08rem;
@@ -152,26 +152,31 @@
             }
         }
 
-        input {
+        input, select, textarea {
             flex: 1;
             width: 100%;
             text-align: center;
-            padding-top: 3px;
+            padding: 10px;
             border: none;
             border-bottom: 3.75px solid v.$color-golden-twilight;
             @include v.orbitron-bold;
-            color: v.$color-golden-twilight;
-            text-shadow: 1px 1px 0 black, -1px -1px 0 black, 1px -1px 0 black, -1px  1px 0 black;
+            color: v.$color-white;
+            text-shadow: 1px 1px 0 v.$color-black, -1px -1px 0 v.$color-black, 1px -1px 0 v.$color-black, -1px  1px 0 v.$color-black;
             background-color: transparent;
-            //background-image: url();
-            background-size: contain;
-            background-repeat: round;
             outline: none;
             resize: none;
         }
-        input:focus-visible {
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible{
             outline: none;
-            border-bottom-color: color.adjust(v.$color-primary, $lightness: 20%);
+            border-bottom-color: color.adjust(v.$color-white, $lightness: 20%);
+        }
+    }
+
+    .selecte, #image {
+        label {
+            transform: translate(0, 0);
         }
     }
 
@@ -192,17 +197,20 @@
 
         &::file-selector-button {
             padding: 0.3rem 0.5rem;
-            background-color: transparent;
-            color: v.$color-accent;
-            border: 1px solid v.$color-accent;
-            border-radius: 4px;
+            background-color: v.$color-old-antique-gold;
+            color: v.$color-white;
+            border-top: none;
+            border-left: none;
+            border-bottom: 3.75px solid v.$color-golden-twilight;
+            border-right: none;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
         }
 
         &::file-selector-button:hover {
-            background-color: v.$color-accent;
-            color: v.$color-white;
+            background-color: v.$color-antique-gold;
+            text-shadow: 0 0 10px v.$color-black;
+            border-bottom-color: v.$color-blue-eidolon;
         }
     }
 
@@ -227,12 +235,42 @@
         transform: translate(0, 0);
     }
 
+
     .inputs--invalid input,
     .inputs--invalid select,
     .inputs--invalid textarea {
         border-bottom: 4px solid v.$color-accent;
         color: v.$color-accent;
         animation: shake 0.3s both ease-in-out;
+
+        &::file-selector-button {
+            text-shadow: 0 0 10px v.$color-black;
+            color: v.$color-accent;
+            border-top: none;
+            border-left: none;
+            border-bottom: 3.75px solid v.$color-accent;
+            border-right: none;
+        }
+
+        &::file-selector-button:hover {
+            color: v.$color-white;
+            background-color: v.$color-antique-gold;
+            text-shadow: 0 0 10px v.$color-black;
+            border-bottom-color: v.$color-accent;
+        }
+    }
+
+    .inputs--invalid label {
+        color: v.$color-accent;
+    }
+
+    #pseudo-error, #email-error,#selecte-error ,#texte-area-error, #image-error {
+        padding: 5px;
+        text-align: center;
+        border-right: 1px solid v.$color-accent;
+        border-bottom: 1px solid v.$color-accent;
+        border-left: 1px solid v.$color-accent;
+        color: v.$color-accent;
     }
 }
 

@@ -42,7 +42,8 @@ final class SupportController extends AbstractController
                 ->setName($data['name'])
                 ->setEmail($data['email'])
                 ->setCategory($data['category'])
-                ->setMessage($data['message']);
+                ->setMessage($data['message'])
+                ->setImageFile($data['imageFile']);
 
             $em->persist($ticket);
             $em->flush();
