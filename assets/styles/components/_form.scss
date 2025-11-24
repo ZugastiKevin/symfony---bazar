@@ -8,7 +8,7 @@
     100% { transform: translateX(0);}
 }
 
-@mixin form-basique($width: 39%, $height: 650px) {
+@mixin form-basique($width: 50%, $height: 500px) {
     position: relative;
     width: $width;
     max-width: 1200px;
@@ -92,13 +92,6 @@
             -webkit-mask-size: 100% 100%;
 
             .text-headline {
-                color: v.$color-primary;
-                text-shadow: 2px 2px 0 v.$color-black, -1px -1px 0 v.$color-black, 1px -1px 0 v.$color-black, -1px  1px 0 v.$color-black;
-                font-size: 1.6rem;
-                text-transform: uppercase;
-                letter-spacing: 0.4rem;
-            }
-            .text-subheadline {
                 color: v.$color-blue-eidolon;
                 font-size: 0.8rem;
                 text-transform: uppercase;
@@ -110,9 +103,6 @@
 }
 
 @mixin input-label-effect() {
-    span:first-child {
-        padding-top: 5%;
-    }
     span {
         width: 100%;
         display: block;
@@ -122,7 +112,7 @@
 
         label {
             width: 100%;
-            height: 64px;
+            height: 50px;
             padding-top: 12px;
             color: v.$color-golden-twilight;
             @include v.orbitron-bold;
@@ -181,11 +171,11 @@
     }
 
     input[type="file"] {
+        padding: 0 0 10px 0;
         &::-webkit-file-upload-button {
             background-color: transparent;
             color: v.$color-accent;
             border: none;
-            padding: 0.3rem 0.5rem;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
         }
@@ -196,7 +186,6 @@
         }
 
         &::file-selector-button {
-            padding: 0.3rem 0.5rem;
             background-color: v.$color-old-antique-gold;
             color: v.$color-white;
             border-top: none;
@@ -264,7 +253,7 @@
         color: v.$color-accent;
     }
 
-    #pseudo-error, #email-error,#selecte-error ,#texte-area-error, #image-error {
+    #pseudo-error, #user_pseudo-error, #email-error, #user_email-error, #user_password_first-error, #user_password_second-error, #selecte-error, #text-area-error, #image-error {
         padding: 5px;
         text-align: center;
         border-right: 1px solid v.$color-accent;
@@ -274,8 +263,8 @@
     }
 }
 
-#form-background {
-    background-image: url("/public/assets/images/login/login.png");
+.form-background {
+    background-image: url("/public/assets/images/form/form.png");
     background-repeat: no-repeat;
     background-size: contain;
     background-position: left center;
@@ -309,13 +298,11 @@
 
             .all-form {
                 overflow: hidden;
-                padding: 5%;
+                padding: 0 5%;
                 position: relative;
                 width: 100%;
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
-                align-items: center;
                 //background-image: url("");
                 background-size: calc(100% + 10px) 100%;
                 background-repeat: no-repeat;
@@ -323,15 +310,25 @@
 
                 @include input-label-effect();
 
-                .form-group {
-                    .form-error {
-                        text-align: center;
-                        color: v.$color-blue-eidolon;
-                        @include v.orbitron-bold;
+                .spliter {
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    gap: 2rem;
 
-                        ul {
-                            margin-bottom: 0;
-                        }
+                    .left {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        width: 48%;
+
+                    }
+                    .right {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-between;
+                        width: 48%;
+
                     }
                 }
             }
@@ -340,9 +337,11 @@
 }
 
 @media screen and (min-width:1991px) {
-    #form {
+    .form-background {
         background-size: contain;
         background-position: center;
+    }
+    #form {
         .form {
             width: 35%;
         }
@@ -350,16 +349,18 @@
 }
 
 @media screen and (min-width: 1400px) {
-    #form {
+    .form-background{
         background-size: cover;
         background-position: center;
     }
 }
 
 @media screen and (max-width:1000px) {
-    #form {
+    .form-background {
         background-size: cover;
         background-position: top center;
+    }
+    #form {
         .form {
             width: 95%;
             .mix {
@@ -372,10 +373,12 @@
 }
 
 @media screen and (max-width:768px) {
-    #form {
-        padding: 0;
+    .form-background {
         background-size: contain;
         background-position: top center;
+    }
+    #form {
+        padding: 0;
         .form {
             width: 75%;
             flex-direction: column;

@@ -3,7 +3,7 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <div id="form form-background">
+    <section id="form">
         <div class="warming">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -20,8 +20,7 @@
             <div class="form-content">
                 <div class="mix">
                     <div class="headline">
-                        <h2 class="text-headline">{{ site.name }}</h2>
-                        <h3 class="text-subheadline">connexion</h3>
+                        <h3 class="text-headline">connexion</h3>
                     </div>
                 </div>
                 <div class="all-form">
@@ -43,5 +42,5 @@
                 </div>
             </div>
         </form>
-    </div>
+    </section>
 {% endblock %}

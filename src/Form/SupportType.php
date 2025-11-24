@@ -43,7 +43,7 @@ class SupportType extends AbstractType
             ->add('message', TextareaType::class, [
                 'label' => 'Votre message',
                 'attr' => [
-                    'rows' => 6,
+                    'rows' => 5,
                     'placeholder' => 'Décrivez votre problème, question ou suggestion…',
                 ],
             ])
