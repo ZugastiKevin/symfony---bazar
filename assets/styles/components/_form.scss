@@ -285,14 +285,16 @@
     .form {
         @include form-basique();
         margin-left: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
 
         .form-content {
             position: relative;
             width: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            padding-bottom: 10rem;
+            justify-content: center;
 
             @include mix();
 
@@ -319,14 +321,14 @@
                     .left {
                         display: flex;
                         flex-direction: column;
-                        justify-content: space-between;
+                        justify-content: flex-start;
                         width: 48%;
 
                     }
                     .right {
                         display: flex;
                         flex-direction: column;
-                        justify-content: space-between;
+                        justify-content: flex-start;
                         width: 48%;
 
                     }
@@ -355,10 +357,10 @@
     }
 }
 
-@media screen and (max-width:1000px) {
+@media screen and (max-width:1125px) {
     .form-background {
         background-size: cover;
-        background-position: top center;
+        background-position: 7.5% top;
     }
     #form {
         .form {
@@ -374,10 +376,11 @@
 
 @media screen and (max-width:768px) {
     .form-background {
-        background-size: contain;
-        background-position: top center;
+        background-size: cover;
+        background-position: 24.3% top;
     }
     #form {
+        margin-top: 124px;
         padding: 0;
         .form {
             width: 75%;
@@ -387,7 +390,6 @@
 
 
             .form-content {
-                flex-direction: column;
                 .mix {
                     width: 100%;
                 }
@@ -406,6 +408,29 @@
                             text-align: center;
                         }
                     }
+
+                    .spliter {
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 2rem;
+
+                        .left {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            width: 100%;
+
+                        }
+                        .right {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-between;
+                            width: 100%;
+
+                        }
+                    }
                 }
             }
         }
@@ -414,6 +439,7 @@
 
 @media screen and (max-width:600px) {
     #form {
+        margin-top: 124px;
         .form {
             width: 100%;
             .form-content {
@@ -433,7 +459,13 @@
     }
 }
 
-@media screen and (max-width:360px) {
+@media screen and (max-width:585px) {
+    #form {
+        margin-top: 134px;
+    }
+}
+
+@media screen and (max-width:364px) {
     #form {
         .form {
             .form-content {

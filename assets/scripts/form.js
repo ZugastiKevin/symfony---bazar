@@ -14,6 +14,9 @@ function initInput(inputEl) {
 
     inputEl.addEventListener('focus', onFocus);
     inputEl.addEventListener('blur', onBlur);
+
+    // Pour le responsive mobile
+    inputEl.addEventListener('touchend', onBlur);
 }
 
 function onFocus(ev) {
@@ -102,10 +105,37 @@ function attachValidator(inputId, eventTypes = ['input', 'blur'], delayMs = 3000
                     runValidator(inputId);
                 }, delayMs);
             });
-        } else {
-            // Pour les autres événements (blur, change), validation immédiate
-            input.addEventListener(eventType, () => {
-                // Annuler le timer en cours si l'utilisateur quitte le champ
+        } else if (eventType === 'change') {
+            // Pour 'change', validation immédiate
+            input.addEventListener('change', () => {
+                if (validationTimers[inputId]) {
+                    clearTimeout(validationTimers[inputId]);
+                    delete validationTimers[inputId];
+                }
+                runValidator(inputId);
+            });
+        } else if (eventType === 'blur') {
+            // Pour 'blur', validation immédiate
+            input.addEventListener('blur', () => {
+                if (validationTimers[inputId]) {
+                    clearTimeout(validationTimers[inputId]);
+                    delete validationTimers[inputId];
+                }
+                runValidator(inputId);
+            });
+
+            // Ajouter 'touchend' pour mobile
+            input.addEventListener('touchend', () => {
+                if (validationTimers[inputId]) {
+                    clearTimeout(validationTimers[inputId]);
+                    delete validationTimers[inputId];
+                }
+                // Petit délai pour éviter les doubles déclenchements
+                setTimeout(() => runValidator(inputId), 100);
+            });
+        } else if (eventType === 'click') {
+            // Pour 'click', validation immédiate
+            input.addEventListener('click', () => {
                 if (validationTimers[inputId]) {
                     clearTimeout(validationTimers[inputId]);
                     delete validationTimers[inputId];
@@ -206,7 +236,7 @@ registerValidator('user_email', 'user_email-error', (value, input) => {
     return true;
 });
 
-// Validation Mot de passe (utiliser les vrais IDs)
+// Validation Mot de passe
 registerValidator('user_plainPassword_first', 'user_password_first-error', (value) => {
     if (value.trim() === '') {
         return "Veuillez entrer un mot de passe.";
@@ -233,7 +263,7 @@ registerValidator('user_plainPassword_first', 'user_password_first-error', (valu
     return true;
 });
 
-// Validation Confirmation mot de passe (utiliser les vrais IDs)
+// Validation Confirmation mot de passe
 registerValidator('user_plainPassword_second', 'user_password_second-error', (value) => {
     const firstPassword = document.getElementById('user_plainPassword_first');
     if (!firstPassword) return true;
@@ -313,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     attachValidator('support_message', ['input', 'blur'], 3000);
     attachValidator('support_imageFile', ['change'], 0);
 
-    // Attacher les validateurs du formulaire utilisateur (avec les vrais IDs)
+    // Attacher les validateurs du formulaire utilisateur
     attachValidator('user_pseudo', ['input', 'blur'], 3000);
     attachValidator('user_email', ['input', 'blur'], 3000);
     attachValidator('user_plainPassword_first', ['input', 'blur'], 3000);
@@ -324,3 +354,4 @@ document.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', onSubmit);
     }
 });
+

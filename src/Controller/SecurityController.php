@@ -9,6 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -27,7 +29,7 @@ class SecurityController extends AbstractController
     // create or update user
     #[Route('/update_user/{id}', name: 'update_user')]
     #[Route('/create_user', name: 'create_user')]
-    public function createUser(?User $user, Request $request, UserRepository $repository, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
+    public function createUser(?User $user, Request $request, UserRepository $repository, MailerInterface $mailer, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
     {
         $currentUser = $this->getUser();
 
@@ -59,6 +61,28 @@ class SecurityController extends AbstractController
                 $user->setPassword(
                     $passwordEncoder->hashPassword($user, $plainPassword)
                 );
+
+                $email = (new Email())
+                    ->from('support@bazar-de-cetus.octohub.fr')
+                    ->to($user->getEmail()) // Email de l'utilisateur
+                    ->subject('Bienvenue sur Bazar de Cetus !')
+                    ->html(
+                        "<h2>Bienvenue " . htmlspecialchars($user->getPseudo()) . " !</h2>" .
+                        "<p>Votre compte a été créé avec succès.</p>" .
+                        "<p><strong>Pseudo :</strong> " . htmlspecialchars($user->getPseudo()) . "</p>" .
+                        "<p><strong>Email :</strong> " . htmlspecialchars($user->getEmail()) . "</p>" .
+                        "<p>Vous pouvez maintenant vous connecter et profiter de nos services.</p>" .
+                        "<p>À bientôt sur Bazar de Cetus !</p>"
+                    );
+
+                try {
+                    $mailer->send($email);
+                    $this->addFlash('success', 'Votre compte a été créé avec succès ! Un email de confirmation vous a été envoyé.');
+                } catch (\Exception $e) {
+                    // Le compte est créé même si l'email échoue
+                    $this->addFlash('warning', 'Votre compte a été créé, mais l\'email de confirmation n\'a pas pu être envoyé.');
+                }
+
             }
 
             if ($plainPassword) {
