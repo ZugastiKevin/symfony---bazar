@@ -278,6 +278,29 @@ registerValidator('user_plainPassword_second', 'user_password_second-error', (va
 });
 
 // ========================
+// VALIDATIONS FORMULAIRE DE CONNEXION
+// ========================
+
+// Validation Email de connexion
+registerValidator('username', 'username-error', (value, input) => {
+    if (value.trim() === '') {
+        return "Veuillez saisir votre adresse email.";
+    }
+    if (!input.checkValidity()) {
+        return "Adresse email invalide.";
+    }
+    return true;
+});
+
+// Validation Mot de passe de connexion
+registerValidator('password', 'password-error', (value) => {
+    if (value.trim() === '') {
+        return "Veuillez entrer votre mot de passe.";
+    }
+    return true;
+});
+
+// ========================
 // SOUMISSION DU FORMULAIRE
 // ========================
 function onSubmit(ev) {
@@ -324,6 +347,7 @@ function onSubmit(ev) {
 // ========================
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.querySelector('.all-form');
+    const loginForm = document.getElementById('login-form');
     const inputs = document.querySelectorAll(selector);
 
     // Initialiser les inputs de base
@@ -349,9 +373,19 @@ document.addEventListener('DOMContentLoaded', () => {
     attachValidator('user_plainPassword_first', ['input', 'blur'], 3000);
     attachValidator('user_plainPassword_second', ['input', 'blur'], 3000);
 
+    // Attacher les validateurs du formulaire de connexion
+    attachValidator('username', ['input', 'blur'], 3000);
+    attachValidator('password', ['input', 'blur'], 3000);
+
     // Attacher la validation au submit
     if (form) {
         form.addEventListener('submit', onSubmit);
     }
+
+    // Attacher la validation au formulaire de connexion
+    if (loginForm) {
+        loginForm.addEventListener('submit', onSubmit);
+    }
 });
+
 

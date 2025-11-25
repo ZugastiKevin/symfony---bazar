@@ -253,7 +253,7 @@
         color: v.$color-accent;
     }
 
-    #pseudo-error, #user_pseudo-error, #email-error, #user_email-error, #user_password_first-error, #user_password_second-error, #selecte-error, #text-area-error, #image-error {
+    #username-error, #pseudo-error, #user_pseudo-error, #email-error, #user_email-error, #password-error, #user_password_first-error, #user_password_second-error, #selecte-error, #text-area-error, #image-error {
         padding: 5px;
         text-align: center;
         border-right: 1px solid v.$color-accent;
@@ -266,8 +266,8 @@
 .form-background {
     background-image: url("/public/assets/images/form/form.png");
     background-repeat: no-repeat;
-    background-size: contain;
-    background-position: left center;
+    background-size: cover;
+    background-position: 7.5% top;
 }
 
 #form {
@@ -290,6 +290,7 @@
         justify-content: center;
 
         .form-content {
+            padding-top: 144px;
             position: relative;
             width: 100%;
             display: flex;
@@ -316,6 +317,7 @@
                     width: 100%;
                     height: 100%;
                     display: flex;
+                    justify-content: center;
                     gap: 2rem;
 
                     .left {
@@ -358,10 +360,6 @@
 }
 
 @media screen and (max-width:1125px) {
-    .form-background {
-        background-size: cover;
-        background-position: 7.5% top;
-    }
     #form {
         .form {
             width: 95%;
@@ -376,7 +374,6 @@
 
 @media screen and (max-width:768px) {
     .form-background {
-        background-size: cover;
         background-position: 24.3% top;
     }
     #form {

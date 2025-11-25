@@ -107,10 +107,14 @@
         display: none;
 
         &:checked + .switch-slider {
-            background-color: v.$color-accent;
+            background-color: v.$color-blue-eidolon;
 
             &::before {
                 transform: translateX(26px);
+            }
+
+            &:hover {
+                background-color: rgba(v.$color-blue-eidolon, 0.5);
             }
         }
     }
@@ -120,7 +124,7 @@
         display: inline-block;
         width: 52px;
         height: 26px;
-        background-color: rgba(v.$color-white, 0.3);
+        background-color: rgba(v.$color-antique-gold, 0.3);
         border-radius: 34px;
         transition: background-color 0.3s ease;
 
@@ -131,14 +135,14 @@
             width: 20px;
             left: 3px;
             bottom: 3px;
-            background-color: v.$color-white;
+            background-color: v.$color-golden-twilight;
             border-radius: 50%;
             transition: transform 0.3s ease;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         &:hover {
-            background-color: rgba(v.$color-white, 0.4);
+            background-color: rgba(v.$color-antique-gold, 0.5);
         }
     }
 }

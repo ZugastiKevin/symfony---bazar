@@ -1,50 +1,60 @@
+
 {% extends 'base.html.twig' %}
 
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <div id="form">
-        <div class="warming">
-            {% if error %}
-                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-            {% endif %}
-
-            {% if app.user %}
-                <div class="mb-3">
-                    <span>Vous êtes connecté en tant que {{ app.user.userIdentifier }}</span>
-                    <a href="{{ path('app_logout') }}" class="btn btn-warming">Se déconnecter</a>
-                </div>
-            {% endif %}
-        </div>
-        <form method="post" class="form">
+    <div id="form" class="form-background">
+        <div class="form">
             <div class="form-content">
                 <div class="mix">
                     <div class="headline">
                         <h3 class="text-headline">connexion</h3>
                     </div>
                 </div>
-                <div class="all-form">
-                    <span class="form-group">
-                        <label for="username">Email</label>
-                        <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
-                    </span>
-                    <span class="form-group">
-                        <label for="password">Mot de passe</label>
-                        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-                        <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-                    </span>
-                    <span class="form-group switch-group mb-3">
+
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                {% if app.user %}
+                    <div class="alert alert-success">
+                        <span>Vous êtes connecté en tant que {{ app.user.userIdentifier }}</span>
+                        <a href="{{ path('app_logout') }}" class="btn btn-warning">Se déconnecter</a>
+                    </div>
+                {% endif %}
+
+                <form method="post" id="login-form" class="all-form">
+                    <div class="spliter">
+                        <div class="left">
+                            <span class="form-group">
+                                <label for="username">Email</label>
+                                <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+
+                                <div id="username-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                            </span>
+
+                            <span class="form-group">
+                                <label for="password">Mot de passe</label>
+                                <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                                <div id="password-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                            </span>
+                        </div>
+                    </div>
+
+                    <span class="form-group switch-group inputs--filled">
                         <label for="_remember_me" class="switch-label">
-                            <span class="switch-text">Se souvenir de moi</span>
+                            <label class="switch-text">Se souvenir de moi</label>
                             <input type="checkbox" name="_remember_me" id="_remember_me" class="switch-input">
-                            <span class="switch-slider"></span>
+                            <div class="switch-slider"></div>
                         </label>
                     </span>
 
-
                     <input class="btn btn-lg btn-primary" type="submit" value="Validez">
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block title %}{{ 'support-title'|trans }}{% endblock %}
 
 {% block body %}
-    <div id="form">
+    <div id="form" class="form-background">
         <div class="form">
             <div class="form-content">
                 <div class="mix">
@@ -55,12 +55,12 @@
                 </div>
 
                 <span class="form-group">
-                            {{ form_label(supportForm.message) }}
+                    {{ form_label(supportForm.message) }}
                     {{ form_widget(supportForm.message, { attr: { id: 'text-area' } }) }}
                     {{ form_errors(supportForm.message) }}
 
-                            <div id="text-area-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
-                        </span>
+                    <div id="text-area-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                </span>
 
                 <input class="btn btn-lg btn-primary" type="submit" value="Envoyer">
                 {{ form_end(supportForm) }}
