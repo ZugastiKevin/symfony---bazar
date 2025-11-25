@@ -1,10 +1,16 @@
+/* =====================================================
+   VALIDATION GÉNÉRIQUE DES FORMULAIRES
+   Emails + Mots de passe + Pseudos + Custom validators
+   Compatible Support / User / Login / ForgotPassword
+   ===================================================== */
+
 const selector = 'input[type="text"], input[type="number"], input[type="email"], input[type="password"], select, textarea';
 const inputs = document.querySelectorAll(selector);
 const form = document.querySelector('.all-form');
 
-// ========================
-// FONCTIONS D'INPUT
-// ========================
+// =====================================================
+// Fonctions d'apparence des inputs
+// =====================================================
 function initInput(inputEl) {
     const wrapper = inputEl.closest('span') || inputEl.parentElement;
 
@@ -32,8 +38,7 @@ function onBlur(ev) {
     const wrapper = input.closest('span') || input.parentElement;
 
     if (input.value.trim() === '') {
-        wrapper?.classList.remove('inputs--filled');
-        wrapper?.classList.remove('inputs--invalid');
+        wrapper?.classList.remove('inputs--filled', 'inputs--invalid');
     } else {
         wrapper?.classList.add('inputs--filled');
     }
@@ -50,9 +55,9 @@ function liveValidation(ev) {
     }
 }
 
-// ========================
-// VALIDATEURS PERSONNALISÉS
-// ========================
+// =====================================================
+// Système de validation générique
+// =====================================================
 const validators = {};
 const validationTimers = {}; // Stockage des timers
 
@@ -95,12 +100,10 @@ function attachValidator(inputId, eventTypes = ['input', 'blur'], delayMs = 3000
         if (eventType === 'input') {
             // Pour l'événement 'input', on ajoute un délai de 3 secondes
             input.addEventListener('input', () => {
-                // Annuler le timer précédent s'il existe
                 if (validationTimers[inputId]) {
                     clearTimeout(validationTimers[inputId]);
                 }
 
-                // Créer un nouveau timer
                 validationTimers[inputId] = setTimeout(() => {
                     runValidator(inputId);
                 }, delayMs);
@@ -146,157 +149,112 @@ function attachValidator(inputId, eventTypes = ['input', 'blur'], delayMs = 3000
     });
 }
 
-// ========================
-// DÉFINITION DES VALIDATIONS
-// ========================
+// =====================================================
+// VALIDATEURS EMAILS (génériques pour tout le site)
+// =====================================================
 
-// Validation Pseudo (Name)
-registerValidator('support_name', 'pseudo-error', (value) => {
-    if (value.trim() === '') {
-        return "Veuillez entrer votre pseudo.";
-    }
-    if (value.length < 3) {
-        return "Le pseudo doit contenir au moins 3 caractères.";
-    }
+function registerEmail(inputId, errorId) {
+    registerValidator(inputId, errorId, (value, input) => {
+        const v = value.trim();
+        if (v === "") return "Veuillez saisir une adresse email.";
+        if (!input.checkValidity()) return "Adresse email invalide.";
+        return true;
+    });
+}
+
+const emailFields = [
+    { inputId: "support_email", errorId: "email-error" },
+    { inputId: "user_email", errorId: "user_email-error" },
+    { inputId: "username", errorId: "username-error" },
+    { inputId: "forgot_email", errorId: "forgot_email-error" }
+];
+
+emailFields.forEach(f => registerEmail(f.inputId, f.errorId));
+
+// =====================================================
+// VALIDATEURS PSEUDOS (génériques)
+// =====================================================
+
+function registerPseudo(inputId, errorId, minLength = 3) {
+    registerValidator(inputId, errorId, (value) => {
+        const v = value.trim();
+        if (v === "") return "Veuillez entrer votre pseudo.";
+        if (v.length < minLength) return `Le pseudo doit contenir au moins ${minLength} caractères.`;
+        return true;
+    });
+}
+
+const pseudoFields = [
+    { inputId: "support_name", errorId: "pseudo-error", minLength: 3 },
+    { inputId: "user_pseudo", errorId: "user_pseudo-error", minLength: 3 },
+    // Exemple pour plus tard : champ pseudo pour un autre formulaire
+    // { inputId: "forgot_pseudo", errorId: "forgot_pseudo-error", minLength: 3 }
+];
+
+pseudoFields.forEach(f => registerPseudo(f.inputId, f.errorId, f.minLength));
+
+// =====================================================
+// VALIDATEURS MOTS DE PASSE (génériques)
+// =====================================================
+
+registerValidator("user_plainPassword_first", "user_password_first-error", (value) => {
+    const v = value.trim();
+    if (v === "") return "Veuillez entrer un mot de passe.";
+    if (v.length < 8) return "Au moins 8 caractères requis.";
+    if (!/[A-Z]/.test(v)) return "Une majuscule est requise.";
+    if (!/\d/.test(v)) return "Un chiffre est requis.";
+    if (!/[\W_]/.test(v)) return "Un caractère spécial est requis.";
     return true;
 });
 
-// Validation Email
-registerValidator('support_email', 'email-error', (value, input) => {
-    if (value.trim() === '') {
-        return "Veuillez saisir une adresse email.";
-    }
-    if (!input.checkValidity()) {
-        return "Adresse email invalide.";
-    }
+registerValidator("user_plainPassword_second", "user_password_second-error", (value) => {
+    const first = document.getElementById("user_plainPassword_first");
+    if (!first) return true;
+
+    if (value.trim() === "") return "Veuillez confirmer votre mot de passe.";
+    if (value !== first.value) return "Les mots de passe ne correspondent pas.";
     return true;
 });
 
-// Validation Select (Category)
-registerValidator('support_category', 'selecte-error', (value) => {
-    if (!value || value.trim() === '') {
-        return "Veuillez choisir une catégorie.";
-    }
+// Mot de passe de connexion
+registerValidator("password", "password-error", (value) => {
+    if (value.trim() === "") return "Veuillez entrer votre mot de passe.";
     return true;
 });
 
-// Validation Textarea (Message)
-registerValidator('support_message', 'text-area-error', (value) => {
-    if (value.trim() === '') {
-        return "Veuillez entrer un message.";
-    }
-    if (value.length < 10) {
-        return "Le message doit contenir au moins 10 caractères.";
-    }
+// Mot de passe "oublié" (nouveau mot de passe, si tu as un champs dédié)
+registerValidator("forgot_password", "forgot_password-error", (value) => {
+    if (value.trim() === "") return "Veuillez entrer un mot de passe.";
     return true;
 });
 
-// Validation Image
-registerValidator('support_imageFile', 'image-error', (value, input) => {
+// =====================================================
+// VALIDATEURS SUPPORT SUPPLÉMENTAIRES → category / message / image
+// =====================================================
+
+registerValidator("support_category", "selecte-error", (value) => {
+    if (!value || value.trim() === "") return "Veuillez choisir une catégorie.";
+    return true;
+});
+
+registerValidator("support_message", "text-area-error", (value) => {
+    const v = value.trim();
+    if (v === "") return "Veuillez entrer un message.";
+    if (v.length < 10) return "Le message doit contenir au moins 10 caractères.";
+    return true;
+});
+
+// VALIDATION DE L’IMAGE (support)
+registerValidator("support_imageFile", "image-error", (value, input) => {
     const file = input.files[0];
     if (!file) return true;
 
-    const allowed = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+    const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
     const max = 2 * 1024 * 1024;
 
-    if (!allowed.includes(file.type)) {
-        return "Formats autorisés : JPEG, JPG, PNG, WEBP.";
-    }
+    if (!allowed.includes(file.type)) return "Formats autorisés : JPEG, JPG, PNG, WEBP.";
+    if (file.size > max) return "Image trop volumineuse (max 2 Mo).";
 
-    if (file.size > max) {
-        return "Image trop volumineuse (max 2 Mo).";
-    }
-
-    return true;
-});
-
-// ========================
-// VALIDATIONS FORMULAIRE UTILISATEUR
-// ========================
-
-// Validation Pseudo Utilisateur
-registerValidator('user_pseudo', 'user_pseudo-error', (value) => {
-    if (value.trim() === '') {
-        return "Veuillez entrer votre pseudo.";
-    }
-    if (value.length < 3) {
-        return "Le pseudo doit contenir au moins 3 caractères.";
-    }
-    return true;
-});
-
-// Validation Email Utilisateur
-registerValidator('user_email', 'user_email-error', (value, input) => {
-    if (value.trim() === '') {
-        return "Veuillez saisir une adresse email.";
-    }
-    if (!input.checkValidity()) {
-        return "Adresse email invalide.";
-    }
-    return true;
-});
-
-// Validation Mot de passe
-registerValidator('user_plainPassword_first', 'user_password_first-error', (value) => {
-    if (value.trim() === '') {
-        return "Veuillez entrer un mot de passe.";
-    }
-    if (value.length < 8) {
-        return "Le mot de passe doit contenir au moins 8 caractères.";
-    }
-
-    // Vérifier majuscule
-    if (!/[A-Z]/.test(value)) {
-        return "Le mot de passe doit contenir au moins une majuscule.";
-    }
-
-    // Vérifier chiffre
-    if (!/\d/.test(value)) {
-        return "Le mot de passe doit contenir au moins un chiffre.";
-    }
-
-    // Vérifier caractère spécial
-    if (!/[\W_]/.test(value)) {
-        return "Le mot de passe doit contenir au moins un caractère spécial.";
-    }
-
-    return true;
-});
-
-// Validation Confirmation mot de passe
-registerValidator('user_plainPassword_second', 'user_password_second-error', (value) => {
-    const firstPassword = document.getElementById('user_plainPassword_first');
-    if (!firstPassword) return true;
-
-    if (value.trim() === '') {
-        return "Veuillez confirmer votre mot de passe.";
-    }
-    if (value !== firstPassword.value) {
-        return "Les mots de passe ne correspondent pas.";
-    }
-    return true;
-});
-
-// ========================
-// VALIDATIONS FORMULAIRE DE CONNEXION
-// ========================
-
-// Validation Email de connexion
-registerValidator('username', 'username-error', (value, input) => {
-    if (value.trim() === '') {
-        return "Veuillez saisir votre adresse email.";
-    }
-    if (!input.checkValidity()) {
-        return "Adresse email invalide.";
-    }
-    return true;
-});
-
-// Validation Mot de passe de connexion
-registerValidator('password', 'password-error', (value) => {
-    if (value.trim() === '') {
-        return "Veuillez entrer votre mot de passe.";
-    }
     return true;
 });
 
@@ -377,6 +335,10 @@ document.addEventListener('DOMContentLoaded', () => {
     attachValidator('username', ['input', 'blur'], 3000);
     attachValidator('password', ['input', 'blur'], 3000);
 
+    // Attacher les validateurs éventuels du formulaire "mot de passe oublié"
+    attachValidator('forgot_email', ['input', 'blur'], 3000);
+    attachValidator('forgot_password', ['input', 'blur'], 3000);
+
     // Attacher la validation au submit
     if (form) {
         form.addEventListener('submit', onSubmit);
@@ -387,5 +349,3 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.addEventListener('submit', onSubmit);
     }
 });
-
-

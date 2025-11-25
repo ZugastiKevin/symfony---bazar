@@ -253,7 +253,7 @@
         color: v.$color-accent;
     }
 
-    #username-error, #pseudo-error, #user_pseudo-error, #email-error, #user_email-error, #password-error, #user_password_first-error, #user_password_second-error, #selecte-error, #text-area-error, #image-error {
+    .form-error {
         padding: 5px;
         text-align: center;
         border-right: 1px solid v.$color-accent;

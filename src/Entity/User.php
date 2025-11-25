@@ -41,6 +41,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $resetPasswordToken = null;
+
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private ?\DateTimeImmutable $resetPasswordExpiresAt = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +145,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->status = $status;
 
         return $this;
+    }
+
+    public function getResetPasswordToken(): ?string
+    {
+        return $this->resetPasswordToken;
+    }
+
+    public function setResetPasswordToken(?string $resetPasswordToken): self
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
+        return $this;
+    }
+
+    public function getResetPasswordExpiresAt(): ?\DateTimeImmutable
+    {
+        return $this->resetPasswordExpiresAt;
+    }
+
+    public function setResetPasswordExpiresAt(?\DateTimeImmutable $resetPasswordExpiresAt): self
+    {
+        $this->resetPasswordExpiresAt = $resetPasswordExpiresAt;
+        return $this;
+    }
+
+    public function isResetPasswordTokenValid(): bool
+    {
+        return $this->resetPasswordToken !== null
+            && $this->resetPasswordExpiresAt !== null
+            && $this->resetPasswordExpiresAt > new \DateTimeImmutable();
     }
 
     #[\Deprecated]
