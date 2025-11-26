@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const refuse = document.getElementById("refuse-cookies");
     const rememberCheckbox = document.getElementById("_remember_me");
 
+    // Vérifier que les éléments existent
+    if (!box || !accept || !refuse) {
+        console.warn("Éléments cookie non trouvés");
+        return;
+    }
+
     const consent = localStorage.getItem("cookie-consent");
 
     // AFFICHAGE INITIAL
