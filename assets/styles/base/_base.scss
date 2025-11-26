@@ -23,13 +23,16 @@ main {
 }
 
 section {
-    margin-top: 8rem;
+    margin-top: 2rem;
 }
 
 h4 {
     @include v.orbitron-bold;
     font-size: 1rem;
     padding: 0 10px;
+}
+p {
+    color: v.$color-white;
 }
 
 img {

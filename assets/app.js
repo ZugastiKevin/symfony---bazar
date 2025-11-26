@@ -8,8 +8,9 @@ import '@fortawesome/fontawesome-free/js/all.js';
  */
 import './styles/app.scss';
 import './scripts/form';
+import './scripts/remember_me';
 import './scripts/reset-btn';
-import './scripts/dropdown.js';
+import './scripts/dropdown';
 import 'htmx.org';
 window.htmx = require('htmx.org');
 

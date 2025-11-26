@@ -3,13 +3,12 @@
 {% block title %}{{ 'support-title'|trans }}{% endblock %}
 
 {% block body %}
-    <section id="form">
+    <div id="form" class="form-background">
         <div class="form">
             <div class="form-content">
                 <div class="mix">
                     <div class="headline">
-                        <h2 class="text-headline">{{ site.name }}</h2>
-                        <h3 class="text-subheadline">{{ 'support'|trans }}</h3>
+                        <h3 class="text-headline">{{ 'support'|trans }}</h3>
                     </div>
                 </div>
 
@@ -20,45 +19,52 @@
                 {% endfor %}
 
                 {{ form_start(supportForm, { attr: { class: 'all-form', id: 'support-form' } }) }}
-                <span class="form-group">
-                    {{ form_label(supportForm.name) }}
-                    {{ form_widget(supportForm.name, { attr: { id: 'pseudo' } }) }}
-                    {{ form_errors(supportForm.name) }}
+                <div class="spliter">
+                    <div class="left">
+                        <span class="form-group">
+                            {{ form_label(supportForm.name) }}
+                            {{ form_widget(supportForm.name, { attr: { id: 'pseudo' } }) }}
+                            {{ form_errors(supportForm.name) }}
 
-                    <div id="pseudo-error" class="form-error" style="display:none;"></div>
-                </span>
-                <span class="form-group">
-                    {{ form_label(supportForm.email) }}
-                    {{ form_widget(supportForm.email, { attr: { id: 'email' } }) }}
-                    {{ form_errors(supportForm.email) }}
+                            <div id="pseudo-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                        </span>
+                        <span class="form-group">
+                            {{ form_label(supportForm.email) }}
+                            {{ form_widget(supportForm.email, { attr: { id: 'email' } }) }}
+                            {{ form_errors(supportForm.email) }}
 
-                    <div id="email-error" class="form-error" style="display:none;"></div>
-                </span>
-                <span class="selecte">
-                    {{ form_label(supportForm.category) }}
-                    {{ form_widget(supportForm.category, { attr: { id: 'selecte' } }) }}
-                    {{ form_errors(supportForm.category) }}
+                            <div id="email-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                        </span>
+                    </div>
+                    <div class="right">
+                        <span class="selecte">
+                            {{ form_label(supportForm.category) }}
+                            {{ form_widget(supportForm.category, { attr: { id: 'selecte' } }) }}
+                            {{ form_errors(supportForm.category) }}
 
-                    <div id="selecte-error" class="form-error" style="display:none;"></div>
-                </span>
+                            <div id="selecte-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                        </span>
+                        <span id="image">
+                            {{ form_label(supportForm.imageFile) }}
+                            {{ form_widget(supportForm.imageFile, { attr: { id: 'support_imageFile' } }) }}
+                            {{ form_errors(supportForm.imageFile) }}
+
+                            <div id="image-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                        </span>
+                    </div>
+                </div>
+
                 <span class="form-group">
                     {{ form_label(supportForm.message) }}
                     {{ form_widget(supportForm.message, { attr: { id: 'text-area' } }) }}
                     {{ form_errors(supportForm.message) }}
 
-                    <div id="text-area-error" class="form-error" style="display:none;"></div>
-                </span>
-                <span id="image">
-                    {{ form_label(supportForm.imageFile) }}
-                    {{ form_widget(supportForm.imageFile, { attr: { id: 'support_imageFile' } }) }}
-                    {{ form_errors(supportForm.imageFile) }}
-
-                    <div id="image-error" class="form-error" style="display:none;"></div>
+                    <div id="text-area-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
                 </span>
 
                 <input class="btn btn-lg btn-primary" type="submit" value="Envoyer">
                 {{ form_end(supportForm) }}
             </div>
         </div>
-    </section>
+    </div>
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\SupportTicket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -43,12 +44,12 @@ class SupportType extends AbstractType
             ->add('message', TextareaType::class, [
                 'label' => 'Votre message',
                 'attr' => [
-                    'rows' => 6,
+                    'rows' => 5,
                     'placeholder' => 'Décrivez votre problème, question ou suggestion…',
                 ],
             ])
             ->add('imageFile', FileType::class,[
-                'mapped' => true,
+                'mapped' => false,
                 'required' => false,
                 'constraints' => [
                     new File([
@@ -68,6 +69,8 @@ class SupportType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([]);
+        $resolver->setDefaults([
+            'data_class' => SupportTicket::class,
+        ]);
     }
 }

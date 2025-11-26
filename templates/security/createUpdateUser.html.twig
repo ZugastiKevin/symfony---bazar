@@ -3,64 +3,93 @@
 {% block title %}{{ userUpdateForm ? "Modification du Compte" : "Creation du Compte" }}{% endblock %}
 
 {% block body %}
-    <div id="form form-background">
+    <div id="form" class="form-background">
         <div class="form">
             <div class="form-content">
                 <div class="mix">
                     <div class="headline">
-                        <h2 class="text-headline">{{ site.name }}</h2>
-                        <h3 class="text-subheadline">{{ userUpdateForm ? "Modification du Compte" : "Creation du Compte" }}</h3>
+                        <h3 class="text-headline">{{ userUpdateForm ? "Modification du Compte" : "Creation du Compte" }}</h3>
                     </div>
                 </div>
+
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+
                 {{ form_start(userCreateForm, { attr: { class: 'all-form' } }) }}
-                <span>
-                    <label for="{{ userCreateForm.pseudo.vars.id }}">
-                        Pseudo en jeux
-                    </label>
-                    {% if userUpdateForm %}
-                        <div class="input-reset-inline">
-                            {{ form_widget(userCreateForm.pseudo, {
-                                attr: {
-                                    'data-original': userCreateForm.pseudo.vars.value
-                                }
-                            }) }}
-                            <button type="button" class="reset-btn"><i class='fas fa-undo redo-icon'></i></button>
-                        </div>
-                    {% else %}
-                        {{ form_widget(userCreateForm.pseudo) }}
-                    {% endif %}
-                </span>
-                <span>
-                    <label for="{{ userCreateForm.email.vars.id }}">
-                        Email
-                    </label>
-                    {% if userUpdateForm %}
-                        <div class="input-reset-inline">
-                            {{ form_widget(userCreateForm.email, {
-                                attr: {
-                                    'data-original': userCreateForm.email.vars.value
-                                }
-                            }) }}
-                            <button type="button" class="reset-btn"><i class='fas fa-undo redo-icon'></i></button>
-                        </div>
-                    {% else %}
-                        {{ form_widget(userCreateForm.email) }}
-                    {% endif %}
-                </span>
-                <span class="form-group">
-                    {{ form_label(userCreateForm.plainPassword.first) }}
-                    {{ form_widget(userCreateForm.plainPassword.first) }}
-                    <div class="form-error">
-                        {{ form_errors(userCreateForm.plainPassword.first) }}
+                <div class="spliter">
+                    <div class="left">
+                        <span class="form-group">
+                            {{ form_label(userCreateForm.pseudo, 'Pseudo en jeux') }}
+                            {% if userUpdateForm %}
+                                <div class="input-reset-inline">
+                                    {{ form_widget(userCreateForm.pseudo, {
+                                        attr: {
+                                            'id': 'user_pseudo',
+                                            'data-original': userCreateForm.pseudo.vars.value
+                                        }
+                                    }) }}
+                                    <button type="button" class="reset-btn"><i class='fas fa-undo redo-icon'></i></button>
+                                </div>
+                            {% else %}
+                                {{ form_widget(userCreateForm.pseudo, { attr: { id: 'user_pseudo' } }) }}
+                            {% endif %}
+                            {{ form_errors(userCreateForm.pseudo) }}
+
+                            <div id="user_pseudo-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                        </span>
+                        <span class="form-group">
+                            {{ form_label(userCreateForm.email, 'Email') }}
+                            {% if userUpdateForm %}
+                                <div class="input-reset-inline">
+                                    {{ form_widget(userCreateForm.email, {
+                                        attr: {
+                                            'id': 'user_email',
+                                            'data-original': userCreateForm.email.vars.value
+                                        }
+                                    }) }}
+                                    <button type="button" class="reset-btn"><i class='fas fa-undo redo-icon'></i></button>
+                                </div>
+                            {% else %}
+                                {{ form_widget(userCreateForm.email, { attr: { id: 'user_email' } }) }}
+                            {% endif %}
+                            {{ form_errors(userCreateForm.email) }}
+
+                            <div id="user_email-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                        </span>
                     </div>
-                </span>
-                <span class="form-group">
-                    {{ form_label(userCreateForm.plainPassword.second) }}
-                    {{ form_widget(userCreateForm.plainPassword.second) }}
-                    <div class="form-error">
-                        {{ form_errors(userCreateForm.plainPassword.second) }}
+                    <div class="right">
+                        {% set pw1Errors = form_errors(userCreateForm.plainPassword.first) %}
+                        <span class="form-group {{ pw1Errors ? 'inputs--invalid' }}">
+                            {{ form_label(userCreateForm.plainPassword.first) }}
+                            {{ form_widget(userCreateForm.plainPassword.first, { attr: { id: 'user_password_first' } }) }}
+
+                            <div id="user_password_first-error" class="form-error" style="{{ pw1Errors ? '' : 'visibility:hidden;' }}">
+                                {% if pw1Errors %}
+                                    {{ pw1Errors|raw }}
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </div>
+                        </span>
+                        {% set pw2Errors = form_errors(userCreateForm.plainPassword.second) %}
+
+                        <span class="form-group {{ pw2Errors ? 'inputs--invalid' }}">
+                            {{ form_label(userCreateForm.plainPassword.second) }}
+                            {{ form_widget(userCreateForm.plainPassword.second, { attr: { id: 'user_plainPassword_second' } }) }}
+
+                            <div id="user_password_second-error" class="form-error" style="{{ pw2Errors ? '' : 'visibility:hidden;' }}">
+                                {% if pw2Errors %}
+                                    {{ pw2Errors|raw }}
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </div>
+                        </span>
                     </div>
-                </span>
+                </div>
 
                 <input class="btn btn-lg btn-primary" type="submit" value="Validez">
                 {{ form_end(userCreateForm) }}

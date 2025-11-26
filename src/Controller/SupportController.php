@@ -22,42 +22,50 @@ final class SupportController extends AbstractController
     ): Response {
         $user = $this->getUser();
 
-        $prefill = [
-            'name'  => $user ? $user->getPseudo() : '',
-            'email' => $user ? $user->getEmail() : '',
-        ];
+        // Créer le ticket avec pré-remplissage si utilisateur connecté
+        $ticket = new SupportTicket();
 
-        $form = $this->createForm(SupportType::class, $prefill);
+        if ($user) {
+            // Utilisateur connecté : on lie le ticket et on pré-remplit
+            $ticket->setUser($user);
+            $ticket->setName($user->getPseudo());
+            $ticket->setEmail($user->getEmail());
+        }
+
+        $form = $this->createForm(SupportType::class, $ticket);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var SupportTicket $ticket */
+            $ticket = $form->getData();
 
-            $data = $form->getData();
-
-            $ticket = new SupportTicket();
+            // Si l'utilisateur est connecté, on s'assure que le lien est bien maintenu
+            // (au cas où quelqu'un modifierait les valeurs du formulaire)
             if ($user) {
                 $ticket->setUser($user);
             }
-            $ticket
-                ->setName($data['name'])
-                ->setEmail($data['email'])
-                ->setCategory($data['category'])
-                ->setMessage($data['message'])
-                ->setImageFile($data['imageFile']);
+
+            // Gérer l'upload du fichier
+            $imageFile = $form->get('imageFile')->getData();
+            if ($imageFile) {
+                $ticket->setImageFile($imageFile);
+            }
 
             $em->persist($ticket);
             $em->flush();
 
+            // Envoi de l'email
             $email = (new Email())
                 ->from('support@bazar-de-cetus.octohub.fr')
                 ->to('support@bazar-de-cetus.octohub.fr')
-                ->replyTo($data['email'])
+                ->replyTo($ticket->getEmail())
                 ->subject('Nouveau message de support')
                 ->text(
-                    "Pseudo : " . $data['name'] . "\n" .
-                    "Email : " . $data['email'] . "\n" .
-                    "Catégorie : " . $data['category'] . "\n\n" .
-                    "Message :\n" . $data['message']
+                    "Pseudo : " . $ticket->getName() . "\n" .
+                    "Email : " . $ticket->getEmail() . "\n" .
+                    "Catégorie : " . $ticket->getCategory() . "\n" .
+                    ($user ? "Utilisateur ID : " . $user->getId() . "\n" : "Utilisateur : Non connecté\n") .
+                    "\nMessage :\n" . $ticket->getMessage()
                 );
 
             $mailer->send($email);
