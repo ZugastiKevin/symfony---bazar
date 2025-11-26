@@ -171,7 +171,7 @@
     }
 
     input[type="file"] {
-        padding: 0 0 10px 0;
+        padding: 3px 0 10px 0;
         &::-webkit-file-upload-button {
             background-color: transparent;
             color: v.$color-accent;
@@ -380,7 +380,7 @@
         margin-top: 124px;
         padding: 0;
         .form {
-            width: 75%;
+            width: 100%;
             flex-direction: column;
             background-size: 100% 80%;
             max-height: 750px;
@@ -438,7 +438,6 @@
     #form {
         margin-top: 124px;
         .form {
-            width: 100%;
             .form-content {
                 .all-form {
                     .form-group {

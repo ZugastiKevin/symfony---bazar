@@ -77,7 +77,7 @@ function runValidator(inputId) {
     const wrapper = input.closest('span') || input.parentElement;
 
     errorBox.style.visibility = 'hidden';
-    errorBox.textContent = '';
+    errorBox.textContent = '\u00A0';
     wrapper?.classList.remove('inputs--invalid');
 
     const result = config.validateFn(input.value, input);
@@ -166,7 +166,7 @@ const emailFields = [
     { inputId: "support_email", errorId: "email-error" },
     { inputId: "user_email", errorId: "user_email-error" },
     { inputId: "username", errorId: "username-error" },
-    { inputId: "forgot_email", errorId: "forgot_email-error" }
+    { inputId: "forgot_password_request_form_email", errorId: "forgot_email-error" }
 ];
 
 emailFields.forEach(f => registerEmail(f.inputId, f.errorId));
@@ -187,8 +187,6 @@ function registerPseudo(inputId, errorId, minLength = 3) {
 const pseudoFields = [
     { inputId: "support_name", errorId: "pseudo-error", minLength: 3 },
     { inputId: "user_pseudo", errorId: "user_pseudo-error", minLength: 3 },
-    // Exemple pour plus tard : champ pseudo pour un autre formulaire
-    // { inputId: "forgot_pseudo", errorId: "forgot_pseudo-error", minLength: 3 }
 ];
 
 pseudoFields.forEach(f => registerPseudo(f.inputId, f.errorId, f.minLength));
@@ -336,7 +334,7 @@ document.addEventListener('DOMContentLoaded', () => {
     attachValidator('password', ['input', 'blur'], 3000);
 
     // Attacher les validateurs éventuels du formulaire "mot de passe oublié"
-    attachValidator('forgot_email', ['input', 'blur'], 3000);
+    attachValidator('forgot_password_request_form_email', ['input', 'blur'], 3000);
     attachValidator('forgot_password', ['input', 'blur'], 3000);
 
     // Attacher la validation au submit

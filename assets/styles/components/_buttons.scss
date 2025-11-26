@@ -87,7 +87,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 1rem 0;
+    margin: 1rem 0 4rem 0 !important;
 
     .switch-label {
         display: flex;
@@ -144,6 +144,17 @@
         &:hover {
             background-color: rgba(v.$color-antique-gold, 0.5);
         }
+    }
+}
+
+.forgot-password-link {
+    color: v.$color-blue-eidolon;
+    border-bottom: solid 3.75px v.$color-blue-eidolon;
+    transition: color 0.3s ease;
+
+    &:hover {
+        color: v.$color-golden-twilight;
+        border-color: v.$color-golden-twilight;
     }
 }
 

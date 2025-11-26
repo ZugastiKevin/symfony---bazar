@@ -28,7 +28,7 @@
                         <div class="left">
                             <span class="form-group">
                                 <label for="username">Email</label>
-                                <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                                <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required>
 
                                 <div id="username-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
                             </span>
@@ -41,24 +41,23 @@
                                 <div id="password-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
                             </span>
 
-                            {# lien mot de passe oublié #}
-                            <span class="form-group inputs--filled" style="text-align:center; margin-top: 0.5rem;">
+                            <span class="forgot-password-btn" style="text-align:center; margin-top: 0.5rem;">
                                 <a href="{{ path('forgot_password') }}" class="forgot-password-link">
                                     Mot de passe oublié ?
                                 </a>
                             </span>
+
+                            <span class="form-group switch-group inputs--filled">
+                                <label for="_remember_me" class="switch-label">
+                                    <label class="switch-text">Se souvenir de moi</label>
+                                    <input type="checkbox" name="_remember_me" id="_remember_me" class="switch-input">
+                                    <div class="switch-slider"></div>
+                                </label>
+                            </span>
+
+                            <input class="btn btn-lg btn-primary" type="submit" value="Validez">
                         </div>
                     </div>
-
-                    <span class="form-group switch-group inputs--filled">
-                        <label for="_remember_me" class="switch-label">
-                            <label class="switch-text">Se souvenir de moi</label>
-                            <input type="checkbox" name="_remember_me" id="_remember_me" class="switch-input">
-                            <div class="switch-slider"></div>
-                        </label>
-                    </span>
-
-                    <input class="btn btn-lg btn-primary" type="submit" value="Validez">
                 </form>
             </div>
         </div>

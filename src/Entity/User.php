@@ -6,6 +6,9 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use App\Entity\SupportTicket;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -44,8 +47,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $resetPasswordToken = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: SupportTicket::class, orphanRemoval: true)]
+    private Collection $supportTickets;
+
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $resetPasswordExpiresAt = null;
+
+    public function __construct()
+    {
+        $this->supportTickets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -174,6 +185,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->resetPasswordToken !== null
             && $this->resetPasswordExpiresAt !== null
             && $this->resetPasswordExpiresAt > new \DateTimeImmutable();
+    }
+
+    /**
+     * @return Collection<int, SupportTicket>
+     */
+    public function getSupportTickets(): Collection
+    {
+        return $this->supportTickets;
+    }
+
+    public function addSupportTicket(SupportTicket $supportTicket): self
+    {
+        if (!$this->supportTickets->contains($supportTicket)) {
+            $this->supportTickets->add($supportTicket);
+            $supportTicket->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSupportTicket(SupportTicket $supportTicket): self
+    {
+        if ($this->supportTickets->removeElement($supportTicket)) {
+            if ($supportTicket->getUser() === $this) {
+                $supportTicket->setUser(null);
+            }
+        }
+
+        return $this;
     }
 
     #[\Deprecated]
