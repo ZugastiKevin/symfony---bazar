@@ -9,19 +9,18 @@
                 <div class="mix">
                     <div class="headline">
                         <h3 class="text-headline">connexion</h3>
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="alert alert-success">
+                                <span>Vous êtes connecté en tant que {{ app.user.userIdentifier }}</span>
+                                <a href="{{ path('app_logout') }}" class="btn btn-warning">Se déconnecter</a>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
-
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
-
-                {% if app.user %}
-                    <div class="alert alert-success">
-                        <span>Vous êtes connecté en tant que {{ app.user.userIdentifier }}</span>
-                        <a href="{{ path('app_logout') }}" class="btn btn-warning">Se déconnecter</a>
-                    </div>
-                {% endif %}
 
                 <form method="post" id="login-form" class="all-form">
                     <div class="spliter">
@@ -61,5 +60,24 @@
                 </form>
             </div>
         </div>
+    </div>
+    <div id="cookie-consent" class="cookie-consent">
+        <div class="cookie-content">
+            <p>
+                Ce site utilise des cookies essentiels pour le bon fonctionnement de la connexion et de la fonctionnalité:
+            </p>
+            <p><strong>"Se souvenir de moi"</strong></p>
+            <p>En cliquant sur:</p>
+            <p>"Accepter"</p>
+            <p>vous consentez à l'utilisation de tous les cookies. Vous pouvez:</p>
+            <p>"Refuser"</p>
+            <p>ou consulter notre</p>
+            <div class="btn-menu" style="text-align: center; margin-bottom: 0.8rem"><a href="{{ path('confidentialite') }}">POLITIQUE DE CONFIDENTIALITÉ</a></div>
+            <div class="cookie-actions">
+                <button id="accept-cookies" class="btn-cookie accept">Accepter</button>
+                <button id="refuse-cookies" class="btn-cookie refuse">Refuser</button>
+            </div>
+        </div>
+        <button id="cookie-expand-btn" aria-label="Réafficher les cookies">🍪</button>
     </div>
 {% endblock %}

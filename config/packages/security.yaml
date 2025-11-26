@@ -17,6 +17,14 @@ security:
             lazy: true
             provider: app_user_provider
             user_checker: App\Security\UserChecker
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: false
+                name: REMEMBERME
+                secure: true
+                httponly: true
             form_login:
                 login_path: app_login
                 check_path: app_login
