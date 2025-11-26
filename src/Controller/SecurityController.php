@@ -17,11 +17,13 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SecurityController extends AbstractController
 {
     // user by id
     #[Route('/user/{id}', name: 'user')]
+    #[IsGranted('ROLE_USER')]
     public function user(User $user): Response
     {
         return $this->render('security/user.html.twig', [
@@ -36,12 +38,20 @@ class SecurityController extends AbstractController
     {
         $currentUser = $this->getUser();
 
-        if ($user && $user !== $currentUser) {
-            return $this->redirectToRoute('home');
-        }
+        if ($user && $user->getId() !== null) {
+            if (!$currentUser) {
+                return $this->redirectToRoute('app_login');
+            }
 
-        if (!$user) {
-            $user = new User;
+            if ($user !== $currentUser) {
+                return $this->redirectToRoute('home');
+            }
+        } else {
+            $user = new User();
+
+            if ($currentUser) {
+                return $this->redirectToRoute('home');
+            }
         }
 
         $form = $this->createForm(UserType::class, $user, [
