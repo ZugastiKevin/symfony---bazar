@@ -15,6 +15,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -64,16 +65,33 @@ class SecurityController extends AbstractController
                     $passwordEncoder->hashPassword($user, $plainPassword)
                 );
 
+                // 🔹 Génération du token de vérification
+                $token = bin2hex(random_bytes(32));
+                $user->setVerificationToken($token);
+                $user->setVerificationTokenExpiresAt(
+                    (new \DateTimeImmutable())->modify('+24 hours')
+                );
+                $user->setIsVerified(false);
+
+                // 🔹 Génération du lien absolu
+                $verificationLink = $this->generateUrl(
+                    'verify_account',
+                    ['token' => $token],
+                    UrlGeneratorInterface::ABSOLUTE_URL
+                );
+
                 $email = (new Email())
                     ->from('support@bazar-de-cetus.octohub.fr')
-                    ->to($user->getEmail()) // Email de l'utilisateur
+                    ->to($user->getEmail())
                     ->subject('Bienvenue sur Bazar de Cetus !')
                     ->html(
                         "<h2>Bienvenue " . htmlspecialchars($user->getPseudo()) . " !</h2>" .
                         "<p>Votre compte a été créé avec succès.</p>" .
                         "<p><strong>Pseudo :</strong> " . htmlspecialchars($user->getPseudo()) . "</p>" .
                         "<p><strong>Email :</strong> " . htmlspecialchars($user->getEmail()) . "</p>" .
-                        "<p>Vous pouvez maintenant vous connecter et profiter de nos services.</p>" .
+                        "<p>Avant de pouvoir vous connecter, merci de confirmer votre adresse email en cliquant sur le lien ci-dessous :</p>" .
+                        "<p><a href=\"" . htmlspecialchars($verificationLink) . "\">Activer mon compte</a></p>" .
+                        "<p>Ce lien est valable pendant 24 heures.</p>" .
                         "<p>À bientôt sur Bazar de Cetus !</p>"
                     );
 
@@ -103,6 +121,43 @@ class SecurityController extends AbstractController
             'userCreateForm' => $form->createView(),
             'userUpdateForm' => $user->getId() !== null,
         ]);
+    }
+
+    // verify account
+    #[Route('/verify_account/{token}', name: 'verify_account')]
+    public function verifyAccount(
+        string $token,
+        UserRepository $userRepository,
+        EntityManagerInterface $entityManager
+    ): Response {
+        $user = $userRepository->findOneBy(['verificationToken' => $token]);
+
+        if (!$user) {
+            $this->addFlash('error', 'Lien de vérification invalide.');
+            return $this->redirectToRoute('home');
+        }
+
+        if ($user->getVerificationTokenExpiresAt() !== null &&
+            $user->getVerificationTokenExpiresAt() < new \DateTimeImmutable()
+        ) {
+            $this->addFlash('error', 'Ce lien de vérification a expiré. Merci de demander un nouveau lien.');
+            $user->setVerificationToken(null);
+            $user->setVerificationTokenExpiresAt(null);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        $user->setIsVerified(true);
+        $user->setVerificationToken(null);
+        $user->setVerificationTokenExpiresAt(null);
+        $user->setStatus('Offline');
+
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Votre compte a été activé, vous pouvez maintenant vous connecter.');
+
+        return $this->redirectToRoute('app_login');
     }
 
     // delete user
