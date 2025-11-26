@@ -61,19 +61,32 @@
                         </span>
                     </div>
                     <div class="right">
-                        <span class="form-group">
+                        {% set pw1Errors = form_errors(userCreateForm.plainPassword.first) %}
+                        <span class="form-group {{ pw1Errors ? 'inputs--invalid' }}">
                             {{ form_label(userCreateForm.plainPassword.first) }}
                             {{ form_widget(userCreateForm.plainPassword.first, { attr: { id: 'user_password_first' } }) }}
-                            {{ form_errors(userCreateForm.plainPassword.first) }}
 
-                            <div id="user_password_first-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                            <div id="user_password_first-error" class="form-error" style="{{ pw1Errors ? '' : 'visibility:hidden;' }}">
+                                {% if pw1Errors %}
+                                    {{ pw1Errors|raw }}
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </div>
                         </span>
-                        <span class="form-group">
-                            {{ form_label(userCreateForm.plainPassword.second) }}
-                            {{ form_widget(userCreateForm.plainPassword.second, { attr: { id: 'user_password_second' } }) }}
-                            {{ form_errors(userCreateForm.plainPassword.second) }}
+                        {% set pw2Errors = form_errors(userCreateForm.plainPassword.second) %}
 
-                            <div id="user_password_second-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
+                        <span class="form-group {{ pw2Errors ? 'inputs--invalid' }}">
+                            {{ form_label(userCreateForm.plainPassword.second) }}
+                            {{ form_widget(userCreateForm.plainPassword.second, { attr: { id: 'user_plainPassword_second' } }) }}
+
+                            <div id="user_password_second-error" class="form-error" style="{{ pw2Errors ? '' : 'visibility:hidden;' }}">
+                                {% if pw2Errors %}
+                                    {{ pw2Errors|raw }}
+                                {% else %}
+                                    &nbsp;
+                                {% endif %}
+                            </div>
                         </span>
                     </div>
                 </div>
