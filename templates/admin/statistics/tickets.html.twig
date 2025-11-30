@@ -1,0 +1,79 @@
+{# templates/admin/statistics/tickets.html.twig #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+    <div class="stats-wrapper">
+        <h1>Statistiques des tickets de support</h1>
+
+        <section style="margin-top: 1.5rem;">
+            <h2>Vue d'ensemble</h2>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Total des tickets</th>
+                    <th>Ouverts</th>
+                    <th>En cours</th>
+                    <th>Résolus</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ total }}</td>
+                        <td>{{ open }}</td>
+                        <td>{{ inProgress }}</td>
+                        <td>{{ closed }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section style="margin-top: 2rem;">
+            <h2>Par catégorie</h2>
+
+            {% if categories is not empty %}
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Nombre de tickets</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in categories %}
+                        <tr>
+                            <td>
+                                {% if row.category == 'support' %}
+                                    Support technique
+                                {% elseif row.category == 'bug' %}
+                                    Bug
+                                {% elseif row.category == 'question' %}
+                                    Question générale
+                                {% elseif row.category == 'suggestion' %}
+                                    Suggestion
+                                {% elseif row.category == 'other' %}
+                                    Autre
+                                {% else %}
+                                    (Inconnu)
+                                {% endif %}
+                            </td>
+                            <td>{{ row.total }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>Aucun ticket pour le moment.</p>
+            {% endif %}
+        </section>
+
+        <section style="margin-top: 2rem;">
+            <h2>Activité récente</h2>
+
+            <p>
+                Tickets créés depuis le {{ date7Days|date('d/m/Y') }} :
+                <strong>{{ last7Days }}</strong>
+            </p>
+        </section>
+    </div>
+{% endblock %}

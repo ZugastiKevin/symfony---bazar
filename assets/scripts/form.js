@@ -214,6 +214,25 @@ registerValidator("user_plainPassword_second", "user_password_second-error", (va
     return true;
 });
 
+registerValidator("reset_password_form_plainPassword_first", "reset_password_form_plainPassword_first-error", (value) => {
+    const v = value.trim();
+    if (v === "") return "Veuillez entrer un mot de passe.";
+    if (v.length < 8) return "Au moins 8 caractères requis.";
+    if (!/[A-Z]/.test(v)) return "Une majuscule est requise.";
+    if (!/\d/.test(v)) return "Un chiffre est requis.";
+    if (!/[\W_]/.test(v)) return "Un caractère spécial est requis.";
+    return true;
+});
+
+registerValidator("reset_password_form_plainPassword_second", "reset_password_form_plainPassword_second-error", (value) => {
+    const first = document.getElementById("reset_password_form_plainPassword_first");
+    if (!first) return true;
+
+    if (value.trim() === "") return "Veuillez confirmer votre mot de passe.";
+    if (value !== first.value) return "Les mots de passe ne correspondent pas.";
+    return true;
+});
+
 // Mot de passe de connexion
 registerValidator("password", "password-error", (value) => {
     if (value.trim() === "") return "Veuillez entrer votre mot de passe.";
@@ -328,6 +347,10 @@ document.addEventListener('DOMContentLoaded', () => {
     attachValidator('user_email', ['input', 'blur'], 3000);
     attachValidator('user_plainPassword_first', ['input', 'blur'], 3000);
     attachValidator('user_plainPassword_second', ['input', 'blur'], 3000);
+
+    // Attacher les validateurs du formulaire reset password
+    attachValidator('reset_password_form_plainPassword_first', ['input', 'blur'], 3000);
+    attachValidator('reset_password_form_plainPassword_second', ['input', 'blur'], 3000);
 
     // Attacher les validateurs du formulaire de connexion
     attachValidator('username', ['input', 'blur'], 3000);

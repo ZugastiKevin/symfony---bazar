@@ -27,9 +27,17 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        // Dashboard principal
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
 
-        // 🔹 Menu gestion des tickets support
+        // Tickets support
         yield MenuItem::linkToCrud('Tickets support', 'fa fa-life-ring', SupportTicket::class);
+
+        // Sous‑menu « Statistiques »
+        // Sous-menu « Statistiques »
+        yield MenuItem::subMenu('Statistiques', 'fa fa-chart-bar')->setSubItems([
+            MenuItem::linkToRoute('Tickets', 'fa fa-life-ring', 'admin_tickets_statistics'),
+            MenuItem::linkToRoute('Utilisateurs', 'fa fa-users', 'admin_users_statistics'),
+        ]);
     }
 }

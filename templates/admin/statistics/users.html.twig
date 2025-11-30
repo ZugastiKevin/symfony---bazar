@@ -1,0 +1,38 @@
+{# templates/admin/statistics/users.html.twig #}
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content %}
+    <div class="stats-wrapper">
+        <h1>Statistiques des utilisateurs</h1>
+
+        <section style="margin-top: 1.5rem;">
+            <h2>Vue d'ensemble</h2>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Total d'utilisateurs</th>
+                    <th>Admins</th>
+                    <th>Utilisateurs simples</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ totalUsers }}</td>
+                    <td>{{ adminCount }}</td>
+                    <td>{{ userCount }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section style="margin-top: 2rem;">
+            <h2>Inscriptions récentes</h2>
+
+            <p>
+                Utilisateurs créés depuis le {{ date7Days|date('d/m/Y') }} :
+                <strong>{{ newLast7Days }}</strong>
+            </p>
+        </section>
+    </div>
+{% endblock %}

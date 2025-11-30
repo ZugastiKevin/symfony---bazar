@@ -75,7 +75,6 @@
                             </div>
                         </span>
                         {% set pw2Errors = form_errors(userCreateForm.plainPassword.second) %}
-
                         <span class="form-group {{ pw2Errors ? 'inputs--invalid' }}">
                             {{ form_label(userCreateForm.plainPassword.second) }}
                             {{ form_widget(userCreateForm.plainPassword.second, { attr: { id: 'user_plainPassword_second' } }) }}

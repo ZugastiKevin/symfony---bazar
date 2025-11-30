@@ -66,7 +66,7 @@ class SupportTicketCrudController extends AbstractCrudController
 
         // ⚠️ adapte le basePath à ton mapping Vich (dossier public)
         $image      = ImageField::new('imageName', 'Pièce jointe')
-            ->setBasePath('/uploads/images')
+            ->setBasePath('/assets/images/uploads')
             ->onlyOnDetail();
 
         if (Crud::PAGE_INDEX === $pageName) {
