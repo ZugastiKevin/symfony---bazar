@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Shop;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Form\ForgotPasswordRequestFormType;
@@ -34,7 +35,7 @@ class SecurityController extends AbstractController
     // create or update user
     #[Route('/update_user/{id}', name: 'update_user')]
     #[Route('/create_user', name: 'create_user')]
-    public function createUser(?User $user, Request $request, UserRepository $repository, MailerInterface $mailer, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
+    public function createUser(?User $user, Shop $shop, Request $request, UserRepository $repository, MailerInterface $mailer, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
     {
         $currentUser = $this->getUser();
 
@@ -74,6 +75,9 @@ class SecurityController extends AbstractController
                 $user->setPassword(
                     $passwordEncoder->hashPassword($user, $plainPassword)
                 );
+
+                $shop = new Shop();
+                $shop->setUser($user);
 
                 // 🔹 Génération du token de vérification
                 $token = bin2hex(random_bytes(32));

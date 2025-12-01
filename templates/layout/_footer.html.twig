@@ -19,8 +19,8 @@
                         </ul>
                         <div class="dropdown-language">
                             <ul id="language-dropdown" class="dropdown-language-list">
-                                <li class="btn-menu"><a href="#">FRANÇAIS</a></li>
-                                <li class="btn-menu"><a href="#">ENGLISH</a></li>
+                                <li class="btn-menu"><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'fr'})) }}">FRANÇAIS</a></li>
+                                <li class="btn-menu"><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'en'})) }}">ENGLISH</a></li>
                             </ul>
                         </div>
                     </div>

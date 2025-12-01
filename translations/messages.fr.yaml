@@ -1,69 +1,82 @@
-username: Nom d'utilisateur
-logout: Déconnexion
-login: Connexion
-sign_in: Se connecter
-register: Créer un compte
-registration: Inscription
-update_account: Modification du compte
-create_account: Création de compte
-email: Adresse email
-password: Mot de passe
-confirm_password: Confirmer le mot de passe
-remember_me: Se souvenir de moi
-forgot_password: Mot de passe oublié ?
-submit: Valider
-save: Sauvegarder
-cancel: Annuler
-delete: Supprimer
-confirm_delete: Confirmer la suppression?
-update: Modifier
-profile: Profil
-account: Compte
-welcome: Bienvenue
-welcome_back: Bon retour
-logged_in_as: Connecté en tant que
-not_logged_in: Vous n’êtes pas connecté
-error: Erreur
-success: Succès
-invalid_credentials: Identifiants invalides
-csrf_token_invalid: Jeton CSRF invalide
-username_not_found: Utilisateur introuvable
-password_too_short: Le mot de passe est trop court
-form_error: Veuillez corriger les erreurs du formulaire
-please_login: Veuillez vous connecter
+username: "Nom d'utilisateur"
+logout: "Déconnexion"
+login: "Connexion"
+sign_in: "Se connecter"
+sign_out: "Se déconnecter"
+register: "Créer un compte"
+registration: "Inscription"
+update_account: "Modification du compte"
+create_account: "Création de compte"
+email: "Adresse email"
+password: "Mot de passe"
+confirm_password: "Confirmer le mot de passe"
+remember_me: "Se souvenir de moi"
+forgot_password: "Mot de passe oublié ?"
+submit: "Valider"
+save: "Sauvegarder"
+cancel: "Annuler"
+delete: "Supprimer"
+confirm_delete: "Confirmer la suppression?"
+update: "Modifier"
+profile: "Profil"
+account: "Compte"
+welcome: "Bienvenue"
+welcome_back: "Bon retour"
+logged_in_as: "Vous êtes connecté en tant que"
+not_logged_in: "Vous n’êtes pas connecté"
+error: "Erreur"
+success: "Succès"
+invalid_credentials: "Identifiants invalides"
+csrf_token_invalid: "Jeton CSRF invalide"
+username_not_found: "Utilisateur introuvable"
+password_too_short: "Le mot de passe est trop court"
+form_error: "Veuillez corriger les erreurs du formulaire"
+please_login: "Veuillez vous connecter"
+validate: "Valider"
 
 # support
-support-title: Support - Contactez-nous
-support: Contactez le support
+support-title: "Support - Contactez-nous"
+support: "Contactez le support"
 
 # warning video
-video: Votre navigateur ne supporte pas la lecture de vidéos.
+video: "Votre navigateur ne supporte pas la lecture de vidéos."
 
 # navbar
 navbar:
-    market: Commerce
-    contract: Contrats
+    market: "Commerce"
+    contract: "Contrats"
 
 # home
-home: Accueil
+home: "Le Bazar"
 
 # form bottle placeholder
 form:
     label:
-        min: Le nom doit contenir au moins {{ limit }} caractère.
-        max: Le nom ne peut pas dépasser {{ limit }} caractères.
-    year_placeholder: Millésime
-    invalid_type: Veuillez télécharger un fichier au format JPEG, JPG, PNG ou WEBP.
-    pays_placeholder: Sélectionner un pays
-    regions_placeholder: Sélectionner une région
-    types_placeholder: Sélectionner un type de vin
-    grapes_placeholder: Sélectionner un cepage
-    yes: Oui
-    no: Non
-    alcool: Saisir un nombre comme 12.5
+        min: "Le nom doit contenir au moins {{ limit }} caractère."
+        max: "Le nom ne peut pas dépasser {{ limit }} caractères."
+    year_placeholder: "Millésime"
+    invalid_type: "Veuillez télécharger un fichier au format JPEG, JPG, PNG ou WEBP."
+    pays_placeholder: "Sélectionner un pays"
+    regions_placeholder: "Sélectionner une région"
+    types_placeholder: "Sélectionner un type de vin"
+    grapes_placeholder: "Sélectionner un cepage"
+    yes: "Oui"
+    no: "Non"
+    alcool: "Saisir un nombre comme 12.5"
     describ:
-        describ_too_short: La description doit contenir au moins {{ limit }} caractère.
-        describ_too_long: La description ne peut pas dépasser {{ limit }} caractères.
+        describ_too_short: "La description doit contenir au moins {{ limit }} caractère."
+        describ_too_long: "La description ne peut pas dépasser {{ limit }} caractères."
+
+cookie:
+  text_intro: "Ce site utilise des cookies essentiels nécessaires au bon fonctionnement, notamment pour la connexion et la fonctionnalité:"
+  text_exemple: "Se souvenir de moi"
+  text_click: "En cliquant sur:"
+  text_click_after: "vous consentez à l'utilisation de tous les cookies, Vous pouvez:"
+  text_options: "ou consulter notre"
+  privacy_policy: "Politique de Confidentialité"
+  accept: "Accepter"
+  refuse: "Refuser"
+
 
 # footer
 about: "À propos"

@@ -62,6 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', nullable: true)]
     private ?\DateTimeImmutable $resetPasswordExpiresAt = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Shop $shop = null;
+
     public function __construct()
     {
         $this->supportTickets = new ArrayCollection();
@@ -262,5 +265,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
         // @deprecated, to be removed when upgrading to Symfony 8
+    }
+
+    public function getShop(): ?Shop
+    {
+        return $this->shop;
+    }
+
+    public function setShop(Shop $shop): static
+    {
+        // set the owning side of the relation if necessary
+        if ($shop->getUser() !== $this) {
+            $shop->setUser($this);
+        }
+
+        $this->shop = $shop;
+
+        return $this;
     }
 }

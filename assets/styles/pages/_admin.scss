@@ -1,3 +1,5 @@
+@use "../abstracts/variables" as v;
+
 .stats-wrapper {
     display: flex;
     flex-direction: column;
@@ -5,5 +7,86 @@
 
     section {
         width: 100%;
+    }
+}
+
+.admin-dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.admin-dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.admin-dashboard-title h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.admin-dashboard-title p {
+    margin: 0.3rem 0 0;
+    color: #aaa;
+}
+
+.admin-dashboard-back-btn a {
+    display: inline-block;
+    padding: 0.6rem 1.4rem;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid #555;
+    background: linear-gradient(135deg, #1f2933, v.$color-black);
+    color: v.$color-white;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.admin-dashboard-back-btn a:hover {
+    background: linear-gradient(135deg, #111827, v.$color-black);
+    border-color: #9ca3af;
+}
+
+.admin-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.admin-card {
+    background: #111827;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid #1f2933;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
+.admin-card h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+}
+
+.admin-card p {
+    margin: 0.2rem 0;
+    color: #9ca3af;
+    font-size: 0.9rem;
+}
+
+.admin-card-big {
+    grid-column: span 2;
+}
+
+@media (max-width: 768px) {
+    .admin-card-big {
+        grid-column: span 1;
+    }
+
+    .admin-dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
