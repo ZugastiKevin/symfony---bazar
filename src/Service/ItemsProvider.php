@@ -27,9 +27,16 @@ class ItemsProvider
             return $this->cache[$searchName];
         }
 
-        // 2. Check en BDD
-        $item = $this->repository->findOneBy(['searchName' => $searchName]);
+        // 2. Check en BDD en comparant nameEn/nameFr/uniqueName ou le JSON search_names
+        $item = $this->repository->findOneBySearchNameMatching($searchName);
         if ($item) {
+            // si l'enregistrement existe mais ne contient pas le searchName dans le JSON, on l'ajoute
+            if (!in_array($searchName, $item->getSearchNames(), true)) {
+                $item->addSearchName($searchName);
+                $this->em->persist($item);
+                $this->em->flush();
+            }
+
             $this->cache[$searchName] = $item;
             return $item;
         }
@@ -44,60 +51,9 @@ class ItemsProvider
             return null;
         }
 
-        // Sélection plus robuste : on essaie de trouver la meilleure correspondance
-        $en = null;
-        $fr = null;
-
-        $searchLower = mb_strtolower($searchName);
-
-        // 1) correspondance par uniqueName exacte
-        foreach ($dataEn as $candidate) {
-            if (isset($candidate['uniqueName']) && mb_strtolower($candidate['uniqueName']) === $searchLower) {
-                $en = $candidate;
-                break;
-            }
-        }
-
-        // 2) sinon, privilégier les Warframes (si on cherche une warframe)
-        if ($en === null) {
-            foreach ($dataEn as $candidate) {
-                if (isset($candidate['category']) && mb_strtolower($candidate['category']) === 'warframes') {
-                    $en = $candidate;
-                    break;
-                }
-            }
-        }
-
-        // 3) sinon, correspondance par nom exact (insensible à la casse)
-        if ($en === null) {
-            foreach ($dataEn as $candidate) {
-                if (isset($candidate['name']) && mb_strtolower($candidate['name']) === $searchLower) {
-                    $en = $candidate;
-                    break;
-                }
-            }
-        }
-
-        // 4) fallback sur le premier élément
-        if ($en === null) {
-            $en = $dataEn[0];
-        }
-
-        // Extraire uniqueName pour une comparaison sûre
-        $enUnique = $en['uniqueName'] ?? null;
-
-        // Pour le FR : si possible on prend l'élément FR ayant le même uniqueName
-        if (!empty($dataFr)) {
-            foreach ($dataFr as $candidateFr) {
-                if ($enUnique !== null && isset($candidateFr['uniqueName']) && $candidateFr['uniqueName'] === $enUnique) {
-                    $fr = $candidateFr;
-                    break;
-                }
-            }
-            if ($fr === null) {
-                $fr = $dataFr[0];
-            }
-        }
+        // on prend le premier résultat EN comme base
+        $en = $dataEn[0];
+        $fr = !empty($dataFr) ? $dataFr[0] : null;
 
         $item = new Items();
         $item->setSearchName($searchName);
@@ -106,12 +62,6 @@ class ItemsProvider
         $item->setDescriptionEn($en['description'] ?? null);
         $item->setNameFr($fr['name'] ?? null);
         $item->setDescriptionFr($fr['description'] ?? null);
-
-        // Champs supplémentaires sûrs à mapper (existant dans l'entité)
-        $item->setType($en['type'] ?? null);
-        $item->setTradable($en['tradable'] ?? false);
-        $item->setCategory($en['category'] ?? null);
-        $item->setProductCategory($en['productCategory'] ?? null);
 
         $imageName = $en['imageName'] ?? null;
 
@@ -126,11 +76,15 @@ class ItemsProvider
                     $tmpPath = sys_get_temp_dir() . '/' . uniqid('wf_', true) . '.' . $ext;
                     file_put_contents($tmpPath, $contents);
 
-                    // Détecter le mime type si possible
-                    $mime = null;
-                    if (function_exists('mime_content_type')) {
-                        $mime = @mime_content_type($tmpPath) ?: null;
-                    }
+                    // Déduire un mime simple depuis l'extension pour éviter l'appel à ext-fileinfo
+                    $extLower = strtolower($ext);
+                    $mime = match ($extLower) {
+                        'png' => 'image/png',
+                        'jpg', 'jpeg' => 'image/jpeg',
+                        'gif' => 'image/gif',
+                        'webp' => 'image/webp',
+                        default => null,
+                    };
 
                     // Création d'un UploadedFile en mode test pour contourner les vérifs PHP upload
                     $uploaded = new UploadedFile(
@@ -138,14 +92,43 @@ class ItemsProvider
                         basename($imageName),
                         $mime,
                         null,
-                        null,
                         true
                     );
 
                     $item->setImageFile($uploaded);
                 }
             } catch (\Throwable $e) {
-                // ne pas bloquer si le téléchargement échoue
+
+            }
+        }
+
+        $item->setCategory($en['category'] ?? null);
+        $item->setProductCategory($en['productCategory'] ?? null);
+
+        // Si l'API renvoie des components, tenter de récupérer/créer chacun d'eux
+        if (!empty($en['components']) && is_array($en['components'])) {
+            foreach ($en['components'] as $component) {
+                $compName = $component['name'] ?? ($component['uniqueName'] ?? null);
+                if (!$compName) {
+                    continue;
+                }
+
+                $compSearch = $this->normalizeName($compName);
+
+                // éviter les références circulaires vers soi-même
+                if ($compSearch === $searchName) {
+                    continue;
+                }
+
+                try {
+                    // si déjà en cache, pas besoin de rappeler l'API
+                    if (!isset($this->cache[$compSearch])) {
+                        // appel récursif : créera/enregistrera l'Items composant et téléchargera son image
+                        $this->getByName($compName);
+                    }
+                } catch (\Throwable $e) {
+                    // ne pas bloquer la création de l'item principal si un composant échoue
+                }
             }
         }
 

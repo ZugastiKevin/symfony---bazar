@@ -24,8 +24,8 @@ class Items
     #[ORM\ManyToMany(targetEntity: ShopItems::class, inversedBy: 'items')]
     private Collection $shop;
 
-    #[ORM\Column(length: 255)]
-    private ?string $searchName = null;
+    #[ORM\Column(type: 'json', nullable: true)]
+    private ?array $searchNames = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $uniqueName = null;
@@ -77,6 +77,7 @@ class Items
     public function __construct()
     {
         $this->shop = new ArrayCollection();
+        $this->searchNames = [];
     }
 
     public function getId(): ?int
@@ -108,14 +109,52 @@ class Items
         return $this;
     }
 
-    public function getSearchName(): ?string
+    /**
+     * Retourne le tableau des search names (toujours des minuscules)
+     *
+     * @return string[]
+     */
+    public function getSearchNames(): array
     {
-        return $this->searchName;
+        return $this->searchNames ?? [];
     }
 
-    public function setSearchName(string $searchName): static
+    /**
+     * Remplace la liste des search names
+     *
+     * @param string[] $searchNames
+     */
+    public function setSearchNames(array $searchNames): static
     {
-        $this->searchName = $searchName;
+        // normaliser en minuscules et unique
+        $normalized = [];
+        foreach ($searchNames as $s) {
+            $s2 = mb_strtolower(trim($s));
+            if ($s2 !== '' && !in_array($s2, $normalized, true)) {
+                $normalized[] = $s2;
+            }
+        }
+
+        $this->searchNames = $normalized;
+
+        return $this;
+    }
+
+    /**
+     * Ajoute un searchName au tableau JSON (déduit en lowercase)
+     */
+    public function addSearchName(string $searchName): static
+    {
+        $s = mb_strtolower(trim($searchName));
+        if ($s === '') {
+            return $this;
+        }
+
+        $current = $this->getSearchNames();
+        if (!in_array($s, $current, true)) {
+            $current[] = $s;
+            $this->searchNames = $current;
+        }
 
         return $this;
     }
