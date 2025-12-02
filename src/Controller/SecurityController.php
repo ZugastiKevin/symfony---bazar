@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Shop;
 use App\Form\UserType;
 use App\Repository\UserRepository;
 use App\Form\ForgotPasswordRequestFormType;
@@ -71,9 +72,9 @@ class SecurityController extends AbstractController
                 $user->setStatus('Offline');
                 $user->setRoles(['ROLE_USER']);
                 $user->setCreatedAt(new \DateTimeImmutable());
-                $user->setPassword(
-                    $passwordEncoder->hashPassword($user, $plainPassword)
-                );
+
+                $shop = new Shop();
+                $user->setShop($shop);
 
                 // 🔹 Génération du token de vérification
                 $token = bin2hex(random_bytes(32));

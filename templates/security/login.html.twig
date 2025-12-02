@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connexion{% endblock %}
+{% block title %}{{ 'login'|trans }}{% endblock %}
 
 {% block body %}
     <div id="form" class="form-background">
@@ -8,7 +8,7 @@
             <div class="form-content">
                 <div class="mix">
                     <div class="headline">
-                        <h3 class="text-headline">connexion</h3>
+                        <h3 class="text-headline">{{ 'sign_in'|trans }}</h3>
                         <div class="text-subheadline">
                             {% if error %}
                                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -16,8 +16,8 @@
 
                             {% if app.user %}
                                 <div class="alert alert-success">
-                                    <span>Vous êtes connecté en tant que {{ app.user.userIdentifier }}</span>
-                                    <a href="{{ path('app_logout') }}" class="btn btn-warning">Se déconnecter</a>
+                                    <span>{{ 'logged_in_as'|trans }} {{ app.user.userIdentifier }}</span>
+                                    <a href="{{ path('app_logout') }}" class="btn btn-warning">{{ 'sign_out'|trans }}</a>
                                 </div>
                             {% endif %}
                         </div>
@@ -35,7 +35,7 @@
                             </span>
 
                             <span class="form-group">
-                                <label for="password">Mot de passe</label>
+                                <label for="password">{{ 'password'|trans }}</label>
                                 <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
@@ -44,19 +44,19 @@
 
                             <span class="forgot-password-btn" style="text-align:center; margin-top: 0.5rem;">
                                 <a href="{{ path('forgot_password') }}" class="forgot-password-link">
-                                    Mot de passe oublié ?
+                                    {{ 'forgot_password'|trans }}
                                 </a>
                             </span>
 
                             <span class="form-group switch-group inputs--filled">
                                 <label for="_remember_me" class="switch-label">
-                                    <label class="switch-text">Se souvenir de moi</label>
+                                    <label class="switch-text">{{ 'remember_me'|trans }}</label>
                                     <input type="checkbox" name="_remember_me" id="_remember_me" class="switch-input">
                                     <div class="switch-slider"></div>
                                 </label>
                             </span>
 
-                            <input class="btn btn-lg btn-primary" type="submit" value="Validez">
+                            <input class="btn btn-lg btn-primary" type="submit" value="{{ 'validate'|trans }}">
                         </div>
                     </div>
                 </form>
@@ -65,19 +65,17 @@
     </div>
     <div id="cookie-consent" class="cookie-consent">
         <div class="cookie-content">
-            <p>
-                Ce site utilise des cookies essentiels pour le bon fonctionnement de la connexion et de la fonctionnalité:
-            </p>
-            <p><strong>"Se souvenir de moi"</strong></p>
-            <p>En cliquant sur:</p>
-            <p>"Accepter"</p>
-            <p>vous consentez à l'utilisation de tous les cookies. Vous pouvez:</p>
-            <p>"Refuser"</p>
-            <p>ou consulter notre</p>
-            <div class="btn-menu" style="text-align: center; margin-bottom: 0.8rem"><a href="{{ path('confidentialite') }}">POLITIQUE DE CONFIDENTIALITÉ</a></div>
+            <p>{{ 'cookie.text_intro'|trans }}</p>
+            <p><strong>"{{ 'cookie.text_example'|trans }}"</strong></p>
+            <p>{{ 'cookie.text_click'|trans }}</p>
+            <p>"{{ 'cookie.accept'|trans }}"</p>
+            <p>{{ 'cookie.text_click_after'|trans }}</p>
+            <p>"{{ 'cookie.refuse'|trans }}"</p>
+            <p>{{ 'cookie.text_options'|trans }}</p>
+            <div class="btn-menu" style="text-align: center; margin-bottom: 0.8rem"><a href="{{ path('confidentialite') }}">{{ 'privacy_policy'|trans }}</a></div>
             <div class="cookie-actions">
-                <button id="accept-cookies" class="btn-cookie accept">Accepter</button>
-                <button id="refuse-cookies" class="btn-cookie refuse">Refuser</button>
+                <button id="accept-cookies" class="btn-cookie accept">{{ 'cookie.accept'|trans }}</button>
+                <button id="refuse-cookies" class="btn-cookie refuse">{{ 'cookie.refuse'|trans }}</button>
             </div>
         </div>
         <button id="cookie-expand-btn" aria-label="Réafficher les cookies">🍪</button>

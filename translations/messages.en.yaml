@@ -31,6 +31,7 @@ username_not_found: User not found
 password_too_short: Password is too short
 form_error: Please correct the form errors
 please_login: Please log in
+validate: "Validate"
 
 # support
 support-title: Support - Contact us
@@ -45,7 +46,7 @@ navbar:
     contract: Contracts
 
 # home
-home: Home
+home: The Bazar
 
 # form bottle placeholder
 form:
