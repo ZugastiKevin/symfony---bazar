@@ -5,8 +5,11 @@ namespace App\Entity;
 use App\Repository\ItemsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: ItemsRepository::class)]
 class Items
 {
@@ -22,13 +25,46 @@ class Items
     private Collection $shop;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $searchName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $img_item = null;
+    private ?string $uniqueName = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $describe_item = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nameEn = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $nameFr = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $descriptionEn = null;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $descriptionFr = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageUrl = null;
+
+    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $type = null;
+
+    #[ORM\Column]
+    private bool $tradable = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $category = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $productCategory = null;
 
     #[ORM\ManyToOne(inversedBy: 'item')]
     #[ORM\JoinColumn(nullable: false)]
@@ -72,38 +108,169 @@ class Items
         return $this;
     }
 
-    public function getName(): ?string
+    public function getSearchName(): ?string
     {
-        return $this->name;
+        return $this->searchName;
     }
 
-    public function setName(string $name): static
+    public function setSearchName(string $searchName): static
     {
-        $this->name = $name;
+        $this->searchName = $searchName;
 
         return $this;
     }
 
-    public function getImgItem(): ?string
+    public function getUniqueName(): ?string
     {
-        return $this->img_item;
+        return $this->uniqueName;
     }
 
-    public function setImgItem(?string $img_item): static
+    public function setUniqueName(?string $uniqueName): static
     {
-        $this->img_item = $img_item;
+        $this->uniqueName = $uniqueName;
 
         return $this;
     }
 
-    public function getDescribeItem(): ?string
+    public function getNameEn(): ?string
     {
-        return $this->describe_item;
+        return $this->nameEn;
     }
 
-    public function setDescribeItem(string $describe_item): static
+    public function setNameEn(?string $nameEn): static
     {
-        $this->describe_item = $describe_item;
+        $this->nameEn = $nameEn;
+
+        return $this;
+    }
+
+    public function getNameFr(): ?string
+    {
+        return $this->nameFr;
+    }
+
+    public function setNameFr(?string $nameFr): static
+    {
+        $this->nameFr = $nameFr;
+
+        return $this;
+    }
+
+    public function getDescriptionEn(): ?string
+    {
+        return $this->descriptionEn;
+    }
+
+    public function setDescriptionEn(?string $descriptionEn): static
+    {
+        $this->descriptionEn = $descriptionEn;
+
+        return $this;
+    }
+
+    public function getDescriptionFr(): ?string
+    {
+        return $this->descriptionFr;
+    }
+
+    public function setDescriptionFr(?string $descriptionFr): static
+    {
+        $this->descriptionFr = $descriptionFr;
+
+        return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    public function setImageUrl(?string $imageUrl): static
+    {
+        $this->imageUrl = $imageUrl;
+
+        return $this;
+    }
+
+    public function setImageFile(?File $imageFile = null):void
+    {
+        $this->imageFile = $imageFile;
+
+        if ($imageFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(?string $type): static
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function isTradable(): bool
+    {
+        return $this->tradable;
+    }
+
+    public function setTradable(bool $tradable): static
+    {
+        $this->tradable = $tradable;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category): static
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getProductCategory(): ?string
+    {
+        return $this->productCategory;
+    }
+
+    public function setProductCategory(?string $productCategory): static
+    {
+        $this->productCategory = $productCategory;
 
         return $this;
     }

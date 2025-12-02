@@ -35,7 +35,7 @@ class SecurityController extends AbstractController
     // create or update user
     #[Route('/update_user/{id}', name: 'update_user')]
     #[Route('/create_user', name: 'create_user')]
-    public function createUser(?User $user, Shop $shop, Request $request, UserRepository $repository, MailerInterface $mailer, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
+    public function createUser(?User $user, Request $request, UserRepository $repository, MailerInterface $mailer, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
     {
         $currentUser = $this->getUser();
 
@@ -72,12 +72,9 @@ class SecurityController extends AbstractController
                 $user->setStatus('Offline');
                 $user->setRoles(['ROLE_USER']);
                 $user->setCreatedAt(new \DateTimeImmutable());
-                $user->setPassword(
-                    $passwordEncoder->hashPassword($user, $plainPassword)
-                );
 
                 $shop = new Shop();
-                $shop->setUser($user);
+                $user->setShop($shop);
 
                 // 🔹 Génération du token de vérification
                 $token = bin2hex(random_bytes(32));
