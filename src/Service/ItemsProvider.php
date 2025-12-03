@@ -56,7 +56,6 @@ class ItemsProvider
         $fr = !empty($dataFr) ? $dataFr[0] : null;
 
         $item = new Items();
-        $item->setSearchName($searchName);
         $item->setUniqueName($en['uniqueName'] ?? null);
         $item->setNameEn($en['name'] ?? null);
         $item->setDescriptionEn($en['description'] ?? null);

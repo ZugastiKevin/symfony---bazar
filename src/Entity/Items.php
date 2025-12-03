@@ -109,56 +109,6 @@ class Items
         return $this;
     }
 
-    /**
-     * Retourne le tableau des search names (toujours des minuscules)
-     *
-     * @return string[]
-     */
-    public function getSearchNames(): array
-    {
-        return $this->searchNames ?? [];
-    }
-
-    /**
-     * Remplace la liste des search names
-     *
-     * @param string[] $searchNames
-     */
-    public function setSearchNames(array $searchNames): static
-    {
-        // normaliser en minuscules et unique
-        $normalized = [];
-        foreach ($searchNames as $s) {
-            $s2 = mb_strtolower(trim($s));
-            if ($s2 !== '' && !in_array($s2, $normalized, true)) {
-                $normalized[] = $s2;
-            }
-        }
-
-        $this->searchNames = $normalized;
-
-        return $this;
-    }
-
-    /**
-     * Ajoute un searchName au tableau JSON (déduit en lowercase)
-     */
-    public function addSearchName(string $searchName): static
-    {
-        $s = mb_strtolower(trim($searchName));
-        if ($s === '') {
-            return $this;
-        }
-
-        $current = $this->getSearchNames();
-        if (!in_array($s, $current, true)) {
-            $current[] = $s;
-            $this->searchNames = $current;
-        }
-
-        return $this;
-    }
-
     public function getUniqueName(): ?string
     {
         return $this->uniqueName;
@@ -274,18 +224,6 @@ class Items
     public function setType(?string $type): static
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function isTradable(): bool
-    {
-        return $this->tradable;
-    }
-
-    public function setTradable(bool $tradable): static
-    {
-        $this->tradable = $tradable;
 
         return $this;
     }
