@@ -10,6 +10,7 @@ import './styles/app.scss';
 import './scripts/form.js';
 import './scripts/remember_me.js';
 import './scripts/reset-btn.js';
+import './scripts/itemSearch.js';
 import './scripts/dropdown.js';
 import 'htmx.org';
 window.htmx = require('htmx.org');

@@ -11,8 +11,12 @@
                       hx-target="#results"
                       hx-swap="innerHTML"
                       hx-trigger="submit">
-                    <input name="q" type="search" placeholder="Recherche..." required autocomplete="off" />
-                    <button type="submit">Rechercher</button>
+                    <input id="search-input" name="q" type="search" placeholder="Recherche..." autocomplete="off"
+                           hx-get="{{ path('search') }}"
+                           hx-target="#results"
+                           hx-swap="innerHTML"
+                           hx-trigger="keyup changed delay:300ms" />
+                    <button id="search-button" type="submit" disabled>Rechercher</button>
                     <span id="spinner" style="display:none;">Recherche...</span>
                 </form>
 

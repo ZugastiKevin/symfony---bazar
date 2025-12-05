@@ -31,16 +31,19 @@ class Items
     private ?string $uniqueName = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nameEn = null;
+    private ?string $nameEN = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $nameFr = null;
+    private ?string $nameFR = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $descriptionEn = null;
+    private ?string $descriptionEN = null;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private ?string $descriptionFr = null;
+    private ?string $descriptionFR = null;
+
+    #[ORM\Column(type: 'boolean')]
+    private bool $isPrime = false;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $imageUrl = null;
@@ -57,11 +60,8 @@ class Items
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $type = null;
 
-    #[ORM\Column]
-    private bool $tradable = false;
-
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $category = null;
+    private ?string $wikiaUrl = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $productCategory = null;
@@ -72,7 +72,7 @@ class Items
 
     #[ORM\ManyToOne(inversedBy: 'item')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Categorys $categorys = null;
+    private ?Category $category = null;
 
     public function __construct()
     {
@@ -121,50 +121,62 @@ class Items
         return $this;
     }
 
-    public function getNameEn(): ?string
+    public function getNameEN(): ?string
     {
-        return $this->nameEn;
+        return $this->nameEN;
     }
 
-    public function setNameEn(?string $nameEn): static
+    public function setNameEN(?string $nameEN): static
     {
-        $this->nameEn = $nameEn;
+        $this->nameEN = $nameEN;
 
         return $this;
     }
 
-    public function getNameFr(): ?string
+    public function getNameFR(): ?string
     {
-        return $this->nameFr;
+        return $this->nameFR;
     }
 
-    public function setNameFr(?string $nameFr): static
+    public function setNameFR(?string $nameFR): static
     {
-        $this->nameFr = $nameFr;
+        $this->nameFR = $nameFR;
 
         return $this;
     }
 
-    public function getDescriptionEn(): ?string
+    public function getDescriptionEN(): ?string
     {
-        return $this->descriptionEn;
+        return $this->descriptionEN;
     }
 
-    public function setDescriptionEn(?string $descriptionEn): static
+    public function setDescriptionEN(?string $descriptionEN): static
     {
-        $this->descriptionEn = $descriptionEn;
+        $this->descriptionEN = $descriptionEN;
 
         return $this;
     }
 
-    public function getDescriptionFr(): ?string
+    public function getDescriptionFR(): ?string
     {
-        return $this->descriptionFr;
+        return $this->descriptionFR;
     }
 
-    public function setDescriptionFr(?string $descriptionFr): static
+    public function setDescriptionFR(?string $descriptionFR): static
     {
-        $this->descriptionFr = $descriptionFr;
+        $this->descriptionFR = $descriptionFR;
+
+        return $this;
+    }
+
+    public function isPrime(): bool
+    {
+        return (bool) $this->isPrime;
+    }
+
+    public function setIsPrime(bool $prime): static
+    {
+        $this->isPrime = $prime;
 
         return $this;
     }
@@ -181,7 +193,7 @@ class Items
         return $this;
     }
 
-    public function setImageFile(?File $imageFile = null):void
+    public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
 
@@ -228,14 +240,14 @@ class Items
         return $this;
     }
 
-    public function getCategory(): ?string
+    public function getWikiaUrl(): ?string
     {
-        return $this->category;
+        return $this->wikiaUrl;
     }
 
-    public function setCategory(?string $category): static
+    public function setWikiaUrl(?string $wikiaUrl): static
     {
-        $this->category = $category;
+        $this->wikiaUrl = $wikiaUrl;
 
         return $this;
     }
@@ -264,14 +276,50 @@ class Items
         return $this;
     }
 
-    public function getCategorys(): ?Categorys
+    public function getCategory(): ?Category
     {
-        return $this->categorys;
+        return $this->category;
     }
 
-    public function setCategorys(?Categorys $categorys): static
+    public function setCategory(?Category $category): static
     {
-        $this->categorys = $categorys;
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Retourne la liste des search names (normalisés) stockés
+     *
+     * @return string[]
+     */
+    public function getSearchNames(): array
+    {
+        return is_array($this->searchNames) ? $this->searchNames : [];
+    }
+
+    /**
+     * Ajoute un search name si absent
+     */
+    public function addSearchName(string $name): static
+    {
+        $current = $this->getSearchNames();
+        if (!in_array($name, $current, true)) {
+            $current[] = $name;
+            $this->searchNames = $current;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Supprime un search name
+     */
+    public function removeSearchName(string $name): static
+    {
+        $current = $this->getSearchNames();
+        $filtered = array_values(array_filter($current, function ($v) use ($name) { return $v !== $name; }));
+        $this->searchNames = $filtered;
 
         return $this;
     }

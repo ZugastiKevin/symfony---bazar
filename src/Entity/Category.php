@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CategorysRepository::class)]
-class Categorys
+class Category
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,7 +18,7 @@ class Categorys
     /**
      * @var Collection<int, Items>
      */
-    #[ORM\OneToMany(targetEntity: Items::class, mappedBy: 'categorys')]
+    #[ORM\OneToMany(targetEntity: Items::class, mappedBy: 'category')]
     private Collection $item;
 
     #[ORM\Column(length: 255)]
@@ -46,7 +46,7 @@ class Categorys
     {
         if (!$this->item->contains($item)) {
             $this->item->add($item);
-            $item->setCategorys($this);
+            $item->setCategory($this);
         }
 
         return $this;
@@ -56,8 +56,8 @@ class Categorys
     {
         if ($this->item->removeElement($item)) {
             // set the owning side to null (unless already changed)
-            if ($item->getCategorys() === $this) {
-                $item->setCategorys(null);
+            if ($item->getCategory() === $this) {
+                $item->setCategory(null);
             }
         }
 
