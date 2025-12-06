@@ -13,7 +13,7 @@ class CategoryFilter
      * @param string $default
      * @return string[]
      */
-    public function getExcludedCategoriesFromRequest(Request $request, string $paramName = 'exclude', string $default = 'Skins,Glyphs,Resources,Misc'): array
+    public function getExcludedCategoriesFromRequest(Request $request, string $paramName = 'exclude', string $default = 'Skins,Glyphs,Resources,Misc,Node,Sigils,Enemy'): array
     {
         $excludeParam = (string) $request->query->get($paramName, $default);
         $excludedCategories = array_filter(array_map(function ($c) {
@@ -31,6 +31,7 @@ class CategoryFilter
      */
     public function isExcluded(array $item, array $excludedCategories): bool
     {
+        $type = $item['type'] ?? null;
         $categoryField = $item['category'] ?? null;
 
         if ($categoryField === null) {
@@ -50,6 +51,25 @@ class CategoryFilter
 
         if (empty($categories)) {
             return false;
+        }
+
+        $modsExcluded = array_map('mb_strtolower', ['focus way', 'Mod Set Mod']);
+
+        // Règle demandée : si catégorie 'mods' et type dans $modsExcluded -> exclure
+        if (in_array('mods', $categories, true)) {
+            if ($type !== null) {
+                if (is_string($type)) {
+                    if (in_array(mb_strtolower(trim($type)), $modsExcluded, true)) {
+                        return true;
+                    }
+                } elseif (is_array($type)) {
+                    foreach ($type as $t) {
+                        if (is_string($t) && in_array(mb_strtolower(trim($t)), $modsExcluded, true)) {
+                            return true;
+                        }
+                    }
+                }
+            }
         }
 
         // Règles spécifiques : pour certaines catégories (Warframes, Primary, Secondary, Melee),

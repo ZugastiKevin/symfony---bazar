@@ -33,7 +33,7 @@ class SupportTicket
     #[ORM\Column(type: 'text')]
     private ?string $message = null;
 
-    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'imageName')]
+    #[Vich\UploadableField(mapping: 'support_image', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]

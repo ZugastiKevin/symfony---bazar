@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Items;
 use App\Repository\ItemsRepository;
-use App\Service\WarframeApiCache;
+use App\Service\WarframeApiClient;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ class ItemsController extends AbstractController
 {
     public function __construct(
         private ItemsRepository $itemsRepository,
-        private WarframeApiCache $warframeApiCache,
+        private WarframeApiClient $warframeApiClient,
         private LoggerInterface $logger
     ) {}
 
@@ -31,6 +31,7 @@ class ItemsController extends AbstractController
 
         // 1) Cherche en base (utilise findBySearchTerm pour support partial / insensible)
         $entities = $this->itemsRepository->findBySearchTerm($name, 1);
+
         if (!empty($entities) && $entities[0] instanceof Items) {
             $entity = $entities[0];
 
@@ -51,9 +52,9 @@ class ItemsController extends AbstractController
             ]);
         }
 
-        // 2) Sinon, tenter via le cache/API
+        // 2) Sinon, tenter via l'API
         try {
-            $results = $this->warframeApiCache->searchItem($name, $language);
+            $results = $this->warframeApiClient->searchItem($name, $language);
         } catch (\Throwable $e) {
             $this->logger->error('Erreur récupération API pour item', ['name' => $name, 'exception' => $e->getMessage()]);
             $results = [];

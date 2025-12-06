@@ -24,9 +24,6 @@ class Items
     #[ORM\ManyToMany(targetEntity: ShopItems::class, inversedBy: 'items')]
     private Collection $shop;
 
-    #[ORM\Column(type: 'json', nullable: true)]
-    private ?array $searchNames = null;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $uniqueName = null;
 
@@ -45,14 +42,11 @@ class Items
     #[ORM\Column(type: 'boolean')]
     private bool $isPrime = false;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $imageUrl = null;
-
-    #[Vich\UploadableField(mapping: 'images', fileNameProperty: 'imageName')]
-    private ?File $imageFile = null;
-
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
+
+    #[Vich\UploadableField(mapping: 'items_api_image', fileNameProperty: 'imageName')]
+    private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -60,14 +54,17 @@ class Items
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $type = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $ducats = null;
+
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $wikiaUrl = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $productCategory = null;
 
-    #[ORM\ManyToOne(inversedBy: 'item')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'items')]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Parts $parts = null;
 
     #[ORM\ManyToOne(inversedBy: 'item')]
@@ -77,7 +74,6 @@ class Items
     public function __construct()
     {
         $this->shop = new ArrayCollection();
-        $this->searchNames = [];
     }
 
     public function getId(): ?int
@@ -181,18 +177,6 @@ class Items
         return $this;
     }
 
-    public function getImageUrl(): ?string
-    {
-        return $this->imageUrl;
-    }
-
-    public function setImageUrl(?string $imageUrl): static
-    {
-        $this->imageUrl = $imageUrl;
-
-        return $this;
-    }
-
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -240,6 +224,17 @@ class Items
         return $this;
     }
 
+    public function getDucats(): ?int
+    {
+        return $this->ducats;
+    }
+
+    public function setDucats(?int $ducats): static
+    {
+        $this->ducats = $ducats;
+        return $this;
+    }
+
     public function getWikiaUrl(): ?string
     {
         return $this->wikiaUrl;
@@ -284,42 +279,6 @@ class Items
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Retourne la liste des search names (normalisés) stockés
-     *
-     * @return string[]
-     */
-    public function getSearchNames(): array
-    {
-        return is_array($this->searchNames) ? $this->searchNames : [];
-    }
-
-    /**
-     * Ajoute un search name si absent
-     */
-    public function addSearchName(string $name): static
-    {
-        $current = $this->getSearchNames();
-        if (!in_array($name, $current, true)) {
-            $current[] = $name;
-            $this->searchNames = $current;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Supprime un search name
-     */
-    public function removeSearchName(string $name): static
-    {
-        $current = $this->getSearchNames();
-        $filtered = array_values(array_filter($current, function ($v) use ($name) { return $v !== $name; }));
-        $this->searchNames = $filtered;
 
         return $this;
     }

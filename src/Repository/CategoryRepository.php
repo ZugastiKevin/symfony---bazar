@@ -2,18 +2,18 @@
 
 namespace App\Repository;
 
-use App\Entity\Categorys;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Categorys>
+ * @extends ServiceEntityRepository<Category>
  */
-class CategorysRepository extends ServiceEntityRepository
+class CategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Categorys::class);
+        parent::__construct($registry, Category::class);
     }
 
     //    /**

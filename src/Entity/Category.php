@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\CategorysRepository;
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategorysRepository::class)]
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
+#[ORM\Table(name: 'category')]
+#[ORM\UniqueConstraint(name: 'uniq_category_name', columns: ['name'])]
 class Category
 {
     #[ORM\Id]

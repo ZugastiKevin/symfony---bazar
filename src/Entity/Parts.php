@@ -15,18 +15,23 @@ class Parts
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $uniqueName = null;
+
+    // Propriétaire : la Warframe / arme qui possède cette part
+    #[ORM\ManyToOne(targetEntity: Items::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Items $owner = null;
+
     /**
      * @var Collection<int, Items>
      */
     #[ORM\OneToMany(targetEntity: Items::class, mappedBy: 'parts')]
-    private Collection $item;
-
-    #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private Collection $items;
 
     public function __construct()
     {
-        $this->item = new ArrayCollection();
+        $this->items = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -34,18 +39,40 @@ class Parts
         return $this->id;
     }
 
+    public function getUniqueName(): ?string
+    {
+        return $this->uniqueName;
+    }
+
+    public function setUniqueName(string $uniqueName): static
+    {
+        $this->uniqueName = $uniqueName;
+        return $this;
+    }
+
+    public function getOwner(): ?Items
+    {
+        return $this->owner;
+    }
+
+    public function setOwner(?Items $owner): static
+    {
+        $this->owner = $owner;
+        return $this;
+    }
+
     /**
      * @return Collection<int, Items>
      */
-    public function getItem(): Collection
+    public function getItems(): Collection
     {
-        return $this->item;
+        return $this->items;
     }
 
     public function addItem(Items $item): static
     {
-        if (!$this->item->contains($item)) {
-            $this->item->add($item);
+        if (!$this->items->contains($item)) {
+            $this->items->add($item);
             $item->setParts($this);
         }
 
@@ -54,24 +81,11 @@ class Parts
 
     public function removeItem(Items $item): static
     {
-        if ($this->item->removeElement($item)) {
-            // set the owning side to null (unless already changed)
+        if ($this->items->removeElement($item)) {
             if ($item->getParts() === $this) {
                 $item->setParts(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
 
         return $this;
     }

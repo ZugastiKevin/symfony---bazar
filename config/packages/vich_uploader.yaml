@@ -3,7 +3,14 @@ vich_uploader:
     db_driver: orm
 
     mappings:
-        images:
-            uri_prefix: /assets/images/uploads
-            upload_destination: '%kernel.project_dir%/public/assets/images/uploads'
-            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+        items_api_image:
+            uri_prefix: /assets/images/uploads/api
+            upload_destination: '%kernel.project_dir%/public/assets/images/uploads/api'
+            namer: App\Service\ApiFixedNamer
+            delete_on_update: false
+            delete_on_remove: false
+
+        support_image:
+            uri_prefix: /assets/images/uploads/support
+            upload_destination: '%kernel.project_dir%/public/assets/images/uploads/support'
+            namer: vich_uploader.namer_smart_unique

@@ -19,15 +19,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const v = el.value.trim();
 
-        // Si vide -> annuler la requête et vider l'affichage
+        // Si vide -> annuler la requête et ne rien changer à l'affichage
         if (v === '') {
             evt.preventDefault();
-            if (results) results.innerHTML = '';
-            if (spinner) spinner.style.display = 'none';
             return;
         }
 
-        // Pour 1-2 caractères, laisser la requête partir (le backend décidera de chercher en BDD)
+        // Pour 1-2 caractères, laisser la requête partir (le backend décidera)
         if (spinner) spinner.style.display = 'inline';
     });
 

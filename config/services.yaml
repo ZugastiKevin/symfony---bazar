@@ -33,3 +33,7 @@ services:
             $defaultLocale: '%locale%'
         tags:
             - { name: kernel.event_subscriber }
+
+    App\Repository\ItemsRepository:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
