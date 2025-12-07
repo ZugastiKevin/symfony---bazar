@@ -18,10 +18,14 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+
+    {% set currentTheme = app.session.get('theme', 'cetus') %}
+    <body class="theme-{{ currentTheme }}">
         {% set current = app.request.attributes.get('_route') %}
+
         {% include "layout/_header.html.twig" %}
         <main class="container" id="main">
+            {{ render(path('place_order_panel', { '_locale': app.request.locale })) }}
             {% block body %}{% endblock %}
         </main>
         {% include "layout/_footer.html.twig" %}

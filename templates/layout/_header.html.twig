@@ -1,6 +1,7 @@
 <header class="container" id="header">
+    {% set currentRoute = app.request.attributes.get('_route') %}
     <nav class="header">
-        <div class="logo-container {{ current == 'home' ? 'active' : '' }}">
+        <div class="logo-container {{ currentRoute == 'home' ? 'active' : '' }}">
             <a href="{{ path('home', {'_locale': app.request.locale}) }}">
                 <img src="{{ asset('assets/images/logo/bazar.png') }}" alt="{{ site.name }}">
             </a>
@@ -8,12 +9,12 @@
         <div class="navbar_menu">
             <div class="navbar_list_container">
                 <ul class="navbar_list">
-                    <li class="btn-menu-navbar">
+                    <li class="btn-menu-navbar {{ currentRoute == 'home' ? 'active' : '' }}">
                         <a href="{{ path('home', {'_locale': app.request.locale}) }}">
                             <span>{{ 'navbar.market'|trans }}</span>
                         </a>
                     </li>
-                    <li class="btn-menu-navbar">
+                    <li class="btn-menu-navbar {{ currentRoute == 'contract' ? 'active' : '' }}">
                         <a href="{{ path('home', {'_locale': app.request.locale}) }}">
                             <span>{{ 'navbar.contract'|trans }}</span>
                         </a>
@@ -25,7 +26,7 @@
             <ul class="auth_list">
                 {% if app.user %}
                     {% if is_granted('ROLE_ADMIN') %}
-                        <li class="btn-menu-navbar">
+                        <li class="btn-menu-navbar {{ currentRoute == 'admin' ? 'active' : '' }}">
                             <a href="{{ path('admin', {'_locale': app.request.locale}) }}">
                                 <span>{{ 'admin'|trans }}</span>
                             </a>
@@ -37,12 +38,12 @@
                         </a>
                     </li>
                 {% else %}
-                    <li class="btn-menu-navbar">
+                    <li class="btn-menu-navbar {{ currentRoute == 'app_login' ? 'active' : '' }}">
                         <a href="{{ path('app_login', {'_locale': app.request.locale}) }}">
                             <span>{{ 'login'|trans }}</span>
                         </a>
                     </li>
-                    <li class="btn-menu-navbar">
+                    <li class="btn-menu-navbar {{ currentRoute == 'create_user' ? 'active' : '' }}">
                         <a href="{{ path('create_user', {'_locale': app.request.locale}) }}">
                             <span>{{ 'registration'|trans }}</span>
                         </a>

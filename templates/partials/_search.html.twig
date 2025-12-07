@@ -1,0 +1,26 @@
+{% set searchRoute = search_route is defined ? search_route : 'search' %}
+{% set searchPlaceholder = search_placeholder is defined ? search_placeholder : 'Recherche...' %}
+
+<div id="search" class="container search-background">
+    <div class="search">
+        <form id="search-form">
+            <div class="search-input-wrapper">
+                <input id="search-input" name="q" type="search" placeholder="Recherche..." autocomplete="off"
+                       hx-get="{{ path('search') }}"
+                       hx-target="#results"
+                       hx-swap="innerHTML"
+                       hx-trigger="keyup changed delay:300ms" />
+                <button id="search-clear" type="button" class="search-clear" aria-label="Effacer la recherche">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <button id="search-button" type="button">
+                <i class="fa-solid fa-magnifying-glass" id="search-icon"></i>
+                <i class="fa-solid fa-circle-notch" id="search-spinner" style="display:none;"></i>
+            </button>
+        </form>
+
+        <div id="results" class="search-results-container">
+        </div>
+    </div>
+</div>

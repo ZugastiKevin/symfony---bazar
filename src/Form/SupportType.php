@@ -32,6 +32,8 @@ class SupportType extends AbstractType
             ])
             ->add('category', ChoiceType::class, [
                 'label' => 'Catégorie',
+                'attr' => ['class' => 'select-dropdown'],
+                'row_attr' => ['class' => 'select-wrapper'],
                 'placeholder' => 'Choisissez une catégorie',
                 'choices' => [
                     'Support technique'    => 'support',

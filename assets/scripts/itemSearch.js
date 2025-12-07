@@ -2,10 +2,30 @@ document.addEventListener('DOMContentLoaded', function () {
     const input = document.getElementById('search-input');
     const btn = document.getElementById('search-button');
     const results = document.getElementById('results');
-    const spinner = document.getElementById('spinner');
+    const clear   = document.getElementById('search-clear');
+
+    function clearResults() {
+        if (results) {
+            results.innerHTML = '';
+        }
+    }
 
     function updateButton() {
-        const v = (input && input.value || '').trim();
+        if (!input) return;
+
+        const v = input.value.trim();
+        const hasValue = v !== '';
+
+        if (clear) {
+            const wrapper = clear.closest('.search-input-wrapper');
+            if (wrapper) {
+                wrapper.classList.toggle('has-value', hasValue);
+            }
+        }
+
+        if (!hasValue) {
+            clearResults();
+        }
     }
 
     if (input) {
@@ -13,26 +33,68 @@ document.addEventListener('DOMContentLoaded', function () {
         input.addEventListener('input', updateButton);
     }
 
+    if (btn) {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const firstLink =
+                document.querySelector('#results .results-list .results-content a') ||
+                document.querySelector('#results a');
+
+            if (firstLink) {
+                firstLink.click();
+            }
+        });
+    }
+
+    if (clear && input) {
+        clear.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            input.value = '';
+
+            updateButton();
+
+            input.focus();
+        });
+    }
+
     document.addEventListener('htmx:beforeRequest', function (evt) {
-        const el = evt.detail && evt.detail.elt;
+        const detail = evt.detail || {};
+        const el = detail.elt;
+
         if (!el || el.id !== 'search-input') return;
 
         const v = el.value.trim();
 
-        // Si vide -> annuler la requête et ne rien changer à l'affichage
         if (v === '') {
             evt.preventDefault();
             return;
         }
 
-        // Pour 1-2 caractères, laisser la requête partir (le backend décidera)
-        if (spinner) spinner.style.display = 'inline';
+        const icon    = document.getElementById("search-icon");
+        const spinner = document.getElementById("search-spinner");
+
+        if (icon && spinner) {
+            icon.style.display = "none";
+            spinner.style.display = "inline-block";
+        }
     });
 
     document.addEventListener('htmx:afterRequest', function (evt) {
-        const el = evt.detail && evt.detail.elt;
-        if (el && el.id === 'search-input') {
-            if (spinner) spinner.style.display = 'none';
+        const detail = evt.detail || {};
+        const el = detail.elt;
+
+        if (!el || el.id !== 'search-input') return;
+
+        const icon    = document.getElementById("search-icon");
+        const spinner = document.getElementById("search-spinner");
+
+        if (icon && spinner) {
+            spinner.style.display = "none";
+            icon.style.display = "inline-block";
         }
+
+        updateButton();
     });
 });

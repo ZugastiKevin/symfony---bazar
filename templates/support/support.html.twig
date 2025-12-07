@@ -39,7 +39,10 @@
                     <div class="right">
                         <span class="selecte">
                             {{ form_label(supportForm.category) }}
-                            {{ form_widget(supportForm.category, { attr: { id: 'selecte' } }) }}
+                            <div class="select-wrapper">
+                                {{ form_widget(supportForm.category, { attr: { id: 'selecte' } }) }}
+                                <i class="fa-solid fa-caret-down"></i>
+                            </div>
                             {{ form_errors(supportForm.category) }}
 
                             <div id="selecte-error" class="form-error" style="visibility:hidden;">&nbsp;</div>

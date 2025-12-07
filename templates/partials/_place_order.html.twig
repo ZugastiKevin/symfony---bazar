@@ -1,0 +1,58 @@
+{% if app.user %}
+    <button id="place-order-toggle" class="place-order-button">
+        <span class="place-order-icon"><i class="fa-solid fa-plus"></i></span>
+        <span class="place-order-text">{{ 'place-order'|trans }}</span>
+    </button>
+
+    <div id="place-order-overlay" class="place-order-overlay"></div>
+
+    <aside id="place-order-panel" class="place-order-panel">
+        <div class="place-order-header">
+            <h2>{{ "place-order"|trans }}</h2>
+            <button type="button" id="place-order-close" class="place-order-close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+        {% if formOrder is defined and formOrder is not null %}
+            {{ form_start(formOrder, {attr: { 'id': 'place-order-form' }}) }}
+                <div class="place-order-body">
+                    <div class="po-item">
+                        <div class="po-item-image">
+                            <img src="" alt="">
+                        </div>
+                        <div class="po-item-info">
+                            <h3 id="po-item-name"></h3>
+                            <p id="po-item-unique"></p>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="item_id" id="po-item-id">
+
+                    <div class="po-section">
+                        {{ form_label(formOrder.stocks) }}
+                        {{ form_widget(formOrder.stocks, {'attr': {'id': 'po-quantity'}}) }}
+                    </div>
+
+                    <div class="po-section">
+                        {{ form_label(formOrder.price) }}
+                        {{ form_widget(formOrder.price, {'attr': {'id': 'po-price'}}) }}
+                    </div>
+
+                    <div class="po-section">
+                        {{ form_label(formOrder.sellOrBuy) }}
+                        <div class="select-wrapper">
+                            {{ form_widget(formOrder.sellOrBuy, {'attr': {'id': 'po-status'}}) }}
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="po-actions">
+                        <input type="submit" class="po-btn po-btn-sell" value="{{ "validate"|trans }}">
+                    </div>
+                </div>
+            {{ form_end(formOrder) }}
+        {% else %}
+            Aucun formulaire disponible
+        {% endif %}
+    </aside>
+{% endif %}

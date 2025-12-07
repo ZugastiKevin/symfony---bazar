@@ -31,7 +31,7 @@ class SearchController extends AbstractController
             $language = $request->getLocale() ?? 'fr';
             $results = $this->searchService->search($query, $request, 100000, $language);
 
-            return $this->render('home/_search_results.html.twig', [
+            return $this->render('partials/_search_results.html.twig', [
                 'results' => $results,
             ]);
         } catch (\Throwable $e) {

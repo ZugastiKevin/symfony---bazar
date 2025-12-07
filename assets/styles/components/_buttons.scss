@@ -29,7 +29,7 @@
         }
     }
 
-    &:active {
+    &.active {
         border-bottom: solid 3.75px v.$color-blue-eidolon;
     }
 }

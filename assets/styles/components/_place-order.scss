@@ -1,0 +1,212 @@
+@use "../abstracts/variables" as v;
+
+.place-order-button {
+    width: 45px;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    transform: translateY(-50%);
+    padding: 0.75rem 1rem;
+    background-color: v.$color-blue-eidolon;
+    color: v.$color-white;
+    border: none;
+    border-radius: 1rem 0 0 1rem;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
+    text-shadow: 0 0 10px v.$color-black;
+    z-index: 1000;
+    transition: background-color 0.2s ease-out, transform 0.2s ease-out;
+
+    .place-order-text {
+        writing-mode: vertical-rl;
+        display: block;
+        transition: all 0.25s ease-out;
+    }
+
+    &:hover {
+        background-color: v.$color-old-antique-gold;
+        transform: translateY(-50%) translateX(-3px);
+    }
+
+    .place-order-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: v.$color-old-antique-gold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s ease-out, transform 0.2s ease-out;
+
+        i {
+            font-size: 1rem;
+        }
+    }
+
+    &:hover .place-order-icon {
+        background: v.$color-white;
+        color: v.$color-blue-eidolon;
+        transform: scale(1.1);
+    }
+}
+
+.place-order-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-out;
+    z-index: 999;
+}
+
+.place-order-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 360px;
+    max-width: 100%;
+    height: 100vh;
+    background-color: v.$color-black;
+    color: v.$color-white;
+    box-shadow: -4px 0 15px rgba(0,0,0,0.9);
+    transform: translateX(100%);
+    transition: transform 0.25s ease-out;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid v.$color-blue-eidolon;
+
+    .place-order-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+
+        h2 {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .place-order-close {
+            background: none;
+            border: none;
+            color: v.$color-white;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+    }
+
+    .place-order-body {
+        flex: 1;
+        overflow-y: auto;
+    }
+
+    .po-item {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+
+        .po-item-image {
+            width: 64px;
+            height: 64px;
+            border: 2px solid v.$color-blue-eidolon;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            background: rgba(255,255,255,0.05);
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+
+        .po-item-info {
+            h3 {
+                margin: 0;
+                font-size: 0.95rem;
+            }
+
+            p {
+                margin: 0.1rem 0 0;
+                font-size: 0.7rem;
+                color: rgba(255,255,255,0.6);
+            }
+        }
+    }
+
+    .po-section {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.4rem 0.5rem;
+            border: 1px solid v.$color-blue-eidolon;
+            background-color: v.$color-old-antique-gold;
+            color: v.$color-white;
+        }
+    }
+
+    .po-quantity-display,
+    .po-price-total {
+        margin-top: 0.25rem;
+        font-size: 0.8rem;
+    }
+
+    .po-actions {
+        margin-top: 1.5rem;
+
+        input[type=submit] {
+            width: 100%;
+            padding: 10px;
+            color: v.$color-white;
+            background-color: v.$color-old-antique-gold;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
+            border-bottom: solid 3.75px v.$color-golden-twilight;
+            @include v.orbitron-bold;
+            transition: all 0.2s ease-in-out;
+
+            &:hover {
+                text-shadow: 0 0 10px v.$color-black;
+                background-color: v.$color-antique-gold;
+                border-bottom: solid 3.75px v.$color-blue-eidolon;
+            }
+        }
+    }
+}
+
+.place-order-panel.is-open {
+    transform: translateX(0);
+}
+
+.place-order-overlay.is-open {
+    opacity: 1;
+    pointer-events: auto;
+}

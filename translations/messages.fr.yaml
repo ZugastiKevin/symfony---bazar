@@ -77,10 +77,18 @@ cookie:
   accept: "Accepter"
   refuse: "Refuser"
 
+# aside
+place-order: "Passer la commande"
 
 # footer
-about: "À propos"
+about: "À PROPOS"
 privacy_policy: "Politique de Confidentialité"
 legal_notice: "Mentions Légales"
 terms_of_use: "Conditions Générales d'Utilisation"
-alcohol_warning: "L'abus d'alcool est dangereux pour la santé, à consommer avec modération"
+language_theme: "CHANGER DE LANGUE - THEME"
+all-right: "TOUS DROITS RÉSERVÉS"
+links: "LIENS"
+api: "DOCUMENTATION DE L'API"
+call: "CONTACTEZ-NOUS"
+disclaimer: "AVERTISSEMENT"
+disclaimer-text: "Digital Extremes Ltd, Warframe et le logo Warframe sont des marques déposées. Tous droits réservés. Ce site n'a aucun lien officiel avec Digital Extremes Ltd ou Warframe. L'ensemble des illustrations, captures d'écran, personnages et autres éléments reconnaissables de la propriété intellectuelle liés à ces marques sont également la propriété intellectuelle de Digital Extremes Ltd."

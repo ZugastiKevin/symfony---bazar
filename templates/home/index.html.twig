@@ -3,26 +3,9 @@
 {% block title %}{{ 'home'|trans }}{% endblock %}
 
 {% block body %}
-    <div id="home" class="container">
+    <div id="home" class="container margin-navbar">
         <div class="home">
-            <div class="search-container">
-                <form id="search-form"
-                      hx-get="{{ path('search') }}"
-                      hx-target="#results"
-                      hx-swap="innerHTML"
-                      hx-trigger="submit">
-                    <input id="search-input" name="q" type="search" placeholder="Recherche..." autocomplete="off"
-                           hx-get="{{ path('search') }}"
-                           hx-target="#results"
-                           hx-swap="innerHTML"
-                           hx-trigger="keyup changed delay:300ms" />
-                    <button id="search-button" type="submit" disabled>Rechercher</button>
-                    <span id="spinner" style="display:none;">Recherche...</span>
-                </form>
-
-                <div id="results" class="search-results-container">
-                </div>
-            </div>
+            {% include 'partials/_search.html.twig' %}
         </div>
     </div>
 {% endblock %}

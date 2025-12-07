@@ -1,0 +1,183 @@
+@use "../abstracts/variables" as v;
+
+@keyframes spinAndPulse {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.15); // ~3px de plus
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.search-background {
+    background-image: url("/public/assets/images/search/cetus.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#search {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .search {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 30%;
+        transition: all 0.2s ease-out;
+
+        #search-form {
+            width: 100%;
+            display: flex;
+
+            .search-input-wrapper {
+                position: relative;
+                width: 85%;
+
+                #search-input {
+                    width: 100%;
+                    padding: 10px 0 10px 10px;
+                    border: solid 3.75px v.$color-black;
+                    background-color: v.$color-old-antique-gold;
+                    color: v.$color-white;
+                    outline: none;
+                    resize: none;
+                    transition: border-color 0.2s ease-out;
+
+                    &:focus {
+                        border-color: v.$color-blue-eidolon;
+                    }
+                }
+
+                .search-clear {
+                    position: absolute;
+                    right: 8px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    background: none;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+                    cursor: pointer;
+                    color: v.$color-white;
+                    display: none;
+
+                    i {
+                        font-size: 0.9rem;
+                    }
+
+                    &:hover {
+                        color: v.$color-blue-eidolon;
+                    }
+                }
+
+                &.has-value .search-clear {
+                    display: block;
+                }
+            }
+
+            #search-button {
+                width: 15%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                position: relative;
+                border: solid 3.75px v.$color-blue-eidolon;
+                background-color: v.$color-blue-eidolon;
+                color: v.$color-white;
+
+                i {
+                    font-size: 1.2rem;
+                    transition: opacity 0.2s ease;
+                }
+
+                #search-spinner {
+                    animation: spinAndPulse 0.8s linear infinite;
+                    color: v.$color-white;
+                }
+            }
+        }
+
+        .search-results-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(10px);
+            transition:
+                    max-height 0.25s ease,
+                    opacity 0.25s ease,
+                    transform 0.25s ease;
+
+            .results-list {
+                margin-top: 0;
+                display: flex;
+                flex-direction: column;
+                border: solid 3.75px v.$color-blue-eidolon;
+                border-top: none;
+            }
+        }
+
+        &:focus-within {
+            .search-results-container {
+                max-height: 500px;
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1991px) {
+    #search {
+        .search {
+            width: 20%;
+        }
+    }
+}
+
+@media screen and (max-width:1000px) {
+    #search {
+        .search {
+            width: 55%;
+        }
+    }
+}
+
+@media screen and (max-width:768px) {
+    #search {
+        .search {
+            width: 70%;
+        }
+    }
+}
+
+@media screen and (max-width:585px) {
+    #search {
+        .search {
+            width: 90%;
+        }
+    }
+}
+
+@media screen and (max-width:364px) {
+    #search {
+        .search {
+            width: 99%;
+        }
+    }
+}

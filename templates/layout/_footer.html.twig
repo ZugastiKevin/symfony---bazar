@@ -1,38 +1,56 @@
+{% set currentLocale = app.request.locale ?? app.request.attributes.get('_locale') ?? 'fr' %}
+{% set currentLangLabel = currentLocale == 'en' ? 'ENGLISH' : 'FRANÇAIS' %}
+{% set currentTheme = app.session.get('theme', 'cetus') %}
+{% set currentThemeLabel = currentTheme == 'deimos' ? 'DEIMOS' : 'CETUS' %}
+
+
 <footer class="container" id="footer">
     <div class="footer">
         <div class="footer-content">
             <div class="footer-propo">
-                <h4 class="golden-twilight">À PROPOS</h4>
+                <h4 class="golden-twilight">{{ 'about'|trans }}</h4>
                 <ul>
-                    <li class="btn-menu"><a href="{{ path('mentions_legales') }}">MENTIONS LÉGALES</a></li>
-                    <li class="btn-menu"><a href="{{ path('confidentialite') }}">POLITIQUE DE CONFIDENTIALITÉ</a></li>
-                    <li class="btn-menu"><a href="{{ path('cgu') }}">CONDITIONS GÉNÉRALES D'UTILISATION</a></li>
+                    <li class="btn-menu"><a href="{{ path('mentions_legales') }}">{{ 'legal_notice'|trans }}</a></li>
+                    <li class="btn-menu"><a href="{{ path('confidentialite') }}">{{ 'privacy_policy'|trans }}</a></li>
+                    <li class="btn-menu"><a href="{{ path('cgu') }}">{{ 'terms_of_use'|trans }}</a></li>
                 </ul>
             </div>
             <div class="footer-language_theme_copyright">
-                <h4 class="golden-twilight">CHANGER DE LANGUE - THEME</h4>
+                <h4 class="golden-twilight">{{ 'language_theme'|trans }}</h4>
                 <div class="footer-language_theme">
                     <div class="footer-language">
                         <ul class="btn-menu-dropdown language-dropdown-toggle" data-dropdown-target="#language-dropdown">
-                            <li>FRANÇAIS</li>
+                            <li>{{ currentLangLabel }}</li>
                             <li><i class="fa-solid fa-caret-down"></i></li>
                         </ul>
                         <div class="dropdown-language">
                             <ul id="language-dropdown" class="dropdown-language-list">
-                                <li class="btn-menu"><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'fr'})) }}">FRANÇAIS</a></li>
-                                <li class="btn-menu"><a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'en'})) }}">ENGLISH</a></li>
+                                <li class="btn-menu {% if currentLocale == 'fr' %}active{% endif %}">
+                                    <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'fr'})) }}">
+                                        FRANÇAIS
+                                    </a>
+                                </li>
+                                <li class="btn-menu {% if currentLocale == 'en' %}active{% endif %}">
+                                    <a href="{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_locale': 'en'})) }}">
+                                        ENGLISH
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="footer-theme">
                         <ul class="btn-menu-dropdown theme-dropdown-toggle" data-dropdown-target="#theme-dropdown">
-                            <li>CETUS</li>
+                            <li>{{ currentThemeLabel }}</li>
                             <li><i class="fa-solid fa-caret-down"></i></li>
                         </ul>
                         <div class="dropdown-theme">
                             <ul id="theme-dropdown" class="dropdown-theme-list">
-                                <li class="btn-menu"><a href="#">CETUS</a></li>
-                                <li class="btn-menu"><a href="#">DEIMOS</a></li>
+                                <li class="btn-menu {% if currentTheme == 'cetus' %}active{% endif %}">
+                                    <a href="{{ path('switch_theme', {'theme': 'cetus'}) }}">CETUS</a>
+                                </li>
+                                <li class="btn-menu {% if currentTheme == 'deimos' %}active{% endif %}">
+                                    <a href="{{ path('switch_theme', {'theme': 'deimos'}) }}">DEIMOS</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -40,21 +58,21 @@
                 <div class="footer-copyright">
                     <p class="golden-twilight">COPYRIGHT &copy - 2025</p>
                     <p class="golden-twilight">{{ site.name }}</p>
-                    <p class="golden-twilight">TOUS DROITS RÉSERVÉS</p>
+                    <p class="golden-twilight">{{ 'all-right'|trans }}</p>
                 </div>
             </div>
             <div class="footer-link">
-                <h4 class="golden-twilight">LIENS</h4>
+                <h4 class="golden-twilight">{{ 'links'|trans }}</h4>
                 <ul>
-                    <li class="btn-menu"><a href="https://42bytes.notion.site/WFM-Api-v2-Documentation-5d987e4aa2f74b55a80db1a09932459d" target="_blank">DOCUMENTATION DE L'API</a></li>
-                    <li class="btn-menu"><a href="{{ path('support') }}">CONTACTEZ-NOUS</a></li>
+                    <li class="btn-menu"><a href="https://docs.warframestat.us/#tag/Warframe" target="_blank">{{ 'api'|trans }}</a></li>
+                    <li class="btn-menu"><a href="{{ path('support') }}">{{ 'call'|trans }}</a></li>
                     <li class="btn-menu"><a href="{{ path('faq') }}">F.A.Q</a></li>
                 </ul>
             </div>
         </div>
         <div class="footer-disclaimer">
-            <h4 class="golden-twilight">AVERTISSEMENT</h4>
-            <p>Digital Extremes Ltd, Warframe et le logo Warframe sont des marques déposées. Tous droits réservés. Ce site n'a aucun lien officiel avec Digital Extremes Ltd ou Warframe. L'ensemble des illustrations, captures d'écran, personnages et autres éléments reconnaissables de la propriété intellectuelle liés à ces marques sont également la propriété intellectuelle de Digital Extremes Ltd.</p>
+            <h4 class="golden-twilight">{{ 'disclaimer'|trans }}</h4>
+            <p>{{ 'disclaimer-text'|trans }}</p>
         </div>
         <div class="logo-footer-container">
             <a href="{{ path('home') }}"><img src="{{ asset('assets/images/logo/bazar.png') }}" alt="{{ site.name }}"></a>
