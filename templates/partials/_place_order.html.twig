@@ -14,34 +14,98 @@
             </button>
         </div>
         {% if formOrder is defined and formOrder is not null %}
-            {{ form_start(formOrder, {attr: { 'id': 'place-order-form' }}) }}
+            {{ form_start(formOrder, { action: path('shop_place_order'), method: 'POST', attr: { id: 'place-order-form' }}) }}
                 <div class="place-order-body">
                     <div class="po-item">
                         <div class="po-item-image">
                             <img src="" alt="">
                         </div>
-                        <div class="po-item-info">
-                            <h3 id="po-item-name"></h3>
-                            <p id="po-item-unique"></p>
+                        <div class="po-section">
+                            <div class="search-input-wrapper">
+                                <input
+                                        id="place-order-search-input"
+                                        type="search"
+                                        placeholder="Recherche..."
+                                        autocomplete="off"
+                                />
+                                <button id="search-clear" type="button" class="search-clear" aria-label="Effacer la recherche">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
 
-                    <input type="hidden" name="item_id" id="po-item-id">
+                    <input type="hidden" name="uniqueName" id="po-item-uniqueName">
 
                     <div class="po-section">
-                        {{ form_label(formOrder.stocks) }}
-                        {{ form_widget(formOrder.stocks, {'attr': {'id': 'po-quantity'}}) }}
+                        <div class="number-line">
+                            {{ form_label(formOrder.stocks, null, {
+                                label_attr: { class: 'number-line__label' }
+                            }) }}
+
+                            <div class="number-line__field">
+                                {{ form_widget(formOrder.stocks, {
+                                    attr: { class: 'number-line__input' }
+                                }) }}
+                                <div class="number-line__arrows">
+                                    <span class="up"><i class="fa-solid fa-caret-up"></i></span>
+                                    <span class="down"><i class="fa-solid fa-caret-down"></i></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="po-section">
-                        {{ form_label(formOrder.price) }}
-                        {{ form_widget(formOrder.price, {'attr': {'id': 'po-price'}}) }}
+                        <div class="number-line">
+                            {{ form_label(formOrder.price, null, {
+                                label_attr: { class: 'number-line__label' }
+                            }) }}
+
+                            <div class="number-line__field">
+                                {{ form_widget(formOrder.price, {
+                                    attr: { class: 'number-line__input' }
+                                }) }}
+                                <div class="number-line__arrows">
+                                    <span class="up"><i class="fa-solid fa-caret-up"></i></span>
+                                    <span class="down"><i class="fa-solid fa-caret-down"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="po-section po-rank-section">
+                        <div class="number-line">
+                            {{ form_label(formOrder.rank, null, {
+                                label_attr: { class: 'number-line__label' }
+                            }) }}
+
+                            <div class="number-line__field">
+                                {{ form_widget(formOrder.rank, {
+                                    attr: { class: 'number-line__input',
+                                        type: 'number',
+                                        min: 0,
+                                        max: 10 }
+                                }) }}
+                                <div class="number-line__arrows">
+                                    <span class="up"><i class="fa-solid fa-caret-up"></i></span>
+                                    <span class="down"><i class="fa-solid fa-caret-down"></i></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="po-section">
                         {{ form_label(formOrder.sellOrBuy) }}
                         <div class="select-wrapper">
                             {{ form_widget(formOrder.sellOrBuy, {'attr': {'id': 'po-status'}}) }}
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="po-section">
+                        {{ form_label(formOrder.initialVisibility) }}
+                        <div class="select-wrapper">
+                            {{ form_widget(formOrder.initialVisibility, {'attr': {'id': 'po-visibility'}}) }}
                             <i class="fa-solid fa-caret-down"></i>
                         </div>
                     </div>

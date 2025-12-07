@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Shop;
 use App\Form\UserType;
+use App\Repository\StatusRepository;
 use App\Repository\UserRepository;
 use App\Form\ForgotPasswordRequestFormType;
 use App\Form\ResetPasswordFormType;
@@ -35,7 +36,7 @@ class SecurityController extends AbstractController
     // create or update user
     #[Route('/update_user/{id}', name: 'update_user')]
     #[Route('/create_user', name: 'create_user')]
-    public function createUser(?User $user, Request $request, UserRepository $repository, MailerInterface $mailer, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder): Response
+    public function createUser(?User $user, Request $request, UserRepository $repository, MailerInterface $mailer, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordEncoder, StatusRepository $statusRepository): Response
     {
         $currentUser = $this->getUser();
 
@@ -69,14 +70,16 @@ class SecurityController extends AbstractController
                     return $this->redirectToRoute('create_user');
                 }
 
-                $user->setStatus('Offline');
+                $invisibleStatus = $statusRepository->findByCode(0);
+                $user->setStatus($invisibleStatus);
+
                 $user->setRoles(['ROLE_USER']);
                 $user->setCreatedAt(new \DateTimeImmutable());
 
                 $shop = new Shop();
                 $user->setShop($shop);
 
-                // 🔹 Génération du token de vérification
+                // Génération du token de vérification
                 $token = bin2hex(random_bytes(32));
                 $user->setVerificationToken($token);
                 $user->setVerificationTokenExpiresAt(
@@ -84,7 +87,7 @@ class SecurityController extends AbstractController
                 );
                 $user->setIsVerified(false);
 
-                // 🔹 Génération du lien absolu
+                // Génération du lien absolu
                 $verificationLink = $this->generateUrl(
                     'verify_account',
                     ['token' => $token],

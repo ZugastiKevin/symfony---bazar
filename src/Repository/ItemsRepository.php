@@ -169,6 +169,10 @@ class ItemsRepository extends ServiceEntityRepository
                 $entity->setWikiaUrl($raw['wikiaUrl']);
             }
 
+            if (array_key_exists('fusionLimit', $raw)) {
+                $entity->setFusionLimit((int) $raw['fusionLimit']);
+            }
+
             if (array_key_exists('ducats', $raw)) {
                 $entity->setDucats((int) $raw['ducats']);
             }

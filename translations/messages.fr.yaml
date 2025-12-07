@@ -49,20 +49,14 @@ navbar:
 # home
 home: "Le Bazar"
 
-# form bottle placeholder
+# form placeholder
 form:
     label:
         min: "Le nom doit contenir au moins {{ limit }} caractère."
         max: "Le nom ne peut pas dépasser {{ limit }} caractères."
-    year_placeholder: "Millésime"
     invalid_type: "Veuillez télécharger un fichier au format JPEG, JPG, PNG ou WEBP."
-    pays_placeholder: "Sélectionner un pays"
-    regions_placeholder: "Sélectionner une région"
-    types_placeholder: "Sélectionner un type de vin"
-    grapes_placeholder: "Sélectionner un cepage"
     yes: "Oui"
     no: "Non"
-    alcool: "Saisir un nombre comme 12.5"
     describ:
         describ_too_short: "La description doit contenir au moins {{ limit }} caractère."
         describ_too_long: "La description ne peut pas dépasser {{ limit }} caractères."
@@ -79,6 +73,19 @@ cookie:
 
 # aside
 place-order: "Passer la commande"
+price-per-unit: "Prix par unité :"
+quantity: "Quantité :"
+order-type: "Type d'ordre :"
+initial-visibility: "Visibilité initiale :"
+sell: "Vendre"
+buy: "Acheter"
+rank: "rang"
+
+# status
+status.hidden: "Invisible"
+status.online_site: "Sur le site"
+status.connected_ingame: "Connecté en jeu"
+
 
 # footer
 about: "À PROPOS"

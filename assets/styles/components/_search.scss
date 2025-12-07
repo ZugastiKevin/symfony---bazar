@@ -95,15 +95,24 @@
                 border: solid 3.75px v.$color-blue-eidolon;
                 background-color: v.$color-blue-eidolon;
                 color: v.$color-white;
+                transition: background-color 0.2s ease;
 
-                i {
-                    font-size: 1.2rem;
-                    transition: opacity 0.2s ease;
+                svg {
+                    font-size: 1.1rem;
+                    transition: font-size 0.2s ease-out, opacity 0.2s ease;
                 }
 
                 #search-spinner {
                     animation: spinAndPulse 0.8s linear infinite;
+                    font-size: 1.1rem;
                     color: v.$color-white;
+                }
+
+                &:hover {
+                    background-color: v.$color-antique-gold;
+                    svg {
+                        font-size: 1.4rem;
+                    }
                 }
             }
         }

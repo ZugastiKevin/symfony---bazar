@@ -55,6 +55,9 @@ class Items
     private ?string $type = null;
 
     #[ORM\Column(nullable: true)]
+    private ?int $fusionLimit = null;
+
+    #[ORM\Column(nullable: true)]
     private ?int $ducats = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -221,6 +224,17 @@ class Items
     {
         $this->type = $type;
 
+        return $this;
+    }
+
+    public function getFusionLimit(): ?int
+    {
+        return $this->fusionLimit;
+    }
+
+    public function setFusionLimit(?int $fusionLimit): static
+    {
+        $this->fusionLimit = $fusionLimit;
         return $this;
     }
 

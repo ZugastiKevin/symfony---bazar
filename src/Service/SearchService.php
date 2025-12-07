@@ -162,7 +162,8 @@ class SearchService
                 'imageName'   => $it->getImageName(),
                 'wikiaUrl'    => $it->getWikiaUrl(),
                 'type'        => $it->getType(),
-                'ducats'        => $it->getDucats(),
+                'fusionLimit' => $it->getFusionLimit(),
+                'ducats'      => $it->getDucats(),
             ];
         }, $entities);
     }

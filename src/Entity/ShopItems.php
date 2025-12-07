@@ -27,6 +27,9 @@ class ShopItems
     #[ORM\Column]
     private ?int $stocks = null;
 
+    #[ORM\Column(name: "mod_rank", nullable: true)]
+    private ?int $rank = null;
+
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
@@ -35,6 +38,9 @@ class ShopItems
      */
     #[ORM\ManyToMany(targetEntity: Items::class, mappedBy: 'shop')]
     private Collection $items;
+
+    #[ORM\ManyToOne(inversedBy: 'shopsItems')]
+    private ?Status $status = null;
 
     public function __construct()
     {
@@ -94,6 +100,18 @@ class ShopItems
         return $this;
     }
 
+    public function getRank(): ?int
+    {
+        return $this->rank;
+    }
+
+    public function setRank(int $rank): static
+    {
+        $this->rank = $rank;
+
+        return $this;
+    }
+
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
@@ -129,6 +147,18 @@ class ShopItems
         if ($this->items->removeElement($item)) {
             $item->removeShop($this);
         }
+
+        return $this;
+    }
+
+    public function getStatus(): ?Status
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?Status $status): static
+    {
+        $this->status = $status;
 
         return $this;
     }

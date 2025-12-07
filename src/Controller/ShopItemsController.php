@@ -6,7 +6,9 @@ use App\Entity\Items;
 use App\Entity\Shop;
 use App\Entity\ShopItems;
 use App\Form\ShopItemsType;
+use App\Repository\ItemsRepository;
 use App\Repository\ShopRepository;
+use App\Service\UserStatusService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -19,13 +21,19 @@ final class ShopItemsController extends AbstractController
     #[Route('/_fragment/place-order-panel', name: 'place_order_panel', methods: ['GET'])]
     public function panel(Security $security): Response
     {
-        // Si pas connecté → on ne rend rien (évite les erreurs)
         if (!$security->getUser()) {
-            return new Response('', 204); // No Content
+            return new Response('', 204);
         }
 
+        $user = $security->getUser();
         $shopItem = new ShopItems();
-        $form = $this->createForm(ShopItemsType::class, $shopItem);
+
+        $currentStatusCode = $user->getStatus()?->getCode() ?? 0;
+
+        $form = $this->createForm(ShopItemsType::class, $shopItem, [
+            'user_status_code' => $currentStatusCode,
+            'fusion_limit'     => 0,
+        ]);
 
         return $this->render('partials/_place_order.html.twig', [
             'formOrder' => $form->createView(),
@@ -35,15 +43,28 @@ final class ShopItemsController extends AbstractController
     #[Route('/shop/place-order', name: 'shop_place_order', methods: ['POST'])]
     public function placeOrder(
         Request $request,
-        Items $item,
         Security $security,
         ShopRepository $shopRepository,
-        EntityManagerInterface $em
+        ItemsRepository $itemsRepository,
+        EntityManagerInterface $em,
+        UserStatusService $userStatusService,
     ): Response {
         $user = $security->getUser();
 
         if (!$user) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour placer un ordre.');
+        }
+
+        $uniqueName = $request->request->get('uniqueName');
+        if (!$uniqueName) {
+            $this->addFlash('error', "Aucun item sélectionné.");
+            return $this->redirectToRoute('home');
+        }
+
+        $item = $itemsRepository->findOneBy(['uniqueName' => $uniqueName]);
+        if (!$item) {
+            $this->addFlash('error', 'Item introuvable.');
+            return $this->redirectToRoute('home');
         }
 
         // Récupère ou crée le Shop de l'utilisateur
@@ -58,18 +79,40 @@ final class ShopItemsController extends AbstractController
         $shopItem->setShop($shop);
         $shopItem->setCreatedAt(new \DateTimeImmutable());
 
-        $form = $this->createForm(ShopItemsType::class, $shopItem);
+        $currentStatusCode = $user->getStatus()?->getCode() ?? 0;
+
+        $isMod = false;
+        $fusionLimit = 0;
+
+        if ($item->getCategory() && strtolower($item->getCategory()->getName()) === 'mods') {
+            $isMod = true;
+            $fusionLimit = $item->getFusionLimit() ?? 0;
+        }
+
+        $form = $this->createForm(ShopItemsType::class, $shopItem, [
+            'user_status_code' => $currentStatusCode,
+            'fusion_limit'     => $fusionLimit,
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Lien ManyToMany Items <-> ShopItems
+            $selectedCode = (int) $form->get('initialVisibility')->getData();
+
+            if ($selectedCode !== $currentStatusCode) {
+                $userStatusService->setUserStatusByCode($user, $selectedCode, false);
+            }
+
+            if (!$isMod) {
+                $shopItem->setRank(0);
+            }
+
+            $shopItem->setStatus($user->getStatus());
+
             $shopItem->addItem($item);
 
             $em->persist($shopItem);
             $em->flush();
 
-            // Si tu veux gérer en HTMX/AJAX, tu peux retourner juste un fragment
-            // ici je fais simple : redirection vers la page courante ou une page "shop"
             $this->addFlash('success', 'Ordre enregistré avec succès.');
 
             return $this->redirectToRoute('home');

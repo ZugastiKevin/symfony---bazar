@@ -4,6 +4,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const results = document.getElementById('results');
     const clear   = document.getElementById('search-clear');
 
+    const asideInput = document.getElementById('place-order-search-input');
+    const asideClear = document.getElementById('place-order-search-clear');
+    const toggleBtn  = document.getElementById('place-order-toggle');
+
     function clearResults() {
         if (results) {
             results.innerHTML = '';
@@ -25,6 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
         if (!hasValue) {
             clearResults();
+        }
+
+        if (asideInput) {
+            asideInput.value = input.value;
         }
     }
 
@@ -97,4 +105,38 @@ document.addEventListener('DOMContentLoaded', function () {
 
         updateButton();
     });
+
+    if (toggleBtn && input && asideInput) {
+        toggleBtn.addEventListener('click', () => {
+            asideInput.value = input.value;
+        });
+    }
+
+    if (asideInput && input) {
+        asideInput.addEventListener('input', () => {
+            // copie la valeur dans le champ qui a les attributs hx-*
+            input.value = asideInput.value;
+
+            // met à jour l'état du bouton / clear / résultats
+            updateButton();
+
+            // déclenche un keyup pour que htmx réagisse (hx-trigger="keyup changed delay:300ms")
+            const evt = new KeyboardEvent('keyup', { bubbles: true });
+            input.dispatchEvent(evt);
+        });
+    }
+
+    if (asideClear && asideInput) {
+        asideClear.addEventListener('click', (e) => {
+            e.preventDefault();
+            asideInput.value = '';
+            asideInput.focus();
+
+            // si tu veux aussi vider la recherche principale et les résultats :
+            if (input) {
+                input.value = '';
+                updateButton();
+            }
+        });
+    }
 });
