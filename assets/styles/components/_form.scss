@@ -281,16 +281,6 @@
     background-position: 7.5% top;
 }
 
-@supports (-webkit-touch-callout: none) {
-    html, body {
-        height: 100%;
-    }
-
-    #form {
-        min-height: -webkit-fill-available;
-    }
-}
-
 #form {
     display: flex;
     flex-direction: column;
@@ -395,15 +385,10 @@
 }
 
 @media screen and (max-width:768px) {
-    @supports (-webkit-touch-callout: none) {
-        #form {
-            min-height: auto;
-            padding-bottom: 3rem;
-        }
-    }
     .form-background {
         background-position: 24.3% top;
     }
+    
     #form {
         min-height: auto;
         padding: 1rem 0 3rem 0;
