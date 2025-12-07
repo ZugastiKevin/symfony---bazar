@@ -24,7 +24,7 @@
         {% set current = app.request.attributes.get('_route') %}
 
         {% include "layout/_header.html.twig" %}
-        <main class="container" id="main">
+        <main class="container margin-navbar" id="main">
             {{ render(path('place_order_panel', { '_locale': app.request.locale })) }}
             {% block body %}{% endblock %}
         </main>

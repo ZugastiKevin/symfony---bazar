@@ -8,15 +8,13 @@
     100% { transform: translateX(0);}
 }
 
-@mixin form-basique($width: 50%, $height: 500px) {
+@mixin form-basique($width: 50%) {
     position: relative;
     width: $width;
     max-width: 1200px;
-    max-height: $height;
     display: flex;
     flex-direction: column;
     color: v.$color-black;
-    //background-image: url("");
     background-size: 453px 100%;
     background-position: left top;
     background-repeat: no-repeat;
@@ -284,7 +282,6 @@
 }
 
 #form {
-    //margin-top: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -298,12 +295,14 @@
     .form {
         @include form-basique();
         margin-left: auto;
+        margin-right: 2rem;
+        max-height: none;
+        height: auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
 
         .form-content {
-            padding-top: 144px;
             position: relative;
             width: 100%;
             display: flex;
@@ -390,13 +389,15 @@
         background-position: 24.3% top;
     }
     #form {
-        margin-top: 124px;
-        padding: 0;
+        min-height: auto;
+        padding: 1rem 0 3rem 0;
+
         .form {
             width: 100%;
             flex-direction: column;
             background-size: 100% 80%;
-            max-height: 750px;
+            max-height: none;
+            height: auto;
 
 
             .form-content {
@@ -449,7 +450,6 @@
 
 @media screen and (max-width:600px) {
     #form {
-        margin-top: 124px;
         .form {
             .form-content {
                 .all-form {
@@ -465,12 +465,6 @@
                 }
             }
         }
-    }
-}
-
-@media screen and (max-width:585px) {
-    #form {
-        margin-top: 134px;
     }
 }
 
