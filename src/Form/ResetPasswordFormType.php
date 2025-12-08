@@ -15,20 +15,20 @@ class ResetPasswordFormType extends AbstractType
         $builder->add('plainPassword', RepeatedType::class, [
             'type' => PasswordType::class,
             'first_options'  => [
-                'label' => 'Nouveau mot de passe',
+                'label' => 'new_password',
                 'attr' => [
                     'id' => 'password',
                     'autocomplete' => 'new-password',
                 ],
             ],
             'second_options' => [
-                'label' => 'Confirmez le mot de passe',
+                'label' => 'confirm_password',
                 'attr' => [
                     'id' => 'password_confirm',
                     'autocomplete' => 'new-password',
                 ],
             ],
-            'invalid_message' => 'Les mots de passe ne correspondent pas.',
+            'invalid_message' => 'form.error.error_mismatch',
         ]);
     }
 
