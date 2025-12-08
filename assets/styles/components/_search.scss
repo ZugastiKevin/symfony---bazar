@@ -21,7 +21,7 @@
 
 #search {
     width: 100%;
-    height: 65vh;
+    height: 50vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -172,6 +172,7 @@
     #search {
         height: 40vh;
         .search {
+            margin-top: 9rem;
             width: 70%;
         }
     }
