@@ -54,50 +54,39 @@
                     </div>
                 </div>
             </div>
-            {% if orders is defined and orders is not empty %}
-                <div class="item-orders-table-wrapper">
-                    <table class="item-orders-table">
-                        <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Joueur</th>
-                            <th>Statut</th>
-                            <th>Prix unitaire</th>
-                            <th>Quantité</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for order in orders %}
-                            {% set shop = order.shop %}
-                            {% set user = shop.user %}
-                            <tr>
-                                <td>
-                                    {# à adapter selon ton enum/champ : sell/buy #}
-                                    {{ order.orderType is defined and order.orderType == 'sell' ? 'Achat' : 'Vente' }}
-                                </td>
-                                <td>{{ user.pseudo }}</td>
-                                <td>
-                                    {% if user.status %}
-                                        {% set code = user.status.code %}
-                                        {% if code == 0 %}
-                                            {{ 'status.hidden'|trans }}
-                                        {% elseif code == 1 %}
-                                            {{ 'status.online_site'|trans }}
-                                        {% elseif code == 2 %}
-                                            {{ 'status.connected_ingame'|trans }}
-                                        {% else %}
-                                            {{ 'status.hidden'|trans }}
-                                        {% endif %}
-                                    {% else %}
-                                        -
-                                    {% endif %}
-                                </td>
-                                <td>{{ order.price ?? '-' }}</td>
-                                <td>{{ order.stocks ?? '-' }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+            {% if sellOrders is not empty or buyOrders is not empty %}
+                <div class="orders-columns">
+
+                    {# SELL COLUMN #}
+                    <div class="orders-column">
+                        <h3 class="orders-title">{{ 'player-sell'|trans }}</h3>
+
+                        {% if sellOrders is empty %}
+                            <p class="empty-text">{{ 'no-sell'|trans }}</p>
+                        {% else %}
+                            <div class="orders-grid">
+                                {% for order in sellOrders %}
+                                    {% include 'partials/_order_card.html.twig' with { order: order } %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {# BUY COLUMN #}
+                    <div class="orders-column">
+                        <h3 class="orders-title">{{ 'player-buy'|trans }}</h3>
+
+                        {% if buyOrders is empty %}
+                            <p class="empty-text">{{ 'no-buy'|trans }}</p>
+                        {% else %}
+                            <div class="orders-grid">
+                                {% for order in buyOrders %}
+                                    {% include 'partials/_order_card.html.twig' with { order: order } %}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+
                 </div>
             {% endif %}
         </div>

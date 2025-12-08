@@ -1,0 +1,64 @@
+{% set shop = order.shop %}
+{% set user = shop.user %}
+
+<div class="order-card">
+    <div class="copy-popup"></div>
+
+    <div class="order-line user">
+        <span class="value">{{ user.pseudo }}</span>
+    </div>
+
+    <div class="order-line status">
+        <span class="value status-{{ user.status.code }}">
+            {% set code = user.status.code %}
+            {% if code == 0 %}
+                {{ 'status.hidden'|trans }}
+            {% elseif code == 1 %}
+                {{ 'status.online_site'|trans }}
+            {% elseif code == 2 %}
+                {{ 'status.connected_ingame'|trans }}
+            {% endif %}
+        </span>
+    </div>
+
+    <div class="order-line price">
+        <span class="value price-value">{{ order.price }}</span>
+    </div>
+
+    <div class="order-line quantity">
+        <span class="value">{{ order.stocks }}</span>
+    </div>
+
+    {% if order.rank %}
+        <div class="order-line rank">
+            <span class="value">{{ order.rank }}</span>
+        </div>
+    {% else %}
+        <div class="order-line rank">
+            <span class="value"></span>
+        </div>
+    {% endif %}
+
+    <div class="order-line action">
+        {% if order.sellOrBuy is defined and order.sellOrBuy == true %}
+            {% set message = 'orders.whisper_message'|trans({
+                '%pseudo%': user.pseudo,
+                '%item%': item.name,
+                '%price%': order.price
+            }) %}
+            {% set btnLabel = 'buy' %}
+        {% else %}
+            {% set message = 'orders.whisper_message_sell'|trans({
+                '%pseudo%': user.pseudo,
+                '%item%': item.name,
+                '%price%': order.price
+            }) %}
+            {% set btnLabel = 'sell' %}
+        {% endif %}
+
+        <div class="btn-menu btn-copy" data-copy="{{ message|e('html_attr') }}">
+            {{ btnLabel|upper }}
+            <i class="fa-regular fa-copy copy-icon"></i>
+        </div>
+    </div>
+</div>

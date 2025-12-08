@@ -37,6 +37,7 @@ please_login: "Veuillez vous connecter"
 validate: "Valider"
 
 #search bar
+heading: "Commerce et Contrats"
 holder: "Recherche..."
 arial-delete: "Effacer la recherche"
 
@@ -59,6 +60,12 @@ home: "Le Bazar"
 # item
 item:
     not_found: "Aucun item trouvé pour « %name% »."
+orders:
+    whisper_message: '/w %pseudo% Salut ! Je voudrais acheter : "%item%" pour %price% platine. (bazar-de-cetus)'
+    whisper_message_sell: '/w %pseudo% Salut ! Je voudrais vendre : "%item%" pour %price% platine. (bazar-de-cetus)'
+    copy: "Copier le message"
+    copied: "Copié !"
+
 
 # form placeholder
 form:
@@ -132,8 +139,12 @@ price-per-unit: "Prix par unité :"
 quantity: "Quantité :"
 order-type: "Type d'ordre :"
 initial-visibility: "Visibilité initiale :"
+player-sell: "Joueur qui veut vendre"
 sell: "Vendre"
+no-sell: "Aucune vente."
+player-buy: "Joueur qui veut acheter"
 buy: "Acheter"
+no-buy: "Aucun achat."
 rank: "rang"
 
 # shop

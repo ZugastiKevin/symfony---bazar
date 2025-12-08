@@ -74,6 +74,17 @@ class ItemsController extends AbstractController
 
         $orders = $entity->getShop();
 
+        $sellOrders = [];
+        $buyOrders = [];
+
+        foreach ($orders as $order) {
+            if ($order->isSellOrBuy() === true) {
+                $sellOrders[] = $order;
+            } else {
+                $buyOrders[] = $order;
+            }
+        }
+
         $item = [
             'name' => $label,
             'description' => $description,
@@ -83,7 +94,8 @@ class ItemsController extends AbstractController
         return $this->render('warframe/item_show.html.twig', [
             'item' => $item,
             'children' => $children,
-            'orders'   => $orders,
+            'sellOrders'  => $sellOrders,
+            'buyOrders'   => $buyOrders,
         ]);
     }
 }

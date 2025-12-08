@@ -37,6 +37,7 @@ please_login: "Please log in"
 validate: "Validate"
 
 #search bar
+heading: "Market and Contracts"
 holder: "Search..."
 arial-delete: "Clear search"
 
@@ -59,6 +60,12 @@ home: "The Bazaar"
 # item
 item:
     not_found: "No item found for \"%name%\"."
+orders:
+    whisper_message: '/w %pseudo% Hi! I want to buy: "%item%" for %price% platinum. (bazar-de-cetus)'
+    whisper_message_sell: '/w %pseudo% Hi! I want to sell: "%item%" for %price% platinum. (bazar-de-cetus)'
+    copy: "Copy message"
+    copied: "Copied!"
+
 
 # form placeholder
 form:

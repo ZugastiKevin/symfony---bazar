@@ -316,3 +316,9 @@
     opacity: 1;
     pointer-events: auto;
 }
+
+@media screen and (max-width:550px) {
+    .place-order-button {
+        width: 32px;
+    }
+}

@@ -16,4 +16,39 @@ import './scripts/dropdown.js';
 import 'htmx.org';
 window.htmx = require('htmx.org');
 
-console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
+document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.btn-copy');
+    if (!btn) return;
+
+    const text = btn.getAttribute('data-copy');
+    if (!text) return;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+    } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+            document.execCommand('copy');
+        } catch (err) {}
+        document.body.removeChild(ta);
+    }
+
+    const card = btn.closest('.order-card');
+    if (!card) return;
+
+    const popup = card.querySelector('.copy-popup');
+    if (!popup) return;
+
+    popup.textContent = text;
+    popup.classList.add('visible');
+
+    setTimeout(() => {
+        popup.classList.remove('visible');
+        popup.textContent = '';
+    }, 2000);
+});
