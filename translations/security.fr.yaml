@@ -1,0 +1,37 @@
+security:
+
+    # Identifiants incorrects
+    "Invalid credentials.": "Identifiants invalides."
+    "Bad credentials.": "Identifiants invalides."
+
+    # Utilisateur introuvable
+    "Username could not be found.": "Utilisateur introuvable."
+
+    # Mot de passe expiré
+    "The presented password is invalid.": "Le mot de passe fourni est invalide."
+
+    # Jeton CSRF invalide
+    "Invalid CSRF token.": "Jeton CSRF invalide."
+
+    # Compte non vérifié
+    "account_not_verified": "Votre compte n'est pas encore activé. Vérifiez vos emails pour l'activer."
+    "Account is disabled.": "Ce compte est désactivé."
+    "User account is disabled.": "Le compte utilisateur est désactivé."
+
+    # Compte verrouillé
+    "Account is locked.": "Ce compte est verrouillé."
+    "User account is locked.": "Le compte utilisateur est verrouillé."
+
+    # Compte expiré
+    "Account has expired.": "Ce compte a expiré."
+    "User account has expired.": "Le compte utilisateur a expiré."
+
+    # Identifiants expirés
+    "Credentials have expired.": "Les identifiants ont expiré."
+    "User credentials have expired.": "Les identifiants de l’utilisateur ont expiré."
+
+    # Trop de tentatives
+    "Too many failed login attempts, please try again later.": "Trop de tentatives de connexion. Veuillez réessayer plus tard."
+
+    # Accès refusé
+    "Access denied.": "Accès refusé."

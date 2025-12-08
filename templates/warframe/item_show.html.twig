@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block body %}
+    <div id="show" class="container margin-navbar">
+        <div class="show">
+            {% include 'partials/_search.html.twig' %}
+            <div class="item-header">
+                <div class="item-header-left">
+                    <div class="item-main-icon">
+                        <img src="{{ asset('assets/images/uploads/api/' ~ item.entity.imageName) }}" alt="{{ item.name }}">
+                    </div>
+                    {% if children is defined and children is not empty %}
+                        <div class="item-sub-icons">
+                            {% for child in children %}
+                                {% set childLabel = app.request.locale == 'fr'
+                                    ? (child.nameFR ?? child.nameEN)
+                                    : (child.nameEN ?? child.nameFR)
+                                %}
+
+                                {% set slug = child.uniqueName|trim('/')|replace({'/':'-'}) %}
+
+                                <a href="{{ path('item_show', { name: slug }) }}" class="item-sub-icon" title="{{ childLabel }}">
+                                    <img src="{{ asset('assets/images/uploads/api/' ~ child.imageName) }}" alt="{{ childLabel }}">
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="item-header-right">
+                    <div class="item-meta">
+                        <h1 class="item-title">{{ item.name|upper }}</h1>
+                        {% if item.description %}
+                            <div class="item-meta-block">
+                                <span class="item-meta-value">{{ item.description }}</i></span>
+                            </div>
+                        {% endif %}
+                        {% if item.entity.ducats %}
+                            <div class="item-meta-block">
+                                <span class="item-meta-label">Ducats:</span>
+                                <span class="item-meta-value">{{ item.entity.ducats }}</i></span>
+                            </div>
+                        {% endif %}
+                        {% if item.entity.wikiaUrl %}
+                            {% set url = item.entity.wikiaUrl|replace({' ': ''}) %}
+                            <div class="item-meta-block btn-menu">
+                                <a href="{{ url }}" target="_blank" rel="noopener noreferrer">
+                                    <span class="item-meta-label">Wiki</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% if orders is defined and orders is not empty %}
+                <div class="item-orders-table-wrapper">
+                    <table class="item-orders-table">
+                        <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Joueur</th>
+                            <th>Statut</th>
+                            <th>Prix unitaire</th>
+                            <th>Quantité</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in orders %}
+                            {% set shop = order.shop %}
+                            {% set user = shop.user %}
+                            <tr>
+                                <td>
+                                    {# à adapter selon ton enum/champ : sell/buy #}
+                                    {{ order.orderType is defined and order.orderType == 'sell' ? 'Vente' : 'Achat' }}
+                                </td>
+                                <td>{{ user.pseudo }}</td>
+                                <td>
+                                    {% if user.status %}
+                                        {% set code = user.status.code %}
+                                        {% if code == 0 %}
+                                            {{ 'status.hidden'|trans }}
+                                        {% elseif code == 1 %}
+                                            {{ 'status.online_site'|trans }}
+                                        {% elseif code == 2 %}
+                                            {{ 'status.connected_ingame'|trans }}
+                                        {% else %}
+                                            {{ 'status.hidden'|trans }}
+                                        {% endif %}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>{{ order.price ?? '-' }}</td>
+                                <td>{{ order.stocks ?? '-' }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

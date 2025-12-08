@@ -15,9 +15,14 @@ use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ShopItemsController extends AbstractController
 {
+    public function __construct(
+        private TranslatorInterface $translator
+    ) {}
+
     #[Route('/_fragment/place-order-panel', name: 'place_order_panel', methods: ['GET'])]
     public function panel(Security $security): Response
     {
@@ -52,18 +57,26 @@ final class ShopItemsController extends AbstractController
         $user = $security->getUser();
 
         if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour placer un ordre.');
+            throw $this->createAccessDeniedException(
+                $this->translator->trans('shop.place_order.must_be_logged_in')
+            );
         }
 
         $uniqueName = $request->request->get('uniqueName');
         if (!$uniqueName) {
-            $this->addFlash('error', "Aucun item sélectionné.");
+            $this->addFlash(
+                'error',
+                $this->translator->trans('shop.place_order.no_item_selected')
+            );
             return $this->redirectToRoute('home');
         }
 
         $item = $itemsRepository->findOneBy(['uniqueName' => $uniqueName]);
         if (!$item) {
-            $this->addFlash('error', 'Item introuvable.');
+            $this->addFlash(
+                'error',
+                $this->translator->trans('shop.place_order.item_not_found')
+            );
             return $this->redirectToRoute('home');
         }
 
@@ -107,18 +120,19 @@ final class ShopItemsController extends AbstractController
             }
 
             $shopItem->setStatus($user->getStatus());
-
             $shopItem->addItem($item);
 
             $em->persist($shopItem);
             $em->flush();
 
-            $this->addFlash('success', 'Ordre enregistré avec succès.');
+            $this->addFlash(
+                'success',
+                $this->translator->trans('shop.place_order.saved_success')
+            );
 
             return $this->redirectToRoute('home');
         }
 
-        // Si tu veux rendre le formulaire dans un template (fallback ou popup)
         return $this->render('partials/_place_order.html.twig', [
             'formOrder' => $form->createView(),
         ]);

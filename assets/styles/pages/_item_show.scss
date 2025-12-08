@@ -1,0 +1,161 @@
+@use "../abstracts/variables" as v;
+
+#show {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .show {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+
+        .item-header {
+            margin-top: -20.7rem;
+            padding: 10px 5%;
+            width: 80%;
+            height: 305px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 2rem;
+
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(18px);
+            mask-image: linear-gradient(to right, transparent, v.$color-black 5%, v.$color-black 95%, transparent);
+            mask-repeat: no-repeat;
+            mask-size: 100% 100%;
+            -webkit-mask-repeat: no-repeat;
+            -webkit-mask-size: 100% 100%;
+
+            .item-header-left {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+
+                .item-main-icon {
+                    width: 100%;
+                    max-width: 225px;
+                    max-height: 225px;
+                    min-width: 225px;
+                    min-height: 225px;
+                    border: 2px solid v.$color-blue-eidolon;
+                    border-radius: 0.5rem;
+                    overflow: hidden;
+                    background: rgba(255,255,255,0.05);
+
+                    img {
+                        object-fit: contain;
+                    }
+                }
+
+                .item-sub-icons {
+                    margin-top: 0.5rem;
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 0.5rem;
+                }
+
+                .item-sub-icon {
+                    display: block;
+                    width: 52px;
+                    height: 52px;
+                    border: 2px solid v.$color-golden-twilight;
+                    border-radius: 0.5rem;
+                    overflow: hidden;
+                    transition: border 0.2s ease-in-out, transform 0.25s ease-out;
+
+                    img {
+                        object-fit: cover;
+                        transition: transform 0.25s ease-out;
+                    }
+
+                    &:hover {
+                        border: 2px solid v.$color-blue-eidolon;
+                        transform: scale(1.12);
+
+                        img {
+                            transform: scale(1.18);
+                        }
+                    }
+                }
+            }
+
+            .item-header-right {
+                .item-meta {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    align-items: flex-end;
+                    gap: .75rem;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1991px) {
+    #show {
+        .show {
+            .item-header {
+                width: 60%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1280px) {
+    #show {
+        .show {
+            .item-header {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:768px) {
+    #show {
+        .show {
+            .item-header {
+                margin-top: 1rem;
+                flex-direction: column;
+                align-items: center;
+                padding: 5px;
+
+                .item-header-left {
+
+                    .item-main-icon {
+                        img {
+                        }
+                    }
+
+                    .item-sub-icons {
+                    }
+
+                    .item-sub-icon {
+                        img {
+                        }
+
+                        &:hover {
+                            img {
+                            }
+                        }
+                    }
+                }
+
+                .item-header-right {
+                    align-items: center;
+
+                    .item-meta {
+                        align-items: center;
+                    }
+                }
+            }
+        }
+    }
+}

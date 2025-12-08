@@ -1,0 +1,27 @@
+security:
+
+    "Invalid credentials.": "Invalid credentials."
+    "Bad credentials.": "Invalid credentials."
+
+    "Username could not be found.": "User not found."
+
+    "The presented password is invalid.": "The provided password is invalid."
+
+    "Invalid CSRF token.": "Invalid CSRF token."
+
+    "account_not_verified": "Your account is not activated yet. Please check your email to activate it."
+    "Account is disabled.": "This account is disabled."
+    "User account is disabled.": "The user account is disabled."
+
+    "Account is locked.": "This account is locked."
+    "User account is locked.": "The user account is locked."
+
+    "Account has expired.": "This account has expired."
+    "User account has expired.": "The user account has expired."
+
+    "Credentials have expired.": "Credentials have expired."
+    "User credentials have expired.": "The user's credentials have expired."
+
+    "Too many failed login attempts, please try again later.": "Too many failed login attempts, please try again later."
+
+    "Access denied.": "Access denied."

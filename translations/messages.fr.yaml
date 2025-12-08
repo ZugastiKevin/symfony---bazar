@@ -41,6 +41,7 @@ holder: "Recherche..."
 arial-delete: "Effacer la recherche"
 
 # support
+ticket_sent: "Votre message a bien été envoyé. Nous avons enregistré votre demande."
 support-title: "Support - Contactez-nous"
 support: "Contactez le support"
 
@@ -54,6 +55,10 @@ navbar:
 
 # home
 home: "Le Bazar"
+
+# item
+item:
+    not_found: "Aucun item trouvé pour « %name% »."
 
 # form placeholder
 form:
@@ -93,6 +98,23 @@ form:
         image_type: "Formats autorisés : JPEG, JPG, PNG, WEBP."
         image_size: "Image trop volumineuse (max 2 Mo)."
 
+# flash
+flash:
+    account_email_exists: "Un compte avec cet email existe déjà."
+    account_created: "Votre compte a été créé avec succès ! Un email de confirmation vous a été envoyé."
+    account_created_but_email_failed: "Votre compte a été créé, mais l'email de confirmation n'a pas pu être envoyé."
+
+    verify_invalid: "Lien de vérification invalide."
+    verify_expired: "Ce lien de vérification a expiré. Merci de demander un nouveau lien."
+    verify_success: "Votre compte a été activé, vous pouvez maintenant vous connecter."
+
+    forgot_password_sent: "Si un compte existe avec cet email, un lien de réinitialisation a été envoyé."
+
+    reset_invalid: "Ce lien de réinitialisation est invalide ou expiré."
+    reset_success: "Votre mot de passe a bien été modifié. Vous pouvez maintenant vous connecter."
+
+
+# cookie
 cookie:
     arial: "Réafficher les cookies"
     text_intro: "Ce site utilise des cookies essentiels nécessaires au bon fonctionnement, notamment pour la connexion et la fonctionnalité:"
@@ -113,6 +135,14 @@ initial-visibility: "Visibilité initiale :"
 sell: "Vendre"
 buy: "Acheter"
 rank: "rang"
+
+# shop
+shop:
+    place_order:
+        must_be_logged_in: "Vous devez être connecté pour placer un ordre."
+        no_item_selected: "Aucun item sélectionné."
+        item_not_found: "Item introuvable."
+        saved_success: "Ordre enregistré avec succès."
 
 # status
 status.hidden: "Invisible"

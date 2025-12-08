@@ -11,9 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class SupportController extends AbstractController
 {
+    public function __construct(
+        private TranslatorInterface $translator
+    ) {}
+
     #[Route('/support', name: 'support')]
     public function index(
         Request $request,
@@ -22,11 +27,10 @@ final class SupportController extends AbstractController
     ): Response {
         $user = $this->getUser();
 
-        // Créer le ticket avec pré-remplissage si utilisateur connecté
         $ticket = new SupportTicket();
 
+        // Pré-remplissage pour utilisateur connecté
         if ($user) {
-            // Utilisateur connecté : on lie le ticket et on pré-remplit
             $ticket->setUser($user);
             $ticket->setName($user->getPseudo());
             $ticket->setEmail($user->getEmail());
@@ -39,13 +43,11 @@ final class SupportController extends AbstractController
             /** @var SupportTicket $ticket */
             $ticket = $form->getData();
 
-            // Si l'utilisateur est connecté, on s'assure que le lien est bien maintenu
-            // (au cas où quelqu'un modifierait les valeurs du formulaire)
             if ($user) {
-                $ticket->setUser($user);
+                $ticket->setUser($user); // sécurité
             }
 
-            // Gérer l'upload du fichier
+            // Upload éventuel
             $imageFile = $form->get('imageFile')->getData();
             if ($imageFile) {
                 $ticket->setImageFile($imageFile);
@@ -54,7 +56,7 @@ final class SupportController extends AbstractController
             $em->persist($ticket);
             $em->flush();
 
-            // Envoi de l'email
+            // Email support
             $email = (new Email())
                 ->from('support@bazar-de-cetus.octohub.fr')
                 ->to('support@bazar-de-cetus.octohub.fr')
@@ -70,7 +72,10 @@ final class SupportController extends AbstractController
 
             $mailer->send($email);
 
-            $this->addFlash('success', 'Votre message a bien été envoyé. Nous avons enregistré votre demande.');
+            $this->addFlash(
+                'success',
+                $this->translator->trans('ticket_sent')
+            );
 
             return $this->redirectToRoute('support');
         }

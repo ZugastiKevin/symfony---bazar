@@ -17,9 +17,7 @@ public function checkPreAuth(UserInterface $user): void
 
     // Si le compte n'est pas vérifié, on empêche la connexion
     if (!$user->isVerified()) {
-        throw new CustomUserMessageAuthenticationException(
-            'Votre compte n\'est pas encore activé. Vérifiez vos emails pour l\'activer.'
-        );
+        throw new CustomUserMessageAuthenticationException('Account not verified.');
     }
 }
 

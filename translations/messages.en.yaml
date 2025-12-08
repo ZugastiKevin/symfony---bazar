@@ -41,6 +41,7 @@ holder: "Search..."
 arial-delete: "Clear search"
 
 # support
+ticket_sent: "Your message has been successfully sent. We have recorded your request."
 support-title: "Support - Contact us"
 support: "Contact support"
 
@@ -54,6 +55,10 @@ navbar:
 
 # home
 home: "The Bazaar"
+
+# item
+item:
+    not_found: "No item found for \"%name%\"."
 
 # form placeholder
 form:
@@ -93,6 +98,22 @@ form:
         image_type: "Allowed formats: JPEG, JPG, PNG, WEBP."
         image_size: "Image too large (max 2 MB)."
 
+# flash
+flash:
+    account_email_exists: "An account with this email already exists."
+    account_created: "Your account has been successfully created! A confirmation email has been sent to you."
+    account_created_but_email_failed: "Your account has been created, but the confirmation email could not be sent."
+
+    verify_invalid: "Invalid verification link."
+    verify_expired: "This verification link has expired. Please request a new one."
+    verify_success: "Your account has been activated, you can now log in."
+
+    forgot_password_sent: "If an account exists with this email, a password reset link has been sent."
+
+    reset_invalid: "This password reset link is invalid or has expired."
+    reset_success: "Your password has been successfully changed. You can now log in."
+
+# cookie
 cookie:
     arial: "Show cookies again"
     text_intro: "This site uses essential cookies required for the proper functioning of the website, notably for login and features such as:"
@@ -113,6 +134,14 @@ initial-visibility: "Initial visibility:"
 sell: "Sell"
 buy: "Buy"
 rank: "rank"
+
+# shop
+shop:
+    place_order:
+        must_be_logged_in: "You must be logged in to place an order."
+        no_item_selected: "No item selected."
+        item_not_found: "Item not found."
+        saved_success: "Order successfully saved."
 
 # status
 status.hidden: "Hidden"

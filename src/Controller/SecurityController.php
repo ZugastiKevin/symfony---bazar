@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -23,6 +24,10 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class SecurityController extends AbstractController
 {
+    public function __construct(
+        private TranslatorInterface $translator
+    ) {}
+
     // user by id
     #[Route('/user/{id}', name: 'user')]
     #[IsGranted('ROLE_USER')]
@@ -66,7 +71,7 @@ class SecurityController extends AbstractController
             if (!$user->getId()) {
                 $exist = $repository->findOneBy(['email' => $user->getEmail()]);
                 if ($exist) {
-                    $this->addFlash('error', 'Un compte avec cet email existe déjà.');
+                    $this->addFlash('error', $this->translator->trans('flash.account_email_exists'));
                     return $this->redirectToRoute('create_user');
                 }
 
@@ -111,10 +116,10 @@ class SecurityController extends AbstractController
 
                 try {
                     $mailer->send($email);
-                    $this->addFlash('success', 'Votre compte a été créé avec succès ! Un email de confirmation vous a été envoyé.');
+                    $this->addFlash('success', $this->translator->trans('flash.account_created'));
                 } catch (\Exception $e) {
                     // Le compte est créé même si l'email échoue
-                    $this->addFlash('warning', 'Votre compte a été créé, mais l\'email de confirmation n\'a pas pu être envoyé.');
+                    $this->addFlash('warning', $this->translator->trans('flash.account_created_but_email_failed'));
                 }
 
             }
@@ -147,14 +152,14 @@ class SecurityController extends AbstractController
         $user = $userRepository->findOneBy(['verificationToken' => $token]);
 
         if (!$user) {
-            $this->addFlash('error', 'Lien de vérification invalide.');
+            $this->addFlash('error', $this->translator->trans('flash.verify_invalid'));
             return $this->redirectToRoute('home');
         }
 
         if ($user->getVerificationTokenExpiresAt() !== null &&
             $user->getVerificationTokenExpiresAt() < new \DateTimeImmutable()
         ) {
-            $this->addFlash('error', 'Ce lien de vérification a expiré. Merci de demander un nouveau lien.');
+            $this->addFlash('error', $this->translator->trans('flash.verify_expired'));
             $user->setVerificationToken(null);
             $user->setVerificationTokenExpiresAt(null);
             $entityManager->flush();
@@ -168,7 +173,7 @@ class SecurityController extends AbstractController
 
         $entityManager->flush();
 
-        $this->addFlash('success', 'Votre compte a été activé, vous pouvez maintenant vous connecter.');
+        $this->addFlash('success', $this->translator->trans('flash.verify_success'));
 
         return $this->redirectToRoute('app_login');
     }
@@ -250,7 +255,7 @@ class SecurityController extends AbstractController
                 $mailer->send($mail);
             }
 
-            $this->addFlash('success', 'Si un compte existe avec cet email, un lien de réinitialisation a été envoyé.');
+            $this->addFlash('success', $this->translator->trans('flash.forgot_password_sent'));
             return $this->redirectToRoute('forgot_password');
         }
 
@@ -272,7 +277,7 @@ class SecurityController extends AbstractController
         $user = $userRepository->findOneBy(['resetPasswordToken' => $token]);
 
         if (!$user || !$user->isResetPasswordTokenValid()) {
-            $this->addFlash('error', 'Ce lien de réinitialisation est invalide ou expiré.');
+            $this->addFlash('error', $this->translator->trans('flash.reset_invalid'));
             return $this->redirectToRoute('app_forgot_password_request');
         }
 
@@ -291,7 +296,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $this->addFlash('success', 'Votre mot de passe a bien été modifié. Vous pouvez maintenant vous connecter.');
+            $this->addFlash('success', $this->translator->trans('flash.reset_success'));
             return $this->redirectToRoute('app_login');
         }
 
