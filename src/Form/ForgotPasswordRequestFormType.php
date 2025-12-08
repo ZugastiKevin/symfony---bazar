@@ -12,10 +12,7 @@ class ForgotPasswordRequestFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('email', EmailType::class, [
-            'label' => 'Votre email',
-            'attr' => [
-                'placeholder' => 'exemple@mail.com',
-            ],
+            'label' => 'email',
         ]);
     }
 

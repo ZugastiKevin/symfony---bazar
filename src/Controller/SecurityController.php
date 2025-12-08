@@ -165,7 +165,6 @@ class SecurityController extends AbstractController
         $user->setIsVerified(true);
         $user->setVerificationToken(null);
         $user->setVerificationTokenExpiresAt(null);
-        $user->setStatus('Offline');
 
         $entityManager->flush();
 

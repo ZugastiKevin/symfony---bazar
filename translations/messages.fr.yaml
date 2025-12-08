@@ -34,6 +34,10 @@ form_error: "Veuillez corriger les erreurs du formulaire"
 please_login: "Veuillez vous connecter"
 validate: "Valider"
 
+#search bar
+holder: "Recherche..."
+arial-delete: "Effacer la recherche"
+
 # support
 support-title: "Support - Contactez-nous"
 support: "Contactez le support"
@@ -51,25 +55,52 @@ home: "Le Bazar"
 
 # form placeholder
 form:
+    create_account: "Creation du Compte"
+    update_account: "Modification du Compte"
     label:
+        pseudo: "Pseudo en jeux"
         min: "Le nom doit contenir au moins {{ limit }} caractère."
         max: "Le nom ne peut pas dépasser {{ limit }} caractères."
     invalid_type: "Veuillez télécharger un fichier au format JPEG, JPG, PNG ou WEBP."
     yes: "Oui"
     no: "Non"
+    nothing: "Aucun formulaire disponible"
+    forgot_password_text: "Indique l’adresse email associée à ton compte. Si elle existe dans notre base, tu recevras un lien pour réinitialiser ton mot de passe."
+    send_forgot: "Envoyer le lien de réinitialisation"
     describ:
         describ_too_short: "La description doit contenir au moins {{ limit }} caractère."
         describ_too_long: "La description ne peut pas dépasser {{ limit }} caractères."
+    error:
+        error_obligatory: "Ce champ est obligatoire."
+        error_email: "Adresse email invalide."
+        error_email_required: "Veuillez saisir une adresse email."
+        error_password_length: "Le mot de passe doit contenir au moins {{ limit }} caractères."
+        pseudo_required: "Veuillez entrer votre pseudo."
+        pseudo_min: "Le pseudo doit contenir au moins {{ limit }} caractères."
+        password_required: "Veuillez entrer un mot de passe."
+        password_confirm_required: "Veuillez confirmer votre mot de passe."
+        error_upper: "Ajoutez au moins une majuscule."
+        error_number: "Ajoutez au moins un chiffre."
+        error_special: "Ajoutez au moins un caractère spécial."
+        error_vulnerability: "Ce mot de passe figure dans des fuites connues, merci d'en choisir un autre."
+        error_ref: "Au moins 1 majuscule, 1 chiffre et 1 caractère spécial"
+        error_mismatch: "Les mots de passe ne correspondent pas."
+        support_category_required: "Veuillez choisir une catégorie."
+        support_message_required: "Veuillez entrer un message."
+        support_message_min: "Le message doit contenir au moins {{ limit }} caractères."
+        image_type: "Formats autorisés : JPEG, JPG, PNG, WEBP."
+        image_size: "Image trop volumineuse (max 2 Mo)."
 
 cookie:
-  text_intro: "Ce site utilise des cookies essentiels nécessaires au bon fonctionnement, notamment pour la connexion et la fonctionnalité:"
-  text_exemple: "Se souvenir de moi"
-  text_click: "En cliquant sur:"
-  text_click_after: "vous consentez à l'utilisation de tous les cookies, Vous pouvez:"
-  text_options: "ou consulter notre"
-  privacy_policy: "Politique de Confidentialité"
-  accept: "Accepter"
-  refuse: "Refuser"
+    arial: "Réafficher les cookies"
+    text_intro: "Ce site utilise des cookies essentiels nécessaires au bon fonctionnement, notamment pour la connexion et la fonctionnalité:"
+    text_exemple: "Se souvenir de moi"
+    text_click: "En cliquant sur:"
+    text_click_after: "vous consentez à l'utilisation de tous les cookies, Vous pouvez:"
+    text_options: "ou consulter notre"
+    privacy_policy: "Politique de Confidentialité"
+    accept: "Accepter"
+    refuse: "Refuser"
 
 # aside
 place-order: "Passer la commande"

@@ -31,3 +31,27 @@
         {% include "layout/_footer.html.twig" %}
     </body>
 </html>
+
+<script>
+    window.appTranslations = {
+        email_required: '{{ 'form.error.error_email_required'|trans|e('js') }}',
+        email_invalid: '{{ 'form.error.error_email'|trans|e('js') }}',
+
+        pseudo_required: '{{ 'form.error.pseudo_required'|trans|e('js') }}',
+        pseudo_min_3: '{{ 'form.error.pseudo_min'|trans({'{{ limit }}': 3})|e('js') }}',
+
+        password_required: '{{ 'form.error.password_required'|trans|e('js') }}',
+        password_confirm_required: '{{ 'form.error.password_confirm_required'|trans|e('js') }}',
+        password_mismatch: '{{ 'form.error.error_mismatch'|trans|e('js') }}',
+        password_length_8: '{{ 'form.error.error_password_length'|trans({'{{ limit }}': 8})|e('js') }}',
+        password_upper: '{{ 'form.error.error_upper'|trans|e('js') }}',
+        password_number: '{{ 'form.error.error_number'|trans|e('js') }}',
+        password_special: '{{ 'form.error.error_special'|trans|e('js') }}',
+
+        support_category_required: '{{ 'form.error.support_category_required'|trans|e('js') }}',
+        support_message_required: '{{ 'form.error.support_message_required'|trans|e('js') }}',
+        support_message_min_10: '{{ 'form.error.support_message_min'|trans({'{{ limit }}': 10})|e('js') }}',
+        image_type: '{{ 'form.error.image_type'|trans|e('js') }}',
+        image_size: '{{ 'form.error.image_size'|trans|e('js') }}',
+    };
+</script>

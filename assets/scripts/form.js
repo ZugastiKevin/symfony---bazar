@@ -156,8 +156,8 @@ function attachValidator(inputId, eventTypes = ['input', 'blur'], delayMs = 3000
 function registerEmail(inputId, errorId) {
     registerValidator(inputId, errorId, (value, input) => {
         const v = value.trim();
-        if (v === "") return "Veuillez saisir une adresse email.";
-        if (!input.checkValidity()) return "Adresse email invalide.";
+        if (v === "") return t('email_required');
+        if (!input.checkValidity()) return t('email_invalid');
         return true;
     });
 }
@@ -175,11 +175,15 @@ emailFields.forEach(f => registerEmail(f.inputId, f.errorId));
 // VALIDATEURS PSEUDOS (génériques)
 // =====================================================
 
+function t(key) {
+    return (window.appTranslations && window.appTranslations[key]) || key;
+}
+
 function registerPseudo(inputId, errorId, minLength = 3) {
     registerValidator(inputId, errorId, (value) => {
         const v = value.trim();
-        if (v === "") return "Veuillez entrer votre pseudo.";
-        if (v.length < minLength) return `Le pseudo doit contenir au moins ${minLength} caractères.`;
+        if (v === "") return t('pseudo_required');
+        if (v.length < minLength) return t('pseudo_min_3');
         return true;
     });
 }
@@ -197,11 +201,11 @@ pseudoFields.forEach(f => registerPseudo(f.inputId, f.errorId, f.minLength));
 
 registerValidator("user_plainPassword_first", "user_password_first-error", (value) => {
     const v = value.trim();
-    if (v === "") return "Veuillez entrer un mot de passe.";
-    if (v.length < 8) return "Au moins 8 caractères requis.";
-    if (!/[A-Z]/.test(v)) return "Une majuscule est requise.";
-    if (!/\d/.test(v)) return "Un chiffre est requis.";
-    if (!/[\W_]/.test(v)) return "Un caractère spécial est requis.";
+    if (v === "") return t('password_required');
+    if (v.length < 8) return t('password_length_8');
+    if (!/[A-Z]/.test(v)) return t('password_upper');
+    if (!/\d/.test(v)) return t('password_number');
+    if (!/[\W_]/.test(v)) return t('password_special');
     return true;
 });
 
@@ -209,18 +213,18 @@ registerValidator("user_plainPassword_second", "user_password_second-error", (va
     const first = document.getElementById("user_plainPassword_first");
     if (!first) return true;
 
-    if (value.trim() === "") return "Veuillez confirmer votre mot de passe.";
-    if (value !== first.value) return "Les mots de passe ne correspondent pas.";
+    if (value.trim() === "") return t('password_confirm_required');
+    if (value !== first.value) return t('password_mismatch');
     return true;
 });
 
 registerValidator("reset_password_form_plainPassword_first", "reset_password_form_plainPassword_first-error", (value) => {
     const v = value.trim();
-    if (v === "") return "Veuillez entrer un mot de passe.";
-    if (v.length < 8) return "Au moins 8 caractères requis.";
-    if (!/[A-Z]/.test(v)) return "Une majuscule est requise.";
-    if (!/\d/.test(v)) return "Un chiffre est requis.";
-    if (!/[\W_]/.test(v)) return "Un caractère spécial est requis.";
+    if (v === "") return t('password_required');
+    if (v.length < 8) return t('password_length_8');
+    if (!/[A-Z]/.test(v)) return t('password_upper');
+    if (!/\d/.test(v)) return t('password_number');
+    if (!/[\W_]/.test(v)) return t('password_special');
     return true;
 });
 
@@ -228,20 +232,20 @@ registerValidator("reset_password_form_plainPassword_second", "reset_password_fo
     const first = document.getElementById("reset_password_form_plainPassword_first");
     if (!first) return true;
 
-    if (value.trim() === "") return "Veuillez confirmer votre mot de passe.";
-    if (value !== first.value) return "Les mots de passe ne correspondent pas.";
+    if (value.trim() === "") return t('password_confirm_required');
+    if (value !== first.value) return t('password_mismatch');
     return true;
 });
 
 // Mot de passe de connexion
 registerValidator("password", "password-error", (value) => {
-    if (value.trim() === "") return "Veuillez entrer votre mot de passe.";
+    if (value.trim() === "") return t('password_required');
     return true;
 });
 
 // Mot de passe "oublié" (nouveau mot de passe, si tu as un champs dédié)
 registerValidator("forgot_password", "forgot_password-error", (value) => {
-    if (value.trim() === "") return "Veuillez entrer un mot de passe.";
+    if (value.trim() === "") return t('password_required');
     return true;
 });
 
@@ -250,14 +254,14 @@ registerValidator("forgot_password", "forgot_password-error", (value) => {
 // =====================================================
 
 registerValidator("support_category", "selecte-error", (value) => {
-    if (!value || value.trim() === "") return "Veuillez choisir une catégorie.";
+    if (!value || value.trim() === "") return t('support_category_required');
     return true;
 });
 
 registerValidator("support_message", "text-area-error", (value) => {
     const v = value.trim();
-    if (v === "") return "Veuillez entrer un message.";
-    if (v.length < 10) return "Le message doit contenir au moins 10 caractères.";
+    if (v === "") return t('support_message_required');
+    if (v.length < 10) return t('support_message_min_10');
     return true;
 });
 
@@ -269,8 +273,8 @@ registerValidator("support_imageFile", "image-error", (value, input) => {
     const allowed = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
     const max = 2 * 1024 * 1024;
 
-    if (!allowed.includes(file.type)) return "Formats autorisés : JPEG, JPG, PNG, WEBP.";
-    if (file.size > max) return "Image trop volumineuse (max 2 Mo).";
+    if (!allowed.includes(file.type)) return t('image_type');
+    if (file.size > max) return t('image_size');
 
     return true;
 });

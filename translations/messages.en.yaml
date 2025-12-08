@@ -1,74 +1,129 @@
-username: Username
-logout: Logout
-login: Login
-sign_in: Log in
-register: Create account
-registration: Sign up
-update_account: Update account
-create_account: Create account
-email: Email address
-password: Password
-confirm_password: Confirm password
-remember_me: Remember me
-forgot_password: Forgot your password?
-submit: Submit
-save: Save
-cancel: Cancel
-delete: Delete
-confirm_delete: Confirm delete?
-update: Update
-profile: Profile
-account: Account
-welcome: Welcome
-welcome_back: Welcome back
-logged_in_as: Logged in as
-not_logged_in: You are not logged in
-error: Error
-success: Success
-invalid_credentials: Invalid credentials
-csrf_token_invalid: Invalid CSRF token
-username_not_found: User not found
-password_too_short: Password is too short
-form_error: Please correct the form errors
-please_login: Please log in
+username: "Username"
+logout: "Logout"
+login: "Login"
+sign_in: "Sign in"
+sign_out: "Sign out"
+register: "Create an account"
+registration: "Registration"
+update_account: "Account update"
+create_account: "Account creation"
+email: "Email address"
+password: "Password"
+confirm_password: "Confirm password"
+remember_me: "Remember me"
+forgot_password: "Forgot password?"
+submit: "Submit"
+save: "Save"
+cancel: "Cancel"
+delete: "Delete"
+confirm_delete: "Confirm deletion?"
+update: "Edit"
+profile: "Profile"
+account: "Account"
+welcome: "Welcome"
+welcome_back: "Welcome back"
+logged_in_as: "You are logged in as"
+not_logged_in: "You are not logged in"
+error: "Error"
+success: "Success"
+invalid_credentials: "Invalid credentials"
+csrf_token_invalid: "Invalid CSRF token"
+username_not_found: "User not found"
+password_too_short: "Password is too short"
+form_error: "Please correct the form errors"
+please_login: "Please log in"
 validate: "Validate"
 
+#search bar
+holder: "Search..."
+arial-delete: "Clear search"
+
 # support
-support-title: Support - Contact us
-support: Contact support
+support-title: "Support - Contact us"
+support: "Contact support"
 
 # warning video
-video: Your browser does not support the video tag.
+video: "Your browser does not support video playback."
 
 # navbar
 navbar:
-    market: Market
-    contract: Contracts
+    market: "Market"
+    contract: "Contracts"
 
 # home
-home: The Bazar
+home: "The Bazaar"
 
-# form bottle placeholder
+# form placeholder
 form:
+    create_account: "Account creation"
+    update_account: "Account update"
     label:
-        min: The name must be at least {{ limit }} character long.
-        max: The name cannot be longer than {{ limit }} characters.
-    year_placeholder: Vintage
-    invalid_type: Please upload a file in JPEG, JPG, PNG or WEBP format.
-    pays_placeholder: Select a country
-    regions_placeholder: Select a region
-    types_placeholder: Select a wine type
-    cepages_placeholder: Select a grape variety
-    yes: Yes
-    no: No
-    alcool: Enter a number like 12.5
+        pseudo: "In-game nickname"
+        min: "The name must contain at least {{ limit }} character."
+        max: "The name cannot exceed {{ limit }} characters."
+    invalid_type: "Please upload a file in JPEG, JPG, PNG or WEBP format."
+    yes: "Yes"
+    no: "No"
+    nothing: "No form available"
     describ:
-        describ_too_short: The description must contain at least {{ limit }} character.
-        describ_too_long: The description cannot exceed {{ limit }} characters.
+        describ_too_short: "The description must contain at least {{ limit }} character."
+        describ_too_long: "The description cannot exceed {{ limit }} characters."
+    error:
+        error_obligatory: "This field is required."
+        error_email: "Invalid email address."
+        error_email_required: "Please enter an email address."
+        error_password_length: "The password must contain at least {{ limit }} characters."
+        pseudo_required: "Please enter your nickname."
+        pseudo_min: "The nickname must contain at least {{ limit }} characters."
+        password_required: "Please enter a password."
+        password_confirm_required: "Please confirm your password."
+        error_upper: "Add at least one uppercase letter."
+        error_number: "Add at least one number."
+        error_special: "Add at least one special character."
+        error_vulnerability: "This password appears in known leaks, please choose another one."
+        error_ref: "At least 1 uppercase letter, 1 number and 1 special character"
+        error_mismatch: "Passwords do not match."
+        support_category_required: "Please choose a category."
+        support_message_required: "Please enter a message."
+        support_message_min: "The message must contain at least {{ limit }} characters."
+        image_type: "Allowed formats: JPEG, JPG, PNG, WEBP."
+        image_size: "Image too large (max 2 MB)."
+
+cookie:
+    arial: "Show cookies again"
+    text_intro: "This site uses essential cookies required for proper functioning, notably for login and functionality such as:"
+    text_exemple: "Remember me"
+    text_click: "By clicking on:"
+    text_click_after: "you consent to the use of all cookies. You may:"
+    text_options: "or consult our"
+    privacy_policy: "Privacy Policy"
+    accept: "Accept"
+    refuse: "Refuse"
+
+# aside
+place-order: "Place order"
+price-per-unit: "Price per unit:"
+quantity: "Quantity:"
+order-type: "Order type:"
+initial-visibility: "Initial visibility:"
+sell: "Sell"
+buy: "Buy"
+rank: "rank"
+
+# status
+status.hidden: "Hidden"
+status.online_site: "Online on site"
+status.connected_ingame: "Connected in game"
 
 # footer
-about: "About"
+about: "ABOUT"
 privacy_policy: "Privacy Policy"
 legal_notice: "Legal Notice"
 terms_of_use: "Terms of Use"
-alcohol_warning: "Alcohol abuse is dangerous for your health, consume in moderation"
+language_theme: "CHANGE LANGUAGE - THEME"
+all-right: "ALL RIGHTS RESERVED"
+links: "LINKS"
+api: "API DOCUMENTATION"
+call: "CONTACT US"
+disclaimer: "DISCLAIMER"
+disclaimer-text: "Digital Extremes Ltd, Warframe and the Warframe logo are registered trademarks. All rights reserved. This site has no official affiliation with Digital Extremes Ltd or Warframe. All illustrations, screenshots, characters and other recognizable intellectual property elements related to these trademarks are also the intellectual property of Digital Extremes Ltd."

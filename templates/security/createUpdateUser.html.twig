@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ userUpdateForm ? "Modification du Compte" : "Creation du Compte" }}{% endblock %}
+{% block title %}{{ userUpdateForm ? ('form.update_account'|trans) : ('form.create_account'|trans) }}{% endblock %}
 
 {% block body %}
     <div id="form" class="form-background">
@@ -8,21 +8,21 @@
             <div class="form-content">
                 <div class="mix">
                     <div class="headline">
-                        <h3 class="text-headline">{{ userUpdateForm ? "Modification du Compte" : "Creation du Compte" }}</h3>
+                        <h3 class="text-headline">{{ userUpdateForm ? ('form.update_account'|trans) : ('form.create_account'|trans) }}</h3>
+
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success text-subheadline">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
-
-                {% for message in app.flashes('success') %}
-                    <div class="alert alert-success">
-                        {{ message }}
-                    </div>
-                {% endfor %}
 
                 {{ form_start(userCreateForm, { attr: { class: 'all-form' } }) }}
                 <div class="spliter">
                     <div class="left">
                         <span class="form-group">
-                            {{ form_label(userCreateForm.pseudo, 'Pseudo en jeux') }}
+                            {{ form_label(userCreateForm.pseudo) }}
                             {% if userUpdateForm %}
                                 <div class="input-reset-inline">
                                     {{ form_widget(userCreateForm.pseudo, {
@@ -41,7 +41,7 @@
                             <div id="user_pseudo-error" class="form-error" style="visibility:hidden;">&nbsp;</div>
                         </span>
                         <span class="form-group">
-                            {{ form_label(userCreateForm.email, 'Email') }}
+                            {{ form_label(userCreateForm.email) }}
                             {% if userUpdateForm %}
                                 <div class="input-reset-inline">
                                     {{ form_widget(userCreateForm.email, {
@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                <input class="btn btn-lg btn-primary" type="submit" value="Validez">
+                <input class="btn btn-lg btn-primary" type="submit" value="{{ 'validate'|trans }}">
                 {{ form_end(userCreateForm) }}
             </div>
         </div>

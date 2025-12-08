@@ -8,47 +8,55 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class UserType extends AbstractType
 {
+    public function __construct(private TranslatorInterface $translator) {}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $isEdit = $options['is_edit'];
 
         $builder
-            ->add('pseudo', TextType::class)
-            ->add('email', EmailType::class)
+            ->add('pseudo', TextType::class, [
+                'label' => 'form.label.pseudo',
+            ])
+            ->add('email', EmailType::class, [
+                'label' => 'email',
+                'invalid_message' => 'form.error.error_email',
+            ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'mapped' => false,
                 'required' => !$isEdit,
-                'invalid_message' => 'Les mots de passe ne correspondent pas.',
+                'invalid_message' => 'form.error.error_mismatch',
                 'error_mapping' => [
                     '.' => 'second',
                 ],
                 'first_options'  => [
-                    'label' => 'Mot de passe',
+                    'label' => 'password',
                     'attr' => [
                         'minlength' => 8,
                         'maxlength' => 4096,
                         'pattern' => '^(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$',
-                        'title' => 'Au moins 1 majuscule, 1 chiffre et 1 caractère spécial',
+                        'title' => 'form.error.error_ref',
                     ],
                     'constraints' => [
-                        ...(!$isEdit ? [new Assert\NotBlank(['message' => 'Le mot de passe est obligatoire'])] : []),
-                        new Assert\Length(min: 8, minMessage: 'Le mot de passe doit contenir au moins {{ limit }} caractères'),
-                        new Assert\Regex('/[A-Z]/', 'Ajoutez au moins une majuscule.'),
-                        new Assert\Regex('/\d/',   'Ajoutez au moins un chiffre.'),
-                        new Assert\Regex('/[\W_]/','Ajoutez au moins un caractère spécial.'),
-                        new Assert\NotCompromisedPassword(message: "Ce mot de passe figure dans des fuites connues, merci d'en choisir un autre."),
+                        ...(!$isEdit ? [new Assert\NotBlank(['message' => 'form.error_obligatory'])] : []),
+                        new Assert\Length(min: 8, minMessage: 'form.error.error_password_length'),
+                        new Assert\Regex('/[A-Z]/', 'form.error.error_upper'),
+                        new Assert\Regex('/\d/',   'form.error.error_number'),
+                        new Assert\Regex('/[\W_]/','form.error.error_special'),
+                        new Assert\NotCompromisedPassword(message: "form.error.error_vulnerability"),
                     ],
                 ],
                 'second_options' => [
                     'label_html' => true,
-                    'label' => '<span>Confirmation du mot de passe</span>',
+                    'label' => '<span>' . $this->translator->trans('confirm_password') . '</span>',
                 ],
             ])
         ;

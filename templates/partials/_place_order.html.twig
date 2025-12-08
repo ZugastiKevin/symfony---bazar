@@ -25,10 +25,10 @@
                                 <input
                                         id="place-order-search-input"
                                         type="search"
-                                        placeholder="Recherche..."
+                                        placeholder="{{ 'holder'|trans }}"
                                         autocomplete="off"
                                 />
-                                <button id="search-clear" type="button" class="search-clear" aria-label="Effacer la recherche">
+                                <button id="place-order-search-clear" type="button" class="search-clear" aria-label="{{ "arial-delete"|trans }}">
                                     <i class="fa-solid fa-xmark"></i>
                                 </button>
                             </div>
@@ -116,7 +116,7 @@
                 </div>
             {{ form_end(formOrder) }}
         {% else %}
-            Aucun formulaire disponible
+            {{ "form.nothing"|trans }}
         {% endif %}
     </aside>
 {% endif %}

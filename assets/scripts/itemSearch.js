@@ -27,6 +27,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
 
+        if (asideClear) {
+            const wrapper = asideClear.closest('.search-input-wrapper');
+            if (wrapper) {
+                wrapper.classList.toggle('has-value', hasValue);
+            }
+        }
+
         if (!hasValue) {
             clearResults();
         }
