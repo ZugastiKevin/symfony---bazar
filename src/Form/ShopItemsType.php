@@ -39,8 +39,8 @@ class ShopItemsType extends AbstractType
                 'attr' => ['class' => 'select-dropdown'],
                 'row_attr' => ['class' => 'select-wrapper'],
                 'choices' => [
-                    'sell'   => true,
-                    'buy'  => false,
+                    'sell' => true,
+                    'buy' => false,
                 ],
                 'expanded' => false,
                 'multiple' => false,

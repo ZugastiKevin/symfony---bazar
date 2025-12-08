@@ -73,7 +73,7 @@
                             <tr>
                                 <td>
                                     {# à adapter selon ton enum/champ : sell/buy #}
-                                    {{ order.orderType is defined and order.orderType == 'sell' ? 'Vente' : 'Achat' }}
+                                    {{ order.orderType is defined and order.orderType == 'sell' ? 'Achat' : 'Vente' }}
                                 </td>
                                 <td>{{ user.pseudo }}</td>
                                 <td>
