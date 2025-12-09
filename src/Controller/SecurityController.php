@@ -197,6 +197,7 @@ class SecurityController extends AbstractController
     }
 
     // delete user
+    #[IsGranted('ROLE_USER')]
     #[Route('/delete_user/{id}', name: 'delete_user')]
     public function deleteUser(User $user, Request $request, EntityManagerInterface $entityManager)
     {
@@ -324,6 +325,7 @@ class SecurityController extends AbstractController
     }
 
     // logout
+    #[IsGranted('ROLE_USER')]
     #[Route(path: '/logout', name: 'app_logout')]
     public function logout(): void
     {

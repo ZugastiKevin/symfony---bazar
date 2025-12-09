@@ -33,6 +33,11 @@
                         </li>
                     {% endif %}
                     <li class="btn-menu-navbar">
+                        <a href="{{ path('user', {id: app.user.id, '_locale': app.request.locale}) }}">
+                            <span>{{ 'profile'|trans }}</span>
+                        </a>
+                    </li>
+                    <li class="btn-menu-navbar">
                         <a href="{{ path('app_logout', {'_locale': app.request.locale}) }}">
                             <span>{{ 'logout'|trans }}</span>
                         </a>

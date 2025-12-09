@@ -1,0 +1,29 @@
+<div class="orders-columns">
+    <div class="orders-column">
+        <h3 class="orders-title">{{ 'player-sell'|trans }}</h3>
+
+        {% if sellOrders is empty %}
+            <p class="empty-text">{{ 'no-sell'|trans }}</p>
+        {% else %}
+            <div class="orders-grid">
+                {% for order in sellOrders %}
+                    {% include 'partials/_order_card_menu.html.twig' with { order: order } %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="orders-column">
+        <h3 class="orders-title">{{ 'player-buy'|trans }}</h3>
+
+        {% if buyOrders is empty %}
+            <p class="empty-text">{{ 'no-buy'|trans }}</p>
+        {% else %}
+            <div class="orders-grid">
+                {% for order in buyOrders %}
+                    {% include 'partials/_order_card_menu.html.twig' with { order: order } %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>

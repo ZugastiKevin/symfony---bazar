@@ -57,6 +57,19 @@ navbar:
 # home
 home: "Le Bazar"
 
+# TRI
+filters.sort.newest: "Plus récents"
+filters.sort.oldest: "Plus anciens"
+filters.sort.lowprice: "Prix croissant"
+filters.sort.highprice: "Prix décroissant"
+
+# PRIX
+filters.price.min: "Prix min"
+filters.price.max: "Prix max"
+
+# STATUTS
+filters.status.all: "Tous les statuts"
+
 # item
 item:
     not_found: "Aucun item trouvé pour « %name% »."
