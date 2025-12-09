@@ -1,11 +1,11 @@
 @use "../abstracts/variables" as v;
 
-#show {
+#user {
     width: 100%;
     display: flex;
     justify-content: center;
 
-    .show {
+    .user {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -13,7 +13,7 @@
         align-items: center;
         gap: 1.5rem;
 
-        .item-header {
+        .user-header {
             margin-top: -20.7rem;
             padding: 10px 5%;
             width: 80%;
@@ -32,68 +32,6 @@
             -webkit-mask-repeat: no-repeat;
             -webkit-mask-size: 100% 100%;
 
-            .item-header-left {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-
-                .item-main-icon {
-                    width: 100%;
-                    max-width: 225px;
-                    max-height: 225px;
-                    min-width: 225px;
-                    min-height: 225px;
-                    border: 2px solid v.$color-blue-eidolon;
-                    border-radius: 0.5rem;
-                    overflow: hidden;
-                    background: rgba(255,255,255,0.05);
-
-                    img {
-                        object-fit: contain;
-                    }
-                }
-
-                .item-sub-icons {
-                    margin-top: 0.5rem;
-                    display: flex;
-                    justify-content: space-between;
-                    gap: 0.5rem;
-                }
-
-                .item-sub-icon {
-                    display: block;
-                    width: 52px;
-                    height: 52px;
-                    border: 2px solid v.$color-golden-twilight;
-                    border-radius: 0.5rem;
-                    overflow: hidden;
-                    transition: border 0.2s ease-in-out, transform 0.25s ease-out;
-
-                    img {
-                        object-fit: cover;
-                        transition: transform 0.25s ease-out;
-                    }
-
-                    &:hover {
-                        border: 2px solid v.$color-blue-eidolon;
-                        transform: scale(1.12);
-
-                        img {
-                            transform: scale(1.18);
-                        }
-                    }
-                }
-            }
-
-            .item-header-right {
-                .item-meta {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: space-between;
-                    align-items: flex-end;
-                    gap: .75rem;
-                }
-            }
         }
 
         .orders-columns {
@@ -135,19 +73,17 @@
                         display: grid;
                         grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
                         grid-template-areas:
-                                "user user user status status status"
-                                "quantity quantity rank rank price price"
-                                ". . . .  action action";
+                                "icon name name name name name"
+                                "icon quantity rank rank price price";
                         height: auto;
                         padding: .5rem 0;
                         gap: .4rem;
 
-                        .order-line.user     { grid-area: user; }
-                        .order-line.status   { grid-area: status; }
+                        .order-line.icon     { grid-area: icon; }
+                        .order-line.name     { grid-area: name; }
                         .order-line.price    { grid-area: price; }
                         .order-line.quantity { grid-area: quantity; }
                         .order-line.rank     { grid-area: rank; }
-                        .order-line.action   { grid-area: action; }
 
                         &:nth-child(odd) {
                             background-color: rgba(20,20,20,0.7);
@@ -181,6 +117,19 @@
                             opacity: 1;
                         }
 
+                        .order-icon {
+                            width: 100px;
+                            height: 100px;
+                            border: 2px solid v.$color-blue-eidolon;
+                            border-radius: 0.5rem;
+                            overflow: hidden;
+                            background: rgba(255,255,255,0.05);
+
+                            img {
+                                object-fit: contain;
+                            }
+                        }
+
                         .order-line {
                             display: flex;
                             justify-content: center;
@@ -204,8 +153,8 @@
                             .btn-copy {
                                 width: 100%;
                                 height: 100%;
-                                padding-top: 5px;
                                 padding-bottom: 5px;
+                                padding-top: 5px;
                                 text-align: center;
                             }
 
@@ -225,11 +174,8 @@
 }
 
 @media screen and (min-width:1991px) {
-    #show {
-        .show {
-            .item-header {
-                width: 60%;
-            }
+    #user {
+        .user {
             .orders-columns {
                 .orders-column {
                     .orders-grid {
@@ -246,11 +192,8 @@
 }
 
 @media screen and (max-width:1280px) {
-    #show {
-        .show {
-            .item-header {
-                width: 100%;
-            }
+    #user {
+        .user {
             .orders-columns {
                 .orders-column {
                     .orders-grid {
@@ -267,8 +210,8 @@
 }
 
 @media screen and (max-width:900px) {
-    #show {
-        .show {
+    #user {
+        .user {
             .orders-columns {
                 margin-left: auto;
                 margin-right: 55px;
@@ -278,56 +221,21 @@
     }
 }
 
-@media screen and (max-width:768px) {
-    #show {
-        .show {
-            .item-header {
-                margin-top: 0;
-                flex-direction: column;
-                align-items: center;
-                padding: 5px;
-
-                .item-header-left {
-
-                    .item-main-icon {
-                        img {
-                        }
-                    }
-
-                    .item-sub-icons {
-                    }
-
-                    .item-sub-icon {
-                        img {
-                        }
-
-                        &:hover {
-                            img {
-                            }
-                        }
-                    }
-                }
-
-                .item-header-right {
-                    align-items: center;
-
-                    .item-meta {
-                        align-items: center;
-                    }
-                }
-            }
-        }
-    }
-}
-
 @media screen and (max-width:620px) {
-    #show {
-        .show {
+    #user {
+        .user {
             .orders-columns {
                 .orders-column {
                     .orders-grid {
                         .order-card {
+                            grid-template-areas:
+                                "icon icon name name name name"
+                                "icon icon . rank rank ."
+                                "icon icon quantity quantity price price";
+
                             .copy-popup {
+                                left: 50%;
+                                height: 75%;
                             }
 
                             .action {

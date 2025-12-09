@@ -1,8 +1,24 @@
 {% set shop = order.shop %}
 {% set user = shop.user %}
 
+{% set itemEntity = order.items|first %}
+{% set itemName = app.request.locale == 'fr'
+    ? (itemEntity.nameFR ?? itemEntity.nameEN)
+    : (itemEntity.nameEN ?? itemEntity.nameFR)
+%}
+
 <div class="order-card">
     <div class="copy-popup"></div>
+
+    <div class="order-line icon">
+        <img src="{{ asset('assets/images/uploads/api/' ~ itemEntity.imageName) }}" alt="{{ itemName }}">
+    </div>
+
+    <div class="order-line name btn-menu">
+        <a href="{{ path('item_show', { name: itemEntity.uniqueName|trim('/')|replace({'/':'-'}) }) }}">
+            <span class="value">{{ itemName }}</span>
+        </a>
+    </div>
 
     <div class="order-line user">
         <span class="value">{{ user.pseudo }}</span>
@@ -31,7 +47,7 @@
 
     {% if order.rank %}
         <div class="order-line rank">
-            <span class="value">{{ order.rank }} {{ 'orders.off'|trans }} {{ data.entity.fusionLimit }}</span>
+            <span class="value">{{ order.rank }} {{ 'orders.off'|trans }} {{ itemEntity.fusionLimit }}</span>
         </div>
     {% else %}
         <div class="order-line rank">
@@ -43,14 +59,14 @@
         {% if order.sellOrBuy is defined and order.sellOrBuy == true %}
             {% set message = 'orders.whisper_message'|trans({
                 '%pseudo%': user.pseudo,
-                '%item%': item.name,
+                '%item%': itemName,
                 '%price%': order.price
             }) %}
             {% set btnLabel = 'buy'|trans %}
         {% else %}
             {% set message = 'orders.whisper_message_sell'|trans({
                 '%pseudo%': user.pseudo,
-                '%item%': item.name,
+                '%item%': itemName,
                 '%price%': order.price
             }) %}
             {% set btnLabel = 'sell'|trans %}

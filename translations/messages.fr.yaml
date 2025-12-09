@@ -65,6 +65,7 @@ orders:
     whisper_message_sell: '/w %pseudo% Salut ! Je voudrais vendre : "%item%" pour %price% platine. (bazar-de-cetus)'
     copy: "Copier le message"
     copied: "Copié !"
+    off: "sur"
 
 
 # form placeholder
@@ -139,9 +140,11 @@ price-per-unit: "Prix par unité :"
 quantity: "Quantité :"
 order-type: "Type d'ordre :"
 initial-visibility: "Visibilité initiale :"
+my_offer_sell: "Mais proposition de vente"
 player-sell: "Joueur qui veut vendre"
 sell: "Vendre"
 no-sell: "Aucune vente."
+my_offer_buy: "Mais proposition d'achat"
 player-buy: "Joueur qui veut acheter"
 buy: "Acheter"
 no-buy: "Aucun achat."

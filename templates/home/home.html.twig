@@ -1,33 +1,21 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
-{% block body %}
-    <div id="user" class="container margin-navbar">
-        <div class="user">
-            {% include 'partials/_search.html.twig' %}
-            <div class="user-header">
-                <h2 class="user-pseudo">
-                    {{ user.pseudo }}
-                </h2>
+{% block title %}{{ 'home'|trans }}{% endblock %}
 
-                {% if app.user and app.user.id == user.id %}
-                <div class="btn-menu">
-                    <a href="{{ path('update_user', { id: user.id }) }}" class="btn-edit-profile">
-                        {{ 'update_account'|trans }}
-                    </a>
-                </div>
-                {% endif %}
-            </div>
+{% block body %}
+    <div id="home" class="container margin-navbar">
+        <div class="home">
+            {% include 'partials/_search.html.twig' %}
             <div class="orders-columns">
                 <div class="orders-column">
-                    <h3 class="orders-title">{{ 'my_offer_sell'|trans }}</h3>
+                    <h3 class="orders-title">{{ 'player-sell'|trans }}</h3>
 
                     {% if sellOrders is empty %}
                         <p class="empty-text">{{ 'no-sell'|trans }}</p>
                     {% else %}
                         <div class="orders-grid">
                             {% for order in sellOrders %}
-                                {% include 'partials/_order_card_profile.html.twig' with {
+                                {% include 'partials/_order_card_menu.html.twig' with {
                                     order: order
                                 } %}
                             {% endfor %}
@@ -35,14 +23,14 @@
                     {% endif %}
                 </div>
                 <div class="orders-column">
-                    <h3 class="orders-title">{{ 'my_offer_buy'|trans }}</h3>
+                    <h3 class="orders-title">{{ 'player-buy'|trans }}</h3>
 
                     {% if buyOrders is empty %}
                         <p class="empty-text">{{ 'no-buy'|trans }}</p>
                     {% else %}
                         <div class="orders-grid">
                             {% for order in buyOrders %}
-                                {% include 'partials/_order_card_profile.html.twig' with {
+                                {% include 'partials/_order_card_menu.html.twig' with {
                                     order: order
                                 } %}
                             {% endfor %}

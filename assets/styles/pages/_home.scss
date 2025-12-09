@@ -1,6 +1,238 @@
 @use "../abstracts/variables" as v;
 
 #home {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
     .home {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1.5rem;
+
+        .orders-columns {
+            width: 90%;
+            min-height: 85rem;
+            margin-top: 1rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+
+            .orders-column {
+                .orders-title {
+                    background: rgba(20,20,20,0.7);
+                    padding: 1rem 1rem 0.3rem 1rem;
+                    font-size: 1.4rem;
+                    text-align: center;
+                    color: v.$color-golden-twilight;
+                    margin-bottom: 1rem;
+                    border-bottom: 2px solid v.$color-golden-twilight;
+                }
+
+                .empty-text {
+                    color: #999;
+                    font-style: italic;
+                }
+
+                .orders-grid {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    margin-top: 2rem;
+
+                    .order-card {
+                        position: relative;
+                        overflow: visible;
+                        border: 3.75px solid v.$color-golden-twilight;
+                        border-left: none;
+                        border-right: none;
+                        transition: transform 0.2s ease-out, border-color 0.2s ease-out;
+                        display: grid;
+                        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+                        grid-template-areas:
+                                "icon name name name name name"
+                                "icon . status status status ."
+                                "icon quantity rank rank price price"
+                                "user user user .  action action";
+                        height: auto;
+                        padding: .5rem 0;
+                        gap: .4rem;
+
+                        .order-line.icon     { grid-area: icon; }
+                        .order-line.name     { grid-area: name; }
+                        .order-line.user     { grid-area: user; }
+                        .order-line.status   { grid-area: status; }
+                        .order-line.price    { grid-area: price; }
+                        .order-line.quantity { grid-area: quantity; }
+                        .order-line.rank     { grid-area: rank; }
+                        .order-line.action   { grid-area: action; }
+
+                        &:nth-child(odd) {
+                            background-color: rgba(20,20,20,0.7);
+                        }
+
+                        &:nth-child(even) {
+                            background-color: v.$color-cetus-rock;
+                        }
+
+                        .copy-popup {
+                            position: absolute;
+                            left: 33%;
+                            top: 0;
+                            transform: translate(-50%);
+                            width: 65%;
+                            height: 100%;
+                            padding: 0.4rem 0.6rem;
+                            background: rgba(0, 0, 0, 0.7);
+                            color: #fff;
+                            border-radius: 0.4rem;
+                            font-size: 0.75rem;
+                            text-align: center;
+                            white-space: normal;
+                            opacity: 0;
+                            pointer-events: none;
+                            transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+                            z-index: 20;
+                        }
+
+                        .copy-popup.visible {
+                            opacity: 1;
+                        }
+
+                        .order-icon {
+                            width: 100px;
+                            height: 100px;
+                            border: 2px solid v.$color-blue-eidolon;
+                            border-radius: 0.5rem;
+                            overflow: hidden;
+                            background: rgba(255,255,255,0.05);
+
+                            img {
+                                object-fit: contain;
+                            }
+                        }
+
+                        .order-line {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            .label {
+                                color: v.$color-golden-twilight;
+                                font-size: 0.85rem;
+                            }
+
+                            .value {
+                                font-size: 0.95rem;
+                                color: white;
+                                font-weight: 600;
+
+                                &.price-value {
+                                    color: v.$color-blue-eidolon;
+                                }
+                            }
+
+                            .btn-copy {
+                                width: 100%;
+                                height: 100%;
+                                padding-bottom: 5px;
+                                padding-top: 5px;
+                                text-align: center;
+                            }
+
+                            .status-1 { color: v.$color-golden-twilight; }
+                            .status-2 { color: v.$color-blue-eidolon; }
+                        }
+
+                        &:hover {
+                            transform: scale(1.02);
+                            border-color: v.$color-blue-eidolon;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1991px) {
+    #home {
+        .home {
+            .orders-columns {
+                .orders-column {
+                    .orders-grid {
+                        .order-card {
+                            &:hover {
+                                transform: scale(1.01);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:1280px) {
+    #home {
+        .home {
+            .orders-columns {
+                .orders-column {
+                    .orders-grid {
+                        .order-card {
+                            &:hover {
+                                transform: scale(1.05);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width:900px) {
+    #home {
+        .home {
+            .orders-columns {
+                margin-left: auto;
+                margin-right: 55px;
+                grid-template-columns: 1fr;
+            }
+        }
+    }
+}
+
+@media screen and (max-width:620px) {
+    #home {
+        .home {
+            .orders-columns {
+                .orders-column {
+                    .orders-grid {
+                        .order-card {
+                            grid-template-areas:
+                                "icon icon name name name name"
+                                "icon icon status status status status"
+                                "icon icon . rank rank ."
+                                "icon icon quantity quantity price price"
+                                "user user user action action action";
+
+                            .copy-popup {
+                                left: 50%;
+                                height: 75%;
+                            }
+
+                            .action {
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

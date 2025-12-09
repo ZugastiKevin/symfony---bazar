@@ -121,13 +121,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (asideInput && input) {
         asideInput.addEventListener('input', () => {
-            // copie la valeur dans le champ qui a les attributs hx-*
             input.value = asideInput.value;
 
-            // met à jour l'état du bouton / clear / résultats
             updateButton();
 
-            // déclenche un keyup pour que htmx réagisse (hx-trigger="keyup changed delay:300ms")
             const evt = new KeyboardEvent('keyup', { bubbles: true });
             input.dispatchEvent(evt);
         });
@@ -139,7 +136,6 @@ document.addEventListener('DOMContentLoaded', function () {
             asideInput.value = '';
             asideInput.focus();
 
-            // si tu veux aussi vider la recherche principale et les résultats :
             if (input) {
                 input.value = '';
                 updateButton();

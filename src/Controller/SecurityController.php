@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Shop;
 use App\Form\UserType;
+use App\Repository\ShopItemsRepository;
 use App\Repository\StatusRepository;
 use App\Repository\UserRepository;
 use App\Form\ForgotPasswordRequestFormType;
@@ -25,16 +26,33 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class SecurityController extends AbstractController
 {
     public function __construct(
+        private ShopItemsRepository $shopItemsRepository,
         private TranslatorInterface $translator
     ) {}
 
     // user by id
     #[Route('/user/{id}', name: 'user')]
     #[IsGranted('ROLE_USER')]
-    public function user(User $user): Response
+    public function user(User $user, Request $request): Response
     {
+        $language = $request->getLocale() ?? 'fr';
+
+        $orders = $this->shopItemsRepository->findAll();
+
+        $sellOrders = [];
+        $buyOrders  = [];
+
+        foreach ($orders as $order) {
+            if ($order->isSellOrBuy() === true) {
+                $sellOrders[] = $order;
+            } else {
+                $buyOrders[]  = $order;
+            }
+        }
         return $this->render('security/user.html.twig', [
-            'user' => $user,
+            'user'       => $user,
+            'sellOrders' => $sellOrders,
+            'buyOrders'  => $buyOrders,
         ]);
     }
 

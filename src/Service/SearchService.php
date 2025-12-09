@@ -34,7 +34,6 @@ class SearchService
         $fromApi = false;
         $len = mb_strlen($query, 'UTF-8');
 
-        // On garde une référence aux entités DB si on en a besoin plus tard
         $entities = [];
 
         // 1-2 chars -> uniquement BDD -> sinon out of memory
@@ -43,13 +42,13 @@ class SearchService
             $rawResults = $this->entitiesToArrays($entities, $language);
             $fromApi = false;
         } else {
-            // Tentative BDD
+            // +3 chars on test en BDD
             $entities = $this->repo->findBySearchTerm($query, $maxResults);
             if (!empty($entities)) {
                 $rawResults = $this->entitiesToArrays($entities, $language);
                 $fromApi = false;
             } else {
-                // si rien BDD on appel l'API Warframe
+                // si rien BDD API Warframe
                 try {
                     $rawResults = $this->api->searchItem($query, $language);
                     $fromApi = true;
@@ -67,12 +66,9 @@ class SearchService
             $rawResults = [];
         }
 
-        // === FILTRAGE DES CATEGORIES (toujours après avoir obtenu rawResults) ===
         $excluded = $this->categoryFilter->getExcludedCategoriesFromRequest($request);
         $filtered = $this->categoryFilter->filter($rawResults, $excluded);
 
-        // === CAS 1 : on vient de l'API "classique" (DB vide au début) ===
-        // => on upsert seulement le subset filtré (comme dans ta première version)
         if (is_array($filtered) && !empty($filtered) && $fromApi) {
             try {
                 $this->repo->upsertItemsFromApi($filtered, $language);
@@ -84,15 +80,11 @@ class SearchService
             }
         }
 
-        // === CAS 2 : on vient de la BDD, mais il manque la langue demandée ===
-        // -> ça, on le gère APRES filtrage, et uniquement pour les résultats filtrés
         if (!$fromApi && $len > 2 && !empty($filtered)) {
-            // Récupère les uniqueName des résultats filtrés
             $uniqueNames = array_column($filtered, 'uniqueName');
             $uniqueNames = array_filter($uniqueNames);
 
             if (!empty($uniqueNames)) {
-                // On récupère les entités correspondantes
                 $entitiesForFiltered = $this->repo->findBy(['uniqueName' => $uniqueNames]);
 
                 $needsApiForLang = false;
@@ -102,7 +94,7 @@ class SearchService
                             $needsApiForLang = true;
                             break;
                         }
-                    } else { // 'en'
+                    } else {
                         if (method_exists($it, 'getNameEN') && $it->getNameEN() === null) {
                             $needsApiForLang = true;
                             break;
@@ -112,18 +104,15 @@ class SearchService
 
                 if ($needsApiForLang) {
                     try {
-                        // On récupère la version de l'API dans la bonne langue
                         $apiResults = $this->api->searchItem($query, $language);
 
                         if (is_array($apiResults)) {
-                            // ⚠️ on filtre AVANT d'upsert, comme tu le veux
                             $apiFiltered = $this->categoryFilter->filter($apiResults, $excluded);
                             if (!empty($apiFiltered)) {
                                 $this->repo->upsertItemsFromApi($apiFiltered, $language);
                             }
                         }
 
-                        // On recharge la BDD et on reconstruit les résultats propres
                         $entities = $this->repo->findBySearchTerm($query, $maxResults);
                         $rawResults = $this->entitiesToArrays($entities, $language);
                         $filtered = $this->categoryFilter->filter($rawResults, $excluded);
