@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Dto\OrderFilter;
+use App\Form\OrderFilterType;
 use App\Entity\Items;
 use App\Repository\ItemsRepository;
 use App\Repository\PartsRepository;
@@ -24,9 +26,20 @@ class ItemsController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request): Response
     {
-        $language = $request->getLocale() ?? 'fr';
+        // 1) On crée le DTO
+        $filter = new OrderFilter();
 
-        $orders = $this->shopItemsRepository->findAll();
+        // 2) On crée le formulaire lié au DTO
+        $form = $this->createForm(OrderFilterType::class, $filter);
+
+        // 3) On bind la requête au formulaire
+        $form->handleRequest($request);
+
+        // 🔍 DEBUG : voir ce qui arrive dans la query
+        // dd($request->query->all(), $filter);
+
+        // 4) On passe le DTO au repo
+        $orders = $this->shopItemsRepository->findByFilter($filter);
 
         $sellOrders = [];
         $buyOrders  = [];
@@ -39,7 +52,17 @@ class ItemsController extends AbstractController
             }
         }
 
+        // 5) Requête HTMX ? On renvoie juste la liste
+        if ($request->headers->get('HX-Request')) {
+            return $this->render('home/_orders_list.html.twig', [
+                'sellOrders' => $sellOrders,
+                'buyOrders'  => $buyOrders,
+            ]);
+        }
+
+        // 6) Sinon, page complète
         return $this->render('home/home.html.twig', [
+            'filterForm' => $form->createView(),
             'sellOrders' => $sellOrders,
             'buyOrders'  => $buyOrders,
         ]);

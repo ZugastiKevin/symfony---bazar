@@ -6,37 +6,69 @@
     <div id="home" class="container margin-navbar">
         <div class="home">
             {% include 'partials/_search.html.twig' %}
-            <div class="orders-columns">
-                <div class="orders-column">
-                    <h3 class="orders-title">{{ 'player-sell'|trans }}</h3>
+{#            <div class="filter-header">#}
+{#                {{ form_start(filterForm, {#}
+{#                    method: 'GET',#}
+{#                    action: path('home'),#}
+{#                    attr: {#}
+{#                        'hx-get': path('home'),#}
+{#                        'hx-target': '#orders-wrapper',#}
+{#                        'hx-indicator': '#orders-loading',#}
+{#                        'hx-trigger': 'change, keyup delay:500ms'#}
+{#                    }#}
+{#                }) }}#}
+{#                <div class="filters-row">#}
+{#                    <div class="filter-group">#}
+{#                        {{ form_widget(filterForm.sort) }}#}
+{#                    </div>#}
+{#                    <div class="filter-group po-section">#}
+{#                        <div class="number-line">#}
+{#                            {{ form_label(filterForm.minPrice, null, {#}
+{#                                label_attr: { class: 'number-line__label' }#}
+{#                            }) }}#}
 
-                    {% if sellOrders is empty %}
-                        <p class="empty-text">{{ 'no-sell'|trans }}</p>
-                    {% else %}
-                        <div class="orders-grid">
-                            {% for order in sellOrders %}
-                                {% include 'partials/_order_card_menu.html.twig' with {
-                                    order: order
-                                } %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="orders-column">
-                    <h3 class="orders-title">{{ 'player-buy'|trans }}</h3>
+{#                            <div class="number-line__field">#}
+{#                                {{ form_widget(filterForm.minPrice, {#}
+{#                                    attr: { class: 'number-line__input' }#}
+{#                                }) }}#}
+{#                                <div class="number-line__arrows">#}
+{#                                    <span class="up"><i class="fa-solid fa-caret-up"></i></span>#}
+{#                                    <span class="down"><i class="fa-solid fa-caret-down"></i></span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="filter-group po-section">#}
+{#                        <div class="number-line">#}
+{#                            {{ form_label(filterForm.maxPrice, null, {#}
+{#                                label_attr: { class: 'number-line__label' }#}
+{#                            }) }}#}
 
-                    {% if buyOrders is empty %}
-                        <p class="empty-text">{{ 'no-buy'|trans }}</p>
-                    {% else %}
-                        <div class="orders-grid">
-                            {% for order in buyOrders %}
-                                {% include 'partials/_order_card_menu.html.twig' with {
-                                    order: order
-                                } %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                </div>
+{#                            <div class="number-line__field">#}
+{#                                {{ form_widget(filterForm.maxPrice, {#}
+{#                                    attr: { class: 'number-line__input' }#}
+{#                                }) }}#}
+{#                                <div class="number-line__arrows">#}
+{#                                    <span class="up"><i class="fa-solid fa-caret-up"></i></span>#}
+{#                                    <span class="down"><i class="fa-solid fa-caret-down"></i></span>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="filter-group">#}
+{#                        {{ form_widget(filterForm.status) }}#}
+{#                    </div>#}
+{#                </div>#}
+{#                {{ form_end(filterForm) }}#}
+{#            </div>#}
+            <div id="orders-loading" class="htmx-indicator">
+                Loading...
+            </div>
+            <div id="orders-wrapper">
+                {% include 'home/_orders_list.html.twig' with {
+                    sellOrders: sellOrders,
+                    buyOrders:  buyOrders
+                } %}
             </div>
         </div>
     </div>

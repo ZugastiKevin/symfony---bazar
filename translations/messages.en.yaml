@@ -4,16 +4,16 @@ login: "Login"
 sign_in: "Sign in"
 sign_out: "Sign out"
 register: "Create an account"
-registration: "Registration"
-update_account: "Account update"
-create_account: "Account creation"
+registration: "Sign up"
+update_account: "Edit account"
+create_account: "Create account"
 email: "Email address"
 password: "Password"
 new_password: "New password"
 confirm_password: "Confirm password"
 validate_new_password: "Confirm new password"
 remember_me: "Remember me"
-forgot_password: "Forgot password?"
+forgot_password: "Forgot your password?"
 submit: "Submit"
 save: "Save"
 cancel: "Cancel"
@@ -31,18 +31,18 @@ success: "Success"
 invalid_credentials: "Invalid credentials"
 csrf_token_invalid: "Invalid CSRF token"
 username_not_found: "User not found"
-password_too_short: "Password is too short"
-form_error: "Please correct the form errors"
+password_too_short: "The password is too short"
+form_error: "Please correct the errors in the form"
 please_login: "Please log in"
 validate: "Validate"
 
 #search bar
-heading: "Market and Contracts"
+heading: "Trading & Contracts"
 holder: "Search..."
 arial-delete: "Clear search"
 
 # support
-ticket_sent: "Your message has been successfully sent. We have recorded your request."
+ticket_sent: "Your message has been sent. Your request has been recorded."
 support-title: "Support - Contact us"
 support: "Contact support"
 
@@ -51,86 +51,99 @@ video: "Your browser does not support video playback."
 
 # navbar
 navbar:
-    market: "Market"
-    contract: "Contracts"
+  market: "Market"
+  contract: "Contracts"
 
 # home
 home: "The Bazaar"
 
+# TRI
+filters.sort.newest: "Newest"
+filters.sort.oldest: "Oldest"
+filters.sort.lowprice: "Lowest price"
+filters.sort.highprice: "Highest price"
+
+# PRIX
+filters.price.min: "Minimum price"
+filters.price.max: "Maximum price"
+
+# STATUTS
+filters.status.all: "All statuses"
+
 # item
 item:
-    not_found: "No item found for \"%name%\"."
+  not_found: "No item found for \"%name%\"."
 orders:
-    whisper_message: '/w %pseudo% Hi! I want to buy: "%item%" for %price% platinum. (bazar-de-cetus)'
-    whisper_message_sell: '/w %pseudo% Hi! I want to sell: "%item%" for %price% platinum. (bazar-de-cetus)'
-    copy: "Copy message"
-    copied: "Copied!"
-
+  whisper_message: '/w %pseudo% Hi! I would like to buy "%item%" for %price% platinum. (bazar-de-cetus)'
+  whisper_message_sell: '/w %pseudo% Hi! I would like to sell "%item%" for %price% platinum. (bazar-de-cetus)'
+  copy: "Copy message"
+  copied: "Copied!"
+  off: "out of"
 
 # form placeholder
 form:
-    create_account: "Account creation"
-    update_account: "Account update"
-    label:
-        pseudo: "In-game username"
-        min: "The name must contain at least {{ limit }} character."
-        max: "The name cannot exceed {{ limit }} characters."
-    invalid_type: "Please upload a file in JPEG, JPG, PNG or WEBP format."
-    yes: "Yes"
-    no: "No"
-    nothing: "No form available"
-    forgot_password_text: "Enter the email address associated with your account. If it exists in our database, you will receive a link to reset your password."
-    send_forgot: "Send reset link"
-    describ:
-        describ_too_short: "The description must contain at least {{ limit }} character."
-        describ_too_long: "The description cannot exceed {{ limit }} characters."
-    error:
-        error_obligatory: "This field is required."
-        error_email: "Invalid email address."
-        error_email_required: "Please enter an email address."
-        error_password_length: "The password must contain at least {{ limit }} characters."
-        pseudo_required: "Please enter your username."
-        pseudo_min: "The username must contain at least {{ limit }} characters."
-        password_required: "Please enter a password."
-        password_confirm_required: "Please confirm your password."
-        error_upper: "Add at least one uppercase letter."
-        error_number: "Add at least one number."
-        error_special: "Add at least one special character."
-        error_vulnerability: "This password appears in known leaks, please choose another one."
-        error_ref: "At least 1 uppercase letter, 1 number and 1 special character"
-        error_mismatch: "Passwords do not match."
-        support_category_required: "Please choose a category."
-        support_message_required: "Please enter a message."
-        support_message_min: "The message must contain at least {{ limit }} characters."
-        image_type: "Allowed formats: JPEG, JPG, PNG, WEBP."
-        image_size: "Image too large (max 2 MB)."
+  create_account: "Create account"
+  update_account: "Edit account"
+  label:
+    pseudo: "In-game nickname"
+    min: "The name must be at least {{ limit }} characters long."
+    max: "The name cannot be longer than {{ limit }} characters."
+  invalid_type: "Please upload a file in JPEG, JPG, PNG or WEBP format."
+  yes: "Yes"
+  no: "No"
+  nothing: "No form available"
+  forgot_password_text: "Enter the email address linked to your account. If it exists in our database, you will receive a link to reset your password."
+  send_forgot: "Send reset link"
+  describ:
+    describ_too_short: "The description must be at least {{ limit }} characters long."
+    describ_too_long: "The description cannot be longer than {{ limit }} characters."
+  error:
+    error_obligatory: "This field is required."
+    error_email: "Invalid email address."
+    error_email_required: "Please enter an email address."
+    error_password_length: "The password must be at least {{ limit }} characters long."
+    pseudo_required: "Please enter your nickname."
+    pseudo_min: "The nickname must be at least {{ limit }} characters long."
+    password_required: "Please enter a password."
+    password_confirm_required: "Please confirm your password."
+    error_upper: "Add at least one uppercase letter."
+    error_number: "Add at least one digit."
+    error_special: "Add at least one special character."
+    error_vulnerability: "This password appears in known leaks, please choose another one."
+    error_ref: "At least 1 uppercase, 1 digit and 1 special character"
+    error_mismatch: "The passwords do not match."
+    support_category_required: "Please choose a category."
+    support_message_required: "Please enter a message."
+    support_message_min: "The message must be at least {{ limit }} characters long."
+    image_type: "Allowed formats: JPEG, JPG, PNG, WEBP."
+    image_size: "Image too large (max 2 MB)."
 
 # flash
 flash:
-    account_email_exists: "An account with this email already exists."
-    account_created: "Your account has been successfully created! A confirmation email has been sent to you."
-    account_created_but_email_failed: "Your account has been created, but the confirmation email could not be sent."
+  account_email_exists: "An account with this email already exists."
+  account_created: "Your account has been successfully created! A confirmation email has been sent to you."
+  account_created_but_email_failed: "Your account has been created, but the confirmation email could not be sent."
 
-    verify_invalid: "Invalid verification link."
-    verify_expired: "This verification link has expired. Please request a new one."
-    verify_success: "Your account has been activated, you can now log in."
+  verify_invalid: "Invalid verification link."
+  verify_expired: "This verification link has expired. Please request a new one."
+  verify_success: "Your account has been activated, you can now log in."
 
-    forgot_password_sent: "If an account exists with this email, a password reset link has been sent."
+  forgot_password_sent: "If an account exists with this email, a reset link has been sent."
 
-    reset_invalid: "This password reset link is invalid or has expired."
-    reset_success: "Your password has been successfully changed. You can now log in."
+  reset_invalid: "This reset link is invalid or has expired."
+  reset_success: "Your password has been successfully changed. You can now log in."
 
 # cookie
 cookie:
-    arial: "Show cookies again"
-    text_intro: "This site uses essential cookies required for the proper functioning of the website, notably for login and features such as:"
-    text_exemple: "Remember me"
-    text_click: "By clicking on:"
-    text_click_after: "you consent to the use of all cookies. You may:"
-    text_options: "or consult our"
-    privacy_policy: "Privacy Policy"
-    accept: "Accept"
-    refuse: "Refuse"
+  arial: "Show cookies again"
+  text_intro: "This site uses essential cookies required for proper operation, in particular for login and the following functionality:"
+  text_exemple: "Remember me"
+  text_click: "By clicking:"
+  text_click_after: "you consent to the use of all cookies. You can also:"
+  text_options: "or read our"
+  privacy_policy: "Privacy Policy"
+  accept: "Accept"
+  refuse: "Refuse"
 
 # aside
 place-order: "Place order"
@@ -138,22 +151,28 @@ price-per-unit: "Price per unit:"
 quantity: "Quantity:"
 order-type: "Order type:"
 initial-visibility: "Initial visibility:"
+my_offer_sell: "My sell offer"
+player-sell: "Player who wants to sell"
 sell: "Sell"
+no-sell: "No sell orders."
+my_offer_buy: "My buy offer"
+player-buy: "Player who wants to buy"
 buy: "Buy"
-rank: "rank"
+no-buy: "No buy orders."
+rank: "Rank"
 
 # shop
 shop:
-    place_order:
-        must_be_logged_in: "You must be logged in to place an order."
-        no_item_selected: "No item selected."
-        item_not_found: "Item not found."
-        saved_success: "Order successfully saved."
+  place_order:
+    must_be_logged_in: "You must be logged in to place an order."
+    no_item_selected: "No item selected."
+    item_not_found: "Item not found."
+    saved_success: "Order successfully saved."
 
 # status
 status.hidden: "Hidden"
-status.online_site: "Online on site"
-status.connected_ingame: "Connected in game"
+status.online_site: "On the site"
+status.connected_ingame: "In game"
 
 # footer
 about: "ABOUT"
