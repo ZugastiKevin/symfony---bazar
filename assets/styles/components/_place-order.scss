@@ -317,6 +317,12 @@
     pointer-events: auto;
 }
 
+@media screen and (max-width:768px) {
+    .place-order-button {
+        width: 37px;
+    }
+}
+
 @media screen and (max-width:550px) {
     .place-order-button {
         width: 32px;

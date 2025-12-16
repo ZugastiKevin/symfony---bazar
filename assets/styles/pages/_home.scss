@@ -137,6 +137,7 @@
         }
 
         #orders-wrapper {
+            width: 100%;
             display: flex;
             justify-content: center;
 
@@ -167,6 +168,7 @@
                     .orders-grid {
                         display: grid;
                         grid-template-columns: 1fr;
+                        gap: 0.07rem;
                         margin-top: 2rem;
 
                         .order-card {
@@ -181,10 +183,10 @@
                             grid-template-areas:
                                     "icon name name name name name"
                                     "icon . status status status ."
-                                    "icon quantity rank rank price price"
+                                    "icon quantity rank rank rank price"
                                     "user user user .  action action";
                             height: auto;
-                            padding: .5rem 0;
+                            padding: 0.5rem 1rem;
                             gap: .4rem;
 
                             .order-line.icon     { grid-area: icon; }
@@ -228,7 +230,7 @@
                                 opacity: 1;
                             }
 
-                            .order-icon {
+                            .icon {
                                 width: 100px;
                                 height: 100px;
                                 border: 2px solid v.$color-blue-eidolon;
@@ -259,6 +261,10 @@
                                     &.price-value {
                                         color: v.$color-blue-eidolon;
                                     }
+
+                                    &.quantity-value {
+                                        color: v.$color-primary;
+                                    }
                                 }
 
                                 .btn-copy {
@@ -274,6 +280,7 @@
                             }
 
                             &:hover {
+                                z-index: 1;
                                 transform: scale(1.02);
                                 border-color: v.$color-blue-eidolon;
                             }
@@ -289,10 +296,21 @@
     #home {
         .home {
             #orders-wrapper {
+                width: 70%;
                 .orders-columns {
                     .orders-column {
                         .orders-grid {
                             .order-card {
+                                grid-template-areas:
+                                    "icon name name name name name"
+                                    "icon . status status status ."
+                                    "icon quantity . rank . price"
+                                    "icon user user .  action action";
+
+                                .icon {
+                                    width: 100%;
+                                    height: 100%;
+                                }
                                 &:hover {
                                     transform: scale(1.01);
                                 }

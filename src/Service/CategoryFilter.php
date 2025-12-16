@@ -13,7 +13,7 @@ class CategoryFilter
      * @param string $default
      * @return string[]
      */
-    public function getExcludedCategoriesFromRequest(Request $request, string $paramName = 'exclude', string $default = 'Skins,Glyphs,Resources,Misc,Node,Sigils,Enemy,Arch-Gun,Fish,Gear'): array
+    public function getExcludedCategoriesFromRequest(Request $request, string $paramName = 'exclude', string $default = 'Skins,Glyphs,Resources,Misc,Node,Sigils,Enemy,Arch-Gun,Fish,Gear,Relics'): array
     {
         $excludeParam = (string) $request->query->get($paramName, $default);
         $excludedCategories = array_filter(array_map(function ($c) {

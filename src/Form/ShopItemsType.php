@@ -22,7 +22,7 @@ class ShopItemsType extends AbstractType
                 'label' => 'price-per-unit',
                 'attr' => [
                     'min' => 1,
-                    'max' => 10000,
+                    'max' => 999,
                 ],
                 'empty_data' => 1,
             ])
@@ -30,7 +30,7 @@ class ShopItemsType extends AbstractType
                 'label' => 'quantity',
                 'attr' => [
                     'min' => 1,
-                    'max' => 1000,
+                    'max' => 99,
                 ],
                 'empty_data' => 1,
             ])

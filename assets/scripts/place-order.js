@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
         let interval = null;
         let holdTimer = null;
 
-        const max = parseInt(input.getAttribute('max') || '9999999', 10);
+        const max = parseInt(input.getAttribute('max') || '999', 10);
         const min = parseInt(input.getAttribute('min') || '0', 10);
 
         if (input.value === '' || input.value === null) {
